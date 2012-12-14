@@ -43,6 +43,7 @@
             this.textBox_LoginEmail = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.pb_Border = new System.Windows.Forms.PictureBox();
+            this.btn_Exit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pb_Border)).BeginInit();
             this.SuspendLayout();
             // 
@@ -174,11 +175,22 @@
             this.pb_Border.TabIndex = 14;
             this.pb_Border.TabStop = false;
             // 
+            // btn_Exit
+            // 
+            this.btn_Exit.Location = new System.Drawing.Point(104, 176);
+            this.btn_Exit.Name = "btn_Exit";
+            this.btn_Exit.Size = new System.Drawing.Size(75, 23);
+            this.btn_Exit.TabIndex = 15;
+            this.btn_Exit.Text = "Exit";
+            this.btn_Exit.UseVisualStyleBackColor = true;
+            this.btn_Exit.Click += new System.EventHandler(this.btn_Exit_Click);
+            // 
             // loginmenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(677, 265);
+            this.Controls.Add(this.btn_Exit);
             this.Controls.Add(this.pb_Border);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textBox_LoginEmail);
@@ -194,6 +206,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox_Password);
             this.Controls.Add(this.textBox_Username);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "loginmenu";
             this.Text = "Project-Kindergarten v0.01";
             this.Load += new System.EventHandler(this.loginmenu_Load);
@@ -220,5 +233,6 @@
         private System.Windows.Forms.TextBox textBox_LoginEmail;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox pb_Border;
+        private System.Windows.Forms.Button btn_Exit;
     }
 }

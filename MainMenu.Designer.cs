@@ -28,9 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // MainMenu
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.ControlBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "MainMenu";
+            this.ShowIcon = false;
             this.Text = "MainMenu";
+            this.Load += new System.EventHandler(this.MainMenu_Load);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
