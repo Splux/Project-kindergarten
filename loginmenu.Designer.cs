@@ -57,6 +57,7 @@
             // 
             this.textBox_Password.Location = new System.Drawing.Point(12, 78);
             this.textBox_Password.Name = "textBox_Password";
+            this.textBox_Password.PasswordChar = '#';
             this.textBox_Password.Size = new System.Drawing.Size(260, 20);
             this.textBox_Password.TabIndex = 1;
             // 
@@ -102,6 +103,7 @@
             // 
             this.textBox_ConfirmPw.Location = new System.Drawing.Point(405, 130);
             this.textBox_ConfirmPw.Name = "textBox_ConfirmPw";
+            this.textBox_ConfirmPw.PasswordChar = '#';
             this.textBox_ConfirmPw.Size = new System.Drawing.Size(260, 20);
             this.textBox_ConfirmPw.TabIndex = 6;
             // 
@@ -109,6 +111,7 @@
             // 
             this.textBox_RegPw.Location = new System.Drawing.Point(405, 78);
             this.textBox_RegPw.Name = "textBox_RegPw";
+            this.textBox_RegPw.PasswordChar = '#';
             this.textBox_RegPw.Size = new System.Drawing.Size(260, 20);
             this.textBox_RegPw.TabIndex = 7;
             // 
@@ -145,7 +148,6 @@
             this.label5.Size = new System.Drawing.Size(55, 13);
             this.label5.TabIndex = 11;
             this.label5.Text = "Username";
-            //this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // textBox_LoginEmail
             // 
@@ -165,12 +167,12 @@
             // 
             // pb_Border
             // 
+            this.pb_Border.BackColor = System.Drawing.Color.Gray;
             this.pb_Border.Location = new System.Drawing.Point(332, 9);
             this.pb_Border.Name = "pb_Border";
             this.pb_Border.Size = new System.Drawing.Size(4, 244);
             this.pb_Border.TabIndex = 14;
             this.pb_Border.TabStop = false;
-            this.pb_Border.BackColor = System.Drawing.Color.Gray;
             // 
             // loginmenu
             // 

@@ -15,15 +15,17 @@ namespace Project_kindergarten
     {
         public TCPConnection()
         {
-            this.tcpClient = new System.Net.Sockets.TcpClient();
+            tcpClient = null;
         }
         public TCPConnection(string dnsName)
         {
-            this.Open(dnsName);
+            if(!this.Open(dnsName))
+                System.Windows.Forms.MessageBox.Show("Failed to connect to remote server");
         }
         public TCPConnection(System.Net.IPAddress ipAddress)
         {
-
+            if (!this.Open(ipAddress))
+                System.Windows.Forms.MessageBox.Show("Failed to connect to remote server");
         }
         ~TCPConnection()
         {
@@ -41,7 +43,7 @@ namespace Project_kindergarten
             }
             catch (System.Net.Sockets.SocketException e)
             {
-                System.Windows.Forms.MessageBox.Show("Failed to close connection");
+                //System.Windows.Forms.MessageBox.Show("Failed to close connection");
                 Log.Write(e.ToString());
                 return false;
             }
@@ -50,17 +52,20 @@ namespace Project_kindergarten
         }
         public bool Open(System.Net.IPAddress ipAddress)
         {
+            // If tcpClient is non-null and connected to something, return false
             if (tcpClient != null)
                 if (tcpClient.Connected)
                     return false;
+            // Create new TcpClient and try to connect to remote server
             tcpClient = new System.Net.Sockets.TcpClient();
             try
             {
                 tcpClient.Connect(ipAddress, 1337);
             }
+                // Output error to fail and tell the user that they're wrong.
             catch (System.Net.Sockets.SocketException e)
             {
-                System.Windows.Forms.MessageBox.Show("Failed to open connection");
+                //System.Windows.Forms.MessageBox.Show("Failed to open connection");
                 Log.Write(e.ToString());
                 return false;
             }
@@ -83,7 +88,7 @@ namespace Project_kindergarten
             // In case of emergency...
             catch (System.Net.Sockets.SocketException e)
             {
-                System.Windows.Forms.MessageBox.Show("Failed to open connection");
+                //System.Windows.Forms.MessageBox.Show("Failed to open connection");
                 Log.Write(e.ToString());
                 return false;
             }
