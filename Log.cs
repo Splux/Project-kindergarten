@@ -11,10 +11,23 @@ namespace Project_kindergarten
         // Although this shit is causing most of the errors atm
         public static void Write(string strErr)
         {
-            byte[] write = System.Text.Encoding.ASCII.GetBytes(strErr);
-            fileStream.Write(write, 0, write.Length);
+            try
+            {
+                // Creates or open a file
+                System.IO.BinaryWriter fileStream = new System.IO.BinaryWriter(System.IO.File.OpenWrite(@"./log.txt"));
+                
+                // Writes to file, closes and cleans up
+                fileStream.Write(strErr);
+                fileStream.Close();
+                fileStream.Dispose();
+                fileStream = null;
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show("Log-class failed");
+            }
         }
 
-        private static System.IO.FileStream fileStream = new System.IO.FileStream("/logs/errorlog.txt", System.IO.FileMode.OpenOrCreate);
+        
     }
 }

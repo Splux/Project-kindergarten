@@ -41,7 +41,8 @@ namespace Project_kindergarten
             }
             catch (System.Net.Sockets.SocketException e)
             {
-                System.Windows.Forms.MessageBox.Show(e.ToString());
+                System.Windows.Forms.MessageBox.Show("Failed to close connection");
+                Log.Write(e.ToString());
                 return false;
             }
 
@@ -59,7 +60,7 @@ namespace Project_kindergarten
             }
             catch (System.Net.Sockets.SocketException e)
             {
-                System.Windows.Forms.MessageBox.Show(e.ToString());
+                System.Windows.Forms.MessageBox.Show("Failed to open connection");
                 Log.Write(e.ToString());
                 return false;
             }
@@ -79,9 +80,10 @@ namespace Project_kindergarten
             {
                 tcpClient.Connect(dnsName, 1337);
             }
+            // In case of emergency...
             catch (System.Net.Sockets.SocketException e)
             {
-                System.Windows.Forms.MessageBox.Show(e.ToString());
+                System.Windows.Forms.MessageBox.Show("Failed to open connection");
                 Log.Write(e.ToString());
                 return false;
             }
@@ -110,7 +112,9 @@ namespace Project_kindergarten
             }
             catch (System.Net.Sockets.SocketException e)
             {
-                System.Windows.Forms.MessageBox.Show(e.ToString());
+                System.Windows.Forms.MessageBox.Show("Couldn't send information to server\n " +
+                "Please check your internet connection");
+                Log.Write(e.ToString());
             }
         }
         public void Receive(out string outString)

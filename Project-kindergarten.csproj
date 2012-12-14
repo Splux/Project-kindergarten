@@ -45,6 +45,12 @@
     <Compile Include="loginmenu.Designer.cs">
       <DependentUpon>loginmenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainMenu.Designer.cs">
+      <DependentUpon>MainMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="TCPConnection.cs" />
   </ItemGroup>
   <ItemGroup>
