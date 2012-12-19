@@ -15,6 +15,10 @@ namespace Project_kindergarten
         {
             InitializeComponent();
         }
+        ~MainMenu()
+        {
+            Application.Exit();
+        }
 
         private void MainMenu_Load(object sender, EventArgs e)
         {

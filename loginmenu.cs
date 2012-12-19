@@ -20,8 +20,8 @@ namespace Project_kindergarten
         private void loginmenu_Load(object sender, EventArgs e)
         {
             //byte[] ipaddr = System.Text.ASCIIEncoding.ASCII.GetBytes("172.20.0.123");
-            //serverConnection = new TCPConnection(System.Net.IPAddress.Parse("172.20.0.123"));
-            serverConnection = new TCPConnection("asdfs");
+            serverConnection = new TCPConnection(System.Net.IPAddress.Parse("172.20.1.6"));
+            //serverConnection = new TCPConnection("asdfs");
 
             // Add eventhandlers for window-dragging functionality
             this.MouseDown += new MouseEventHandler(onMouseDown);
@@ -29,6 +29,7 @@ namespace Project_kindergarten
             this.MouseMove += new MouseEventHandler(onMouseMove);
             _dragging = false;
 
+            #region Lotsofannoyingstuff
             // Set visibility of register menu to false.
             textBox_RegUsrname.Visible = false;
             textBox_RegPw.Visible = false;
@@ -43,7 +44,7 @@ namespace Project_kindergarten
             lbl_RegUser.Visible = false;
 
             pb_Border.Visible = false;
-
+            #endregion
             this.Size = new Size(285, 265);
         }
 
@@ -102,22 +103,54 @@ namespace Project_kindergarten
             if (string.IsNullOrEmpty(rcvData))
             {
                 System.Windows.Forms.MessageBox.Show("Something went wrong!\n Blame our monkeys.");
-                return;
+                //return;
             }
-            if (rcvData[0] == '1')
+            if (rcvData[0] == '0')
             {
-
+                this.Hide();
+                MainMenu menu = new MainMenu();
+                menu.Show();
             }
+            //this.Hide();
+            //MainMenu menu = new MainMenu();
+            //menu.Show();
         }
 
         private void btn_Register1_Click(object sender, EventArgs e)
         {
+            // Check so both password is valid
             if (!textBox_ConfirmPw.Text.Equals(textBox_RegPw.Text))
             {
                 System.Windows.Forms.MessageBox.Show("Password mismatch");
                 textBox_ConfirmPw.Clear();
                 textBox_RegPw.Clear();
+                return;
             }
+            else if (textBox_RegPw.Text.Contains('\\'))
+            {
+                System.Windows.Forms.MessageBox.Show("Not allowed to use '\\' in password or username");
+                return;
+            }
+
+            string sendData = '3' + '\\' + textBox_RegUsrname.Text + '\\' +
+                textBox_RegPw.Text + '\\' + textBox_LoginEmail.Text;
+            serverConnection.Send(sendData);
+            string retVal;
+            serverConnection.Receive(out retVal);
+
+            // retVal[0] should be 3, else something failed
+            if (string.IsNullOrEmpty(retVal))
+            {
+                MessageBox.Show("WHAT");
+                return;
+            }
+            else if (retVal[0] != '3')
+            {
+                System.Windows.Forms.MessageBox.Show("Registration failed");
+                return;
+            }
+
+            System.Windows.Forms.MessageBox.Show("Registration successful!");
         }
 
         private void btn_Exit_Click(object sender, EventArgs e)
