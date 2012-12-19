@@ -44,7 +44,7 @@ namespace Project_kindergarten
 
             pb_Border.Visible = false;
 
-            this.Size = new Size(330, 265);
+            this.Size = new Size(285, 265);
         }
 
 
@@ -164,7 +164,7 @@ namespace Project_kindergarten
             
 
             // Set size so we cannot see it again.
-            for (int i = this.Size.Width; i >= 330; i -= 3)
+            for (int i = this.Size.Width; i >= 285; i -= 3)
             {
                 Size = new Size(i, this.Size.Height);
             }
