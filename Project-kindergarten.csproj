@@ -37,6 +37,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AnimButton.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="loginmenu.cs">
