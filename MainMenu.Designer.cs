@@ -34,13 +34,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.ClientSize = new System.Drawing.Size(1366, 768);
             this.ControlBox = false;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MainMenu";
             this.ShowIcon = false;
             this.Text = "MainMenu";
+            this.BackColor = System.Drawing.Color.Blue;
             this.Load += new System.EventHandler(this.MainMenu_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.handleKeypress);
             this.ResumeLayout(false);
 
         }
