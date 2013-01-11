@@ -22,7 +22,7 @@ namespace Project_kindergarten
                 fileStream.Dispose();
                 fileStream = null;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 System.Windows.Forms.MessageBox.Show("Log-class failed");
             }
