@@ -13,6 +13,14 @@ namespace Project_kindergarten
 {
     class TCPConnection
     {
+        #region Private variables
+
+        private System.Net.Sockets.TcpClient tcpClient = null;
+        private System.Net.Sockets.NetworkStream tcpNetStream;
+        private System.IO.StreamReader _streamReader;
+
+        #endregion
+
         public TCPConnection()
         {
             tcpClient = null;
@@ -112,6 +120,7 @@ namespace Project_kindergarten
                 byte[] sendBytes = System.Text.Encoding.ASCII.GetBytes(inString);
                 // Fire away.
                 tcpNetStream.Write(sendBytes, 0, sendBytes.Length);
+                
                 // Close the stream, otherwise it'll block everything else.
                 tcpNetStream.Close();
             }
@@ -129,21 +138,18 @@ namespace Project_kindergarten
             if (!tcpClient.Connected)
                 return;
 
-            tcpNetStream = tcpClient.GetStream();
+            _streamReader = new System.IO.StreamReader(tcpClient.GetStream());
+            outString = _streamReader.ReadLine();
+
+            //tcpNetStream = tcpClient.GetStream();
             // Byte array to read the networkstream into
-            byte[] data = new byte[256];
-            tcpNetStream.Read(data, 0, data.Length);
+            //byte[] data = new byte[256];
+            //tcpNetStream.Read(data, 0, data.Length);
+            
             // Turn bytes into a readable string
-            outString = System.Text.Encoding.ASCII.GetString(data);
+            //outString = System.Text.Encoding.ASCII.GetString(data);
 
             tcpNetStream.Close();
         }
-
-        #region Private variables
-
-        System.Net.Sockets.TcpClient tcpClient = null;
-        System.Net.Sockets.NetworkStream tcpNetStream;
-
-        #endregion
     }
 }

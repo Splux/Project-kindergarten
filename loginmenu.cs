@@ -11,6 +11,14 @@ namespace Project_kindergarten
 {
     public partial class loginmenu : Form
     {
+        #region Private variables
+        private TCPConnection serverConnection;
+        private bool _dragging;
+        private Point _startPoint = new Point(0, 0);
+        private int _fullBorderXSize = 677;
+        private int _minBorderXSize = 285;
+        #endregion
+
         public loginmenu()
         {
             InitializeComponent();
@@ -20,8 +28,8 @@ namespace Project_kindergarten
         private void loginmenu_Load(object sender, EventArgs e)
         {
             //byte[] ipaddr = System.Text.ASCIIEncoding.ASCII.GetBytes("172.20.0.123");
-            serverConnection = new TCPConnection(System.Net.IPAddress.Parse("172.20.1.6"));
-            //serverConnection = new TCPConnection("asdfs");
+            //serverConnection = new TCPConnection(System.Net.IPAddress.Parse("172.20.0.172"));
+            serverConnection = new TCPConnection("asdfs");
 
             // Add eventhandlers for window-dragging functionality
             this.MouseDown += new MouseEventHandler(onMouseDown);
@@ -29,7 +37,7 @@ namespace Project_kindergarten
             this.MouseMove += new MouseEventHandler(onMouseMove);
             _dragging = false;
 
-            #region Lotsofannoyingstuff
+            #region Make stuff disappear
             // Set visibility of register menu to false.
             textBox_RegUsrname.Visible = false;
             textBox_RegPw.Visible = false;
@@ -80,11 +88,7 @@ namespace Project_kindergarten
 
         #endregion
 
-        #region Private variables
-        private TCPConnection serverConnection;
-        private bool _dragging;
-        private Point _startPoint = new Point(0, 0);
-        #endregion
+        
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
@@ -103,7 +107,7 @@ namespace Project_kindergarten
             if (string.IsNullOrEmpty(rcvData))
             {
                 System.Windows.Forms.MessageBox.Show("Something went wrong!\n Blame our monkeys.");
-                //return;
+                return;
             }
             if (rcvData[0] == '0')
             {
@@ -116,24 +120,60 @@ namespace Project_kindergarten
             //menu.Show();
         }
 
+        private bool isValidRegister()
+        {
+            // Check so both passwords are correct and not empty
+            if (string.IsNullOrEmpty(textBox_RegPw.Text))
+            {
+                System.Windows.Forms.MessageBox.Show("Enter password.");
+                return false;
+            }
+            // Compare regpw + confirmation pw
+            if (textBox_RegPw.Text.CompareTo(textBox_ConfirmPw.Text) != 0)
+            {
+                System.Windows.Forms.MessageBox.Show("Password mismatch.");
+                return false;
+            }
+            // check for valid username
+            if (string.IsNullOrEmpty(textBox_RegUsrname.Text))
+            {
+                System.Windows.Forms.MessageBox.Show("Enter a username.");
+                return false;
+            }
+            // check for invalid characters in loginmail/usrname/pw
+            if (textBox_LoginEmail.Text.Contains('@'))
+            {
+                System.Windows.Forms.MessageBox.Show("Don't use '@' in mail >:(");
+                return false;
+            }
+
+            if (textBox_ConfirmPw.Text.Contains('\\') || textBox_RegPw.Text.Contains('\\') || textBox_RegUsrname.Text.Contains('\\'))
+            {
+                System.Windows.Forms.MessageBox.Show("Don't use '\\' in password or username");
+                return false;
+            }
+
+            return true;
+        }
+
         private void btn_Register1_Click(object sender, EventArgs e)
         {
             // Check so both password is valid
-            if (!textBox_ConfirmPw.Text.Equals(textBox_RegPw.Text))
+            if (!isValidRegister())
             {
-                System.Windows.Forms.MessageBox.Show("Password mismatch");
-                textBox_ConfirmPw.Clear();
-                textBox_RegPw.Clear();
+                textBox_RegPw.Text = string.Empty;
+                textBox_ConfirmPw.Text = string.Empty;
                 return;
             }
-            else if (textBox_RegPw.Text.Contains('\\'))
-            {
-                System.Windows.Forms.MessageBox.Show("Not allowed to use '\\' in password or username");
-                return;
-            }
+            
+            System.Windows.Forms.MessageBox.Show("3" + '\\' + textBox_RegUsrname.Text + '\\' +
+                textBox_RegPw.Text + '\\' + textBox_LoginEmail.Text);
 
-            string sendData = '3' + '\\' + textBox_RegUsrname.Text + '\\' +
+            string sendData = "3" + textBox_RegUsrname.Text + '\\' +
                 textBox_RegPw.Text + '\\' + textBox_LoginEmail.Text;
+
+            System.Windows.Forms.MessageBox.Show(sendData);
+
             serverConnection.Send(sendData);
             string retVal;
             serverConnection.Receive(out retVal);
@@ -142,6 +182,10 @@ namespace Project_kindergarten
             if (string.IsNullOrEmpty(retVal))
             {
                 MessageBox.Show("WHAT");
+                textBox_ConfirmPw.Clear();
+                textBox_LoginEmail.Clear();
+                textBox_RegPw.Clear();
+                textBox_RegUsrname.Clear();
                 return;
             }
             else if (retVal[0] != '3')
@@ -178,7 +222,7 @@ namespace Project_kindergarten
             //pb_Border.Update();
 
             // Set size so we can see it again
-            for (int i = this.Size.Width; i <= 677; i += 3)
+            for (int i = this.Size.Width; i <= _fullBorderXSize; i += 3)
             {
                 this.Size = new Size(i, this.Size.Height);
             }
@@ -189,15 +233,12 @@ namespace Project_kindergarten
             // do it in a thread to avoid a bug I can't solve.
             System.Threading.Thread th = new System.Threading.Thread(showRegObjects);
             th.Start();
-            
         }
 
         private void btn_Close_Click(object sender, EventArgs e)
         {
-            
-
             // Set size so we cannot see it again.
-            for (int i = this.Size.Width; i >= 285; i -= 3)
+            for (int i = this.Size.Width; i >= _minBorderXSize; i -= 3)
             {
                 Size = new Size(i, this.Size.Height);
             }
