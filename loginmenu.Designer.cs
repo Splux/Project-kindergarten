@@ -30,8 +30,8 @@
         {
             this.textBox_Username = new System.Windows.Forms.TextBox();
             this.textBox_Password = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lbl_LoginUsrname = new System.Windows.Forms.Label();
+            this.lbl_LoginPw = new System.Windows.Forms.Label();
             this.btn_Login = new System.Windows.Forms.Button();
             this.btn_Register1 = new System.Windows.Forms.Button();
             this.textBox_ConfirmPw = new System.Windows.Forms.TextBox();
@@ -64,23 +64,23 @@
             this.textBox_Password.TabIndex = 1;
             this.textBox_Password.UseSystemPasswordChar = true;
             // 
-            // label1
+            // lbl_LoginUsrname
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(113, 12);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 13);
-            this.label1.TabIndex = 12;
-            this.label1.Text = "Username";
+            this.lbl_LoginUsrname.AutoSize = true;
+            this.lbl_LoginUsrname.Location = new System.Drawing.Point(113, 12);
+            this.lbl_LoginUsrname.Name = "lbl_LoginUsrname";
+            this.lbl_LoginUsrname.Size = new System.Drawing.Size(55, 13);
+            this.lbl_LoginUsrname.TabIndex = 2;
+            this.lbl_LoginUsrname.Text = "Username";
             // 
-            // label2
+            // lbl_LoginPw
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(113, 62);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 13);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "Password";
+            this.lbl_LoginPw.AutoSize = true;
+            this.lbl_LoginPw.Location = new System.Drawing.Point(113, 62);
+            this.lbl_LoginPw.Name = "lbl_LoginPw";
+            this.lbl_LoginPw.Size = new System.Drawing.Size(53, 13);
+            this.lbl_LoginPw.TabIndex = 3;
+            this.lbl_LoginPw.Text = "Password";
             // 
             // btn_Login
             // 
@@ -193,7 +193,7 @@
             this.btn_Register.Name = "btn_Register";
             this.btn_Register.Size = new System.Drawing.Size(108, 41);
             this.btn_Register.TabIndex = 3;
-            this.btn_Register.Text = "Register";
+            this.btn_Register.Text = "Reg. form";
             this.btn_Register.UseVisualStyleBackColor = true;
             this.btn_Register.Click += new System.EventHandler(this.btn_Register_Click);
             // 
@@ -226,8 +226,8 @@
             this.Controls.Add(this.textBox_ConfirmPw);
             this.Controls.Add(this.btn_Register1);
             this.Controls.Add(this.btn_Login);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lbl_LoginPw);
+            this.Controls.Add(this.lbl_LoginUsrname);
             this.Controls.Add(this.textBox_Password);
             this.Controls.Add(this.textBox_Username);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -245,8 +245,8 @@
 
         private System.Windows.Forms.TextBox textBox_Username;
         private System.Windows.Forms.TextBox textBox_Password;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lbl_LoginUsrname;
+        private System.Windows.Forms.Label lbl_LoginPw;
         private System.Windows.Forms.Button btn_Login;
         private System.Windows.Forms.Button btn_Register1;
         private System.Windows.Forms.TextBox textBox_ConfirmPw;
