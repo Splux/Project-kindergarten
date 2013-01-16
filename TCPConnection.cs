@@ -200,17 +200,22 @@ namespace Project_kindergarten
                 return;
             try
             {
-                // Get the network stream
-                _tcpNetStream = _tcpClient.GetStream();
-                //Convert string to bytes
-                byte[] sendBytes = System.Text.Encoding.ASCII.GetBytes(inString);
-                // Fire away.
-                _tcpNetStream.Write(sendBytes, 0, sendBytes.Length);
+                //// Get the network stream
+                //_tcpNetStream = _tcpClient.GetStream();
+                ////Convert string to bytes
+                //byte[] sendBytes = System.Text.Encoding.ASCII.GetBytes(inString);
+                //// Fire away.
+                //_tcpNetStream.Write(sendBytes, 0, sendBytes.Length);
                 
-                // Close the stream, otherwise it'll block everything else.
-                //_tcpNetStream.Close();
+                //// Close the stream, otherwise it'll block everything else.
+                ////_tcpNetStream.Close();
+
+                using(System.IO.StreamWriter sw = new System.IO.StreamWriter(_tcpClient.GetStream()))
+                {
+                    sw.WriteLine(inString);
+                }
             }
-            catch (System.Net.Sockets.SocketException e)
+            catch (Exception e)
             {
                 System.Windows.Forms.MessageBox.Show("Couldn't send information to server\n " +
                 "Please check your internet connection");
@@ -252,6 +257,7 @@ namespace Project_kindergarten
                 string rcv;
                 while (stillConnected && _stillAlive)
                 {
+                    
                     rcv = _streamReader.ReadLine();
                     lock (_rcvStrings)
                     {

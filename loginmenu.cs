@@ -32,7 +32,7 @@ namespace Project_kindergarten
 
         private void loginmenu_Load(object sender, EventArgs e)
         {
-            serverConnection = new TCPConnection(System.Net.IPAddress.Parse("172.20.1.147"));
+            serverConnection = new TCPConnection(System.Net.IPAddress.Parse("172.20.0.208"));
            // serverConnection = new TCPConnection("asdfs");
             if (!serverConnection.IsConnected())
             {
@@ -105,7 +105,7 @@ namespace Project_kindergarten
             if (textBox_Username.Text == "" || textBox_Password.Text == "")
             {
                 System.Windows.Forms.MessageBox.Show("Enter both username and/or password");
-                //return;
+                return;
             }
             string sendData = "0" + textBox_Username.Text + '\\' + textBox_Password.Text;
             //System.Windows.Forms.MessageBox.Show(textBox_Username.ToString());
@@ -130,7 +130,7 @@ namespace Project_kindergarten
             if (string.IsNullOrEmpty(rcvData))
             {
                 System.Windows.Forms.MessageBox.Show("Something went wrong!\n Blame our monkeys.");
-              //  return;
+                return;
             }
             //if (rcvData[0] == '0')
             //{
