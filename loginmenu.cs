@@ -32,8 +32,12 @@ namespace Project_kindergarten
 
         private void loginmenu_Load(object sender, EventArgs e)
         {
-            //serverConnection = new TCPConnection(System.Net.IPAddress.Parse("172.20.0.172"));
-            serverConnection = new TCPConnection("asdfs");
+            serverConnection = new TCPConnection(System.Net.IPAddress.Parse("172.20.1.147"));
+           // serverConnection = new TCPConnection("asdfs");
+            if (!serverConnection.IsConnected())
+            {
+                MessageBox.Show("Failed to connect to server.");
+            }
 
             // Add eventhandlers for window-dragging functionality
             this.MouseDown += new MouseEventHandler(onMouseDown);
@@ -107,7 +111,22 @@ namespace Project_kindergarten
             //System.Windows.Forms.MessageBox.Show(textBox_Username.ToString());
             string rcvData;
             serverConnection.Send(sendData);
-            serverConnection.Receive(out rcvData);
+
+            int sleepTime = 0;
+
+            do
+            {
+                System.Threading.Thread.Sleep(50);
+                sleepTime += 50;
+
+                if (sleepTime >= 5000)
+                {
+                    System.Windows.Forms.MessageBox.Show("No response from server.");
+                    return;
+                }
+
+            } while ((rcvData = serverConnection.GetString('0')) == string.Empty);
+
             if (string.IsNullOrEmpty(rcvData))
             {
                 System.Windows.Forms.MessageBox.Show("Something went wrong!\n Blame our monkeys.");
@@ -119,6 +138,9 @@ namespace Project_kindergarten
             //    MainMenu menu = new MainMenu();
             //    menu.Show();
             //}
+
+
+
             this.Hide();
             MainMenu mesnu = new MainMenu();
             mesnu.ShowDialog();
@@ -181,7 +203,17 @@ namespace Project_kindergarten
 
             serverConnection.Send(sendData);
             string retVal;
-            serverConnection.Receive(out retVal);
+            //serverConnection.Receive(out retVal);
+            retVal = string.Empty;
+
+            int timePassed = 0;
+            while (timePassed <= 15000 && retVal == string.Empty)
+            {
+                System.Threading.Thread.Sleep(50);
+                timePassed += 50;
+
+                retVal = serverConnection.GetString('3');
+            }
 
             // retVal[0] should be 3, else something failed
             if (string.IsNullOrEmpty(retVal))
@@ -204,6 +236,7 @@ namespace Project_kindergarten
 
         private void btn_Exit_Click(object sender, EventArgs e)
         {
+            serverConnection.Close();
             Application.Exit();
         }
 
@@ -236,8 +269,9 @@ namespace Project_kindergarten
         private void btn_Register_Click(object sender, EventArgs e)
         {
             // do it in a thread to avoid a bug I can't solve.
-            System.Threading.Thread th = new System.Threading.Thread(showRegObjects);
-            th.Start();
+            //System.Threading.Thread th = new System.Threading.Thread(showRegObjects);
+            showRegObjects();
+            //th.Start();
         }
 
         private void btn_Close_Click(object sender, EventArgs e)
