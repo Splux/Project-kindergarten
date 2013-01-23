@@ -7,6 +7,33 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+
+/*
+ * Send flags:
+ * 
+LR = Login Request
+RR = Register Request
+VR = Verify Request
+HR = Host Creation Request
+VR = View Hosts Request
+ * 
+ * Receive flags
+ * 
+ LS = Login Successful
+LF = Login Failed
+LC = Login Failed Connected( Redan inloggad)
+LP = Login Failed Password( fel lösenord)
+FR = Login Failed Not Registred(Användaren är inte registrerad)
+LV = Login Failed Verified Needed (Användaren har inte verifierat sig)
+
+SR = Server Request
+NG = New Game
+RS = Register Successful
+RF = Register Failed
+RT = Register Taken
+ * 
+ * */
+
 namespace Project_kindergarten
 {
     public partial class loginmenu : Form
@@ -32,7 +59,7 @@ namespace Project_kindergarten
 
         private void loginmenu_Load(object sender, EventArgs e)
         {
-            serverConnection = new TCPConnection(System.Net.IPAddress.Parse("172.20.0.208"));
+            serverConnection = new TCPConnection(System.Net.IPAddress.Parse("172.20.0.138"));
            // serverConnection = new TCPConnection("asdfs");
             if (!serverConnection.IsConnected())
             {
@@ -121,7 +148,7 @@ namespace Project_kindergarten
 
                 if (sleepTime >= 5000)
                 {
-                    System.Windows.Forms.MessageBox.Show("No response from server.");
+                    
                     return;
                 }
 
@@ -168,11 +195,11 @@ namespace Project_kindergarten
                 return false;
             }
             // check for invalid characters in loginmail/usrname/pw
-            if (textBox_LoginEmail.Text.Contains('@'))
-            {
-                System.Windows.Forms.MessageBox.Show("Don't use '@' in mail >:(");
-                return false;
-            }
+            //if (textBox_LoginEmail.Text.Contains('@'))
+            //{
+            //    System.Windows.Forms.MessageBox.Show("Don't use '@' in mail >:(");
+            //    return false;
+            //}
 
             if (textBox_ConfirmPw.Text.Contains('\\') || textBox_RegPw.Text.Contains('\\') || textBox_RegUsrname.Text.Contains('\\'))
             {
@@ -193,13 +220,13 @@ namespace Project_kindergarten
                 return;
             }
             
-            System.Windows.Forms.MessageBox.Show("3" + '\\' + textBox_RegUsrname.Text + '\\' +
-                textBox_RegPw.Text + '\\' + textBox_LoginEmail.Text);
+            //System.Windows.Forms.MessageBox.Show("3" + '\\' + textBox_RegUsrname.Text + '\\' +
+            //    textBox_RegPw.Text + '\\' + textBox_LoginEmail.Text);
 
             string sendData = "3" + textBox_RegUsrname.Text + '\\' +
                 textBox_RegPw.Text + '\\' + textBox_LoginEmail.Text;
 
-            System.Windows.Forms.MessageBox.Show(sendData);
+            //System.Windows.Forms.MessageBox.Show(sendData);
 
             serverConnection.Send(sendData);
             string retVal;
