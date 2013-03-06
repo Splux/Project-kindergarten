@@ -14,13 +14,13 @@ namespace Project_kindergarten
             try
             {
                 // Creates or open a file
-                System.IO.BinaryWriter fileStream = new System.IO.BinaryWriter(System.IO.File.OpenWrite(@"./log.txt"));
+                System.IO.FileStream fileStream = new System.IO.FileStream(@"./log.txt", System.IO.FileMode.Append);
                 
                 // Writes to file, closes and cleans up
-                fileStream.Write(strErr);
+                byte[] outbytes = Encoding.ASCII.GetBytes(strErr);
+                
+                fileStream.Write(outbytes, 0, outbytes.Length);
                 fileStream.Close();
-                fileStream.Dispose();
-                fileStream = null;
             }
             catch (Exception)
             {

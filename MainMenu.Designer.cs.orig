@@ -112,7 +112,6 @@
             this.Text = "MainMenu";
             this.BackColor = System.Drawing.Color.Blue;
             this.Load += new System.EventHandler(this.MainMenu_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.handleKeypress);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();

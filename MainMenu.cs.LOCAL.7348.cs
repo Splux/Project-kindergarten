@@ -13,11 +13,6 @@ namespace Project_kindergarten
 
     public partial class MainMenu : Form
     {
-        #region variables
-        Bitmap bm;
-        #endregion
-
-
         System.Drawing.Bitmap myBitmap;
         Image i = Image.FromFile("Backgroundexempel.png");//upload background image to i
         Image j = Image.FromFile("knapp1.png");//upload first button to j
@@ -37,16 +32,16 @@ namespace Project_kindergarten
 
         private void MainMenu_Load(object sender, EventArgs e)
         {
-            Paint += new PaintEventHandler(updateScreen);
-            bm = new Bitmap(this.ClientRectangle.Width, this.ClientRectangle.Height,
-                System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            Graphics gr = Graphics.FromImage(bm);
-            Rectangle rec = new Rectangle(100, 100, 200, 200);
-            Pen pen = new Pen(Color.White, 4);
-            gr.DrawRectangle(pen, rec);
-            
-            gr.Dispose();
-        }
+            //Graphics graphicsObj;
+            //Graphics graphicsObj1;
+            //Image i = Image.FromFile("Backgroundexempel.png");//upload background image to i
+            //Image j = Image.FromFile("knapp1.png");//upload first button to j
+            //Image k = Image.FromFile("knapp2.png");
+            //Image l = Image.FromFile("knapp3.png");
+            //Image m = Image.FromFile("knapp4.png");
+
+            //graphicsObj = Graphics.FromImage(myBitmap);//apply bitmap to graphicsObj
+            //graphicsObj1 = Graphics.FromImage(myBitmap);
 
             //graphicsObj.DrawImage(i, 0, 0, pictureBox1.Size.Width, pictureBox1.Size.Height);//draw image on graphicsObj
             //graphicsObj.DrawImage(j, 0, 0, pictureBox2.Size.Width, pictureBox2.Size.Height);
@@ -110,20 +105,6 @@ namespace Project_kindergarten
         private void pictureBox4_Click(object sender, EventArgs e)
         {
 
-            gr.Clear(Color.Blue);
-            gr.DrawImage(bm, 0, 0, bm.Width, bm.Height);
-
-            gr.Dispose();
         }
-
-        private void handleKeypress(object sender, KeyEventArgs ke)
-        {
-            if (ke.KeyCode == Keys.Escape)
-            {
-                this.Close();
-            }
-        }
-
-
     }
 }

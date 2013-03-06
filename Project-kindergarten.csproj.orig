@@ -37,15 +37,19 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AnimButton.cs" />
+<<<<<<< HEAD
     <Compile Include="Class1.cs" />
-    <Compile Include="FlagEnum.cs" />
     <Compile Include="Create_Game.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Create_Game.Designer.cs">
       <DependentUpon>Create_Game.cs</DependentUpon>
     </Compile>
+=======
+    <Compile Include="AnimButton.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="FlagEnum.cs" />
+>>>>>>> 21c735e5aea0e3aef67edf0628d04c81ad7ca24a
     <Compile Include="Log.cs" />
     <Compile Include="loginmenu.cs">
       <SubType>Form</SubType>
@@ -59,6 +63,7 @@
     <Compile Include="MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="newgame.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,33 +71,41 @@
       <DependentUpon>newgame.cs</DependentUpon>
     </Compile>
     <Compile Include="TCPConnection.cs" />
+=======
+    <Compile Include="TCPConnection.cs" />
     <Compile Include="VerifyUser.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="VerifyUser.Designer.cs">
       <DependentUpon>VerifyUser.cs</DependentUpon>
     </Compile>
+>>>>>>> 21c735e5aea0e3aef67edf0628d04c81ad7ca24a
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+<<<<<<< HEAD
     <Reference Include="System.Messaging" />
+=======
+>>>>>>> 21c735e5aea0e3aef67edf0628d04c81ad7ca24a
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <EmbeddedResource Include="Create_Game.resx">
       <DependentUpon>Create_Game.cs</DependentUpon>
     </EmbeddedResource>
+=======
+>>>>>>> 21c735e5aea0e3aef67edf0628d04c81ad7ca24a
     <EmbeddedResource Include="loginmenu.resx">
       <DependentUpon>loginmenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VerifyUser.resx">
-      <DependentUpon>VerifyUser.cs</DependentUpon>
+<<<<<<< HEAD
     <EmbeddedResource Include="newgame.resx">
       <DependentUpon>newgame.cs</DependentUpon>
     </EmbeddedResource>
@@ -104,5 +117,18 @@
   </Target>
   <Target Name="AfterBuild">
   </Target>
+=======
+    <EmbeddedResource Include="VerifyUser.resx">
+      <DependentUpon>VerifyUser.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+>>>>>>> 21c735e5aea0e3aef67edf0628d04c81ad7ca24a
   -->
 </Project>
