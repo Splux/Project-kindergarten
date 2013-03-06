@@ -1,8 +1,16 @@
 ﻿/*
- * Wrapper class for TCPConnections
+ * Wrapper class for TCP Connections
  * Programmer: Marcus Östlund
  * 
  * */
+
+/*Todo: 
+ * 
+ *fix the multithreaded version (and testc it)
+ *fix singlethreaded version
+ *make sure it is threadsafe
+ *try not to fail
+ */
 
 using System;
 using System.Collections.Generic;
@@ -18,6 +26,7 @@ namespace Project_kindergarten
         private System.Net.Sockets.TcpClient _tcpClient = null;
         //private System.Net.Sockets.NetworkStream _tcpNetStream;
         private System.IO.StreamReader _streamReader;
+        private System.IO.StreamWriter _streamWriter;
         //private System.Threading.Mutex _rcvMutex;
         private System.Threading.Thread _rcvThread = null;
         //private string _rcvString = null;
@@ -130,7 +139,7 @@ namespace Project_kindergarten
             if (_tcpClient == null)
                 return false;
             else
-                return _tcpClient.Connected ? true : false;
+                return _tcpClient.Connected;
         }
 
         public bool Close()
@@ -151,7 +160,8 @@ namespace Project_kindergarten
             }
 
             _stillAlive = false;
-            _rcvThread.Join();
+
+            //_rcvThread.Join();
 
             return true;
         }
@@ -203,11 +213,19 @@ namespace Project_kindergarten
         }
         public void Send(string inString)
         {
+
+            //Log.Write("Sending\n\n");
+
+            //System.Windows.Forms.MessageBox.Show("Sending");
+
             // Do nothing if no connection is open
             if (_tcpClient == null)
                 return;
             else if (!_tcpClient.Connected)
+            {
+                System.Windows.Forms.MessageBox.Show("failed to send information to server");
                 return;
+            }
             else if (inString == null)
                 return;
             try
@@ -223,10 +241,21 @@ namespace Project_kindergarten
                 //// Close the stream, otherwise it'll block everything else.
                 ////_tcpNetStream.Close();
 
-                using (System.IO.StreamWriter sw = new System.IO.StreamWriter(_tcpClient.GetStream()))
-                {
-                    sw.WriteLine(inString);
-                }
+                _streamWriter = new System.IO.StreamWriter(_tcpClient.GetStream());
+                _streamWriter.WriteLine(inString);
+                _streamWriter.Flush();
+                //System.Windows.Forms.MessageBox.Show("" + _tcpClient.Connected.ToString());
+                    
+                //System.Net.Sockets.NetworkStream nw = _tcpClient.GetStream();
+                //if (nw.CanWrite)
+                //{
+                //    byte[] sendbyte = ASCIIEncoding.ASCII.GetBytes(inString);
+                //    nw.Write(sendbyte, 0, sendbyte.Length);
+                //}
+                //System.Windows.Forms.MessageBox.Show("" + _tcpClient.Connected.ToString());
+                ////nw.Flush();
+                //nw.Close();
+                //System.Windows.Forms.MessageBox.Show("" + _tcpClient.Connected.ToString());
             }
             catch (Exception e)
             {
@@ -239,11 +268,26 @@ namespace Project_kindergarten
         {
             outString = string.Empty;
             // If there's no active connection - return with outString as an empty string
-            if (!_tcpClient.Connected)
+            if (_tcpClient == null)
                 return;
+            if (!_tcpClient.Connected)
+            {
+                //System.Windows.Forms.MessageBox.Show("Connection dropped, dunno why");
+                Log.Write("Lost connection...\n\n\n");
+                return;
+            }
 
-            //_streamReader = new System.IO.StreamReader(_tcpClient.GetStream());
-            //outString = _streamReader.ReadLine();
+            _streamReader = new System.IO.StreamReader(_tcpClient.GetStream());
+            try
+            {
+                outString = _streamReader.ReadLine();
+            }
+            catch (Exception e)
+            {
+                Log.Write("\n\n" + e.ToString());
+            }
+
+            //_streamReader.Close();
 
             //tcpNetStream = tcpClient.GetStream();
             // //Byte array to read the networkstream into
@@ -258,6 +302,8 @@ namespace Project_kindergarten
 
         public void Receive()
         {
+            if (_tcpClient == null)
+                return;
             if (!_tcpClient.Connected)
             {
                 System.Windows.Forms.MessageBox.Show("Not connected to server...");
@@ -306,10 +352,3 @@ namespace Project_kindergarten
     }
 }
 // Dat series of closing brackets...
-
-/*Todo: 
- * 
- *fix the multithreaded version (and testc it)
- *make sure it is threadsafe
- *try not to fail
- */

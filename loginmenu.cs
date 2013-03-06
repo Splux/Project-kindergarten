@@ -7,33 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-
-/*
- * Send flags:
- * 
-LR = Login Request
-RR = Register Request
-VR = Verify Request
-HR = Host Creation Request
-VR = View Hosts Request
- * 
- * Receive flags
- * 
- LS = Login Successful
-LF = Login Failed
-LC = Login Failed Connected( Redan inloggad)
-LP = Login Failed Password( fel lösenord)
-FR = Login Failed Not Registred(Användaren är inte registrerad)
-LV = Login Failed Verified Needed (Användaren har inte verifierat sig)
-
-SR = Server Request
-NG = New Game
-RS = Register Successful
-RF = Register Failed
-RT = Register Taken
- * 
- * */
-
 namespace Project_kindergarten
 {
     public partial class loginmenu : Form
@@ -44,6 +17,7 @@ namespace Project_kindergarten
         private Point _startPoint = new Point(0, 0);
         private int _fullBorderXSize = 677;
         private int _minBorderXSize = 285;
+        private const string _remoteServer = "172.20.0.152";
         #endregion
 
         public loginmenu()
@@ -59,14 +33,6 @@ namespace Project_kindergarten
 
         private void loginmenu_Load(object sender, EventArgs e)
         {
-            serverConnection = new TCPConnection(System.Net.IPAddress.Parse("172.20.0.138"));
-           // serverConnection = new TCPConnection("asdfs");
-            if (!serverConnection.IsConnected())
-            {
-                MessageBox.Show("Failed to connect to server.");
-            }
-
-            // Add eventhandlers for window-dragging functionality
             this.MouseDown += new MouseEventHandler(onMouseDown);
             this.MouseUp += new MouseEventHandler(onMouseUp);
             this.MouseMove += new MouseEventHandler(onMouseMove);
@@ -123,10 +89,17 @@ namespace Project_kindergarten
 
         #endregion
 
-        
+
+        private void successfulLogin()
+        {
+            MessageBox.Show("Success");
+
+            serverConnection.Close();
+        }
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
+            serverConnection = new TCPConnection(System.Net.IPAddress.Parse(_remoteServer));
             // Keeping this messagebox, in case I need to disable all this again
             //MessageBox.Show("This section is commented out for testing purpose");
             if (textBox_Username.Text == "" || textBox_Password.Text == "")
@@ -134,10 +107,12 @@ namespace Project_kindergarten
                 System.Windows.Forms.MessageBox.Show("Enter both username and/or password");
                 return;
             }
-            string sendData = "0" + textBox_Username.Text + '\\' + textBox_Password.Text;
+            string sendData = Flags.LOGIN_REQUEST + textBox_Username.Text + '\\' + textBox_Password.Text;
             //System.Windows.Forms.MessageBox.Show(textBox_Username.ToString());
             string rcvData;
+            
             serverConnection.Send(sendData);
+            
 
             int sleepTime = 0;
 
@@ -145,33 +120,50 @@ namespace Project_kindergarten
             {
                 System.Threading.Thread.Sleep(50);
                 sleepTime += 50;
+                serverConnection.Receive(out rcvData);
+            } while (sleepTime <= 5000 && rcvData == string.Empty);
 
-                if (sleepTime >= 5000)
-                {
-                    
-                    return;
-                }
+            bool DropConnection = true;
 
-            } while ((rcvData = serverConnection.GetString('0')) == string.Empty);
-
-            if (string.IsNullOrEmpty(rcvData))
+            if (rcvData == string.Empty)
             {
-                System.Windows.Forms.MessageBox.Show("Something went wrong!\n Blame our monkeys.");
+                MessageBox.Show("Connection dropped, try again later");
                 return;
             }
-            //if (rcvData[0] == '0')
-            //{
-            //    this.Hide();
-            //    MainMenu menu = new MainMenu();
-            //    menu.Show();
-            //}
+            else
+            {
+                switch (rcvData[0])
+                {
+                    case 'G':
+                        MessageBox.Show("Login failed, please try again later");
+                        break;
+                    case 'H':
+                        MessageBox.Show("User already logged in");
+                        break;
+                    case 'I':
+                        MessageBox.Show("Wrong username and/or password");
+                        break;
+                    case 'J':
+                        MessageBox.Show("User not registered");
+                        break;
+                    case 'K':
+                        serverConnection.Close();
+                        userVerification();
+                        break;
+                    default:
+                        DropConnection = false;
+                        break;
+                }
+            }
 
+            if (DropConnection)
+            {
+                serverConnection.Close();
+                return;
+            }
 
-
-            this.Hide();
-            MainMenu mesnu = new MainMenu();
-            mesnu.ShowDialog();
-            this.Show();
+            // User successfully logged in
+            successfulLogin();
         }
 
         private bool isValidRegister()
@@ -210,60 +202,72 @@ namespace Project_kindergarten
             return true;
         }
 
+        private void clearRegisterFields()
+        {
+            textBox_ConfirmPw.Clear();
+            textBox_LoginEmail.Clear();
+            textBox_RegPw.Clear();
+            textBox_RegUsrname.Clear();
+        }
+
         private void btn_Register1_Click(object sender, EventArgs e)
         {
-            // Check so both password is valid
             if (!isValidRegister())
             {
-                textBox_RegPw.Text = string.Empty;
-                textBox_ConfirmPw.Text = string.Empty;
+                clearRegisterFields();
                 return;
             }
             
             //System.Windows.Forms.MessageBox.Show("3" + '\\' + textBox_RegUsrname.Text + '\\' +
             //    textBox_RegPw.Text + '\\' + textBox_LoginEmail.Text);
 
-            string sendData = "3" + textBox_RegUsrname.Text + '\\' +
-                textBox_RegPw.Text + '\\' + textBox_LoginEmail.Text;
+            StringBuilder str = new StringBuilder();
+            str.Append(Flags.REGISTER_REQUEST); /*str.Append("\\");*/ str.Append(textBox_RegUsrname.Text);
+            str.Append("\\"); str.Append(textBox_RegPw.Text); str.Append("\\"); str.Append(textBox_LoginEmail.Text);
+
+            string sendData = str.ToString();
+
+            //string sendData = Flags.REGISTER_REQUEST + '\\' + textBox_RegUsrname.Text + '\\' +
+                                //textBox_RegPw.Text + '\\' + textBox_LoginEmail.Text;
 
             //System.Windows.Forms.MessageBox.Show(sendData);
 
-            serverConnection.Send(sendData);
-            string retVal;
-            //serverConnection.Receive(out retVal);
-            retVal = string.Empty;
+            serverConnection = new TCPConnection(System.Net.IPAddress.Parse(_remoteServer));
 
-            int timePassed = 0;
-            while (timePassed <= 15000 && retVal == string.Empty)
+            serverConnection.Send(sendData);
+            string retVal = string.Empty;
+            if (!serverConnection.IsConnected())
+            {
+                MessageBox.Show("dropped connection");
+                return;
+            }
+            //System.Threading.Thread.Sleep(100);
+            //serverConnection.Receive(out retVal);
+            
+            int sleepTime = 0;
+
+            do
             {
                 System.Threading.Thread.Sleep(50);
-                timePassed += 50;
+                sleepTime += 50;
+                serverConnection.Receive(out retVal);
+                
+            }while(retVal == string.Empty && sleepTime <= 5000);
 
-                retVal = serverConnection.GetString('3');
-            }
+            serverConnection.Close();
+            serverConnection = null;
+            //serverConnection.Receive(out retVal);
+            //retVal = string.Empty;
 
-            // retVal[0] should be 3, else something failed
-            if (string.IsNullOrEmpty(retVal))
-            {
-                MessageBox.Show("WHAT");
-                textBox_ConfirmPw.Clear();
-                textBox_LoginEmail.Clear();
-                textBox_RegPw.Clear();
-                textBox_RegUsrname.Clear();
-                return;
-            }
-            else if (retVal[0] != '3')
-            {
-                System.Windows.Forms.MessageBox.Show("Registration failed");
-                return;
-            }
+            System.Windows.Forms.MessageBox.Show(retVal);
 
-            System.Windows.Forms.MessageBox.Show("Registration successful!");
+            //System.Windows.Forms.MessageBox.Show("Registration successful!");
         }
 
         private void btn_Exit_Click(object sender, EventArgs e)
         {
-            serverConnection.Close();
+            if(serverConnection != null)
+                serverConnection.Close();
             Application.Exit();
         }
 
@@ -300,7 +304,7 @@ namespace Project_kindergarten
             showRegObjects();
             //th.Start();
         }
-
+        
         private void btn_Close_Click(object sender, EventArgs e)
         {
             // Set size so we cannot see it again.
@@ -308,7 +312,7 @@ namespace Project_kindergarten
             {
                 Size = new Size(i, this.Size.Height);
             }
-
+            
             // Set visibility of register menu to false.
             textBox_RegUsrname.Visible = false;
             textBox_RegPw.Visible = false;
@@ -333,6 +337,24 @@ namespace Project_kindergarten
             }
         }
 
-        
+        private void userVerification()
+        {
+            VerifyUser vu = new VerifyUser(System.Net.IPAddress.Parse(_remoteServer), textBox_Username.Text);
+            vu.ShowDialog();
+
+            bool userVerified = vu.IsVerified;
+
+            vu = null;
+
+            if (userVerified)
+            {
+                MessageBox.Show("User is now verified");
+                return;
+            }
+            else
+            {
+                MessageBox.Show("User verification failed");
+            }
+        }
     }
 }

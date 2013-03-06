@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="AnimButton.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="FlagEnum.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="loginmenu.cs">
       <SubType>Form</SubType>
@@ -53,6 +54,12 @@
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="TCPConnection.cs" />
+    <Compile Include="VerifyUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VerifyUser.Designer.cs">
+      <DependentUpon>VerifyUser.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -67,6 +74,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VerifyUser.resx">
+      <DependentUpon>VerifyUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
