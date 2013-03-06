@@ -27,7 +27,6 @@ namespace Project_kindergarten
 
         private void loginmenu_Load(object sender, EventArgs e)
         {
-            //byte[] ipaddr = System.Text.ASCIIEncoding.ASCII.GetBytes("172.20.0.123");
             //serverConnection = new TCPConnection(System.Net.IPAddress.Parse("172.20.0.172"));
             serverConnection = new TCPConnection("asdfs");
 
@@ -54,6 +53,10 @@ namespace Project_kindergarten
             pb_Border.Visible = false;
             #endregion
             this.Size = new Size(285, 265);
+
+
+            MainMenu menu = new MainMenu();
+            menu.Show();
         }
 
 
@@ -115,9 +118,9 @@ namespace Project_kindergarten
                 MainMenu menu = new MainMenu();
                 menu.Show();
             }
-            //this.Hide();
-            //MainMenu menu = new MainMenu();
-            //menu.Show();
+            this.Hide();
+            MainMenu mesnu = new MainMenu();
+            mesnu.Show();
         }
 
         private bool isValidRegister()
