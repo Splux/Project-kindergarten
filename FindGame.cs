@@ -19,19 +19,22 @@ namespace Project_kindergarten
             InitializeComponent();
 
             // Create a bitmap and graphics object to draw a string (too bad for photoshop)
-            pb_Back.Image = new Bitmap(216, 116);
-            Bitmap temp = new Bitmap(pb_Back.Image);
-            Graphics graph = Graphics.FromImage(temp);
-            graph.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-            graph.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-
-            graph.DrawString("Back", new Font("Arial", 25, FontStyle.Bold), Brushes.White, new PointF(0, 0));
+            try
+            {
+                pb_Back.Image = new Bitmap(@"knapp4.png");
+                pb_Back.Size = new System.Drawing.Size(300, 250);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Write(ex.ToString());
+                MessageBox.Show("Missing resources");
+                this.Close();
+            }
             
-            pb_Back.Image = temp;
-            pb_Back.Update();
 
-            pictureBox1.Image = new Bitmap(@"Backgroundexempel.png");
-            pictureBox1.Update();
+            //pictureBox1.Image = new Bitmap(@"Backgroundexempel.png");
+            //pictureBox1.Update();
+            
         }
 
         private void newgame_Load(object sender, EventArgs e)
