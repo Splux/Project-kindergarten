@@ -19,15 +19,26 @@ namespace Project_kindergarten
 
 
         System.Drawing.Bitmap myBitmap;
-        Image i = Image.FromFile("Backgroundexempel.png");//upload background image to i
-        Image j = Image.FromFile("knapp1.png");//upload first button to j
-        Image k = Image.FromFile("knapp2.png");
-        Image l = Image.FromFile("knapp3.png");
-        Image m = Image.FromFile("knapp4.png");
+        Image imgBackground;
+        Image imgFindGame;
+        Image imgCreateGame;
+        Image imgOptions;
+        Image imgExit;
 
         public MainMenu()
         {
-            
+            try
+            {
+                imgBackground = Image.FromFile("Backgroundexempel.png");//upload background image
+                imgFindGame = Image.FromFile("knapp1.png");
+                imgCreateGame = Image.FromFile("knapp2.png");
+                imgOptions = Image.FromFile("knapp3.png");
+                imgExit = Image.FromFile("knapp4.png");
+            }
+            catch (System.Exception ex)
+            {
+            	
+            }
             InitializeComponent();
         }
         ~MainMenu()
@@ -52,15 +63,15 @@ namespace Project_kindergarten
             //graphicsObj.DrawImage(j, 0, 0, pictureBox2.Size.Width, pictureBox2.Size.Height);
             myBitmap = new Bitmap(1960, 1080);//make bitmap
             //apply bitmap to picturebox and update
-            pictureBox1.Image = i;//myBitmap;
+            pictureBox1.Image = imgBackground;//myBitmap;
             pictureBox1.Update();
-            pictureBox2.Image = j;//myBitmap;
+            pictureBox2.Image = imgFindGame;//myBitmap;
             pictureBox2.Update();
-            pictureBox3.Image = k;
+            pictureBox3.Image = imgCreateGame;
             pictureBox3.Update();
-            pictureBox4.Image = l;
+            pictureBox4.Image = imgOptions;
             pictureBox4.Update();
-            pictureBox5.Image = m;
+            pictureBox5.Image = imgExit;
             pictureBox5.Update();
             Rectangle rect = Screen.PrimaryScreen.Bounds;
             this.Width = rect.Width;
