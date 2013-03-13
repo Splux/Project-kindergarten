@@ -37,7 +37,9 @@ namespace Project_kindergarten
             }
             catch (System.Exception ex)
             {
-            	
+                Log.Write(ex.ToString() + "\n" + "In MainMenu()");
+                System.Windows.Forms.MessageBox.Show("Missing resources");
+                Application.Exit();
             }
             InitializeComponent();
         }
