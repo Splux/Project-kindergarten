@@ -93,6 +93,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VerifyUser.resx">
       <DependentUpon>VerifyUser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="newgame.resx">
       <DependentUpon>newgame.cs</DependentUpon>
     </EmbeddedResource>

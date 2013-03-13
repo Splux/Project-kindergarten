@@ -17,13 +17,17 @@ namespace Project_kindergarten
         private Point _startPoint = new Point(0, 0);
         private int _fullBorderXSize = 677;
         private int _minBorderXSize = 285;
-        private const string _remoteServer = "172.20.0.152";
+        private const string _remoteServer = "172.20.0.185";
+
+        private MainMenu mainMenu = new MainMenu();
         #endregion
 
         public loginmenu()
         {
             InitializeComponent();
             this.Show();
+            //endast för testning
+            //mainMenu.ShowDialog();
         }
 
         ~loginmenu()
@@ -55,6 +59,8 @@ namespace Project_kindergarten
             pb_Border.Visible = false;
             #endregion
             this.Size = new Size(285, 265);
+
+            
         }
 
 
@@ -93,8 +99,9 @@ namespace Project_kindergarten
         private void successfulLogin()
         {
             MessageBox.Show("Success");
-
-            serverConnection.Close();
+            this.Hide();
+            mainMenu.Show();
+            //serverConnection.Close();
         }
 
         private void btn_Login_Click(object sender, EventArgs e)
