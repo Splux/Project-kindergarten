@@ -89,9 +89,11 @@ namespace Project_kindergarten
 
         private void pb_FindGame_Click(object sender, EventArgs e)
         {
-            this.Hide();
             FindGame NG = new FindGame();
-            NG.Show();
+            System.Threading.Thread th = new System.Threading.Thread(hideMe);
+            th.Start();
+            NG.ShowDialog();
+            this.Show();
         }
 
         //private void pictureBox2_MouseHover(object sender, EventArgs e)
@@ -114,10 +116,19 @@ namespace Project_kindergarten
             Application.Exit();
         }
 
+        private void hideMe()
+        {
+            System.Threading.Thread.Sleep(50);
+            this.Hide();
+        }
+
         private void pictureBox3_Click(object sender, EventArgs e)
         {
             Create_Game CG = new Create_Game ();
-            CG.Show();
+            System.Threading.Thread th = new System.Threading.Thread(hideMe);
+            th.Start();
+            CG.ShowDialog();
+            this.Show();
         }
 
         private void pictureBox4_Click(object sender, EventArgs e)

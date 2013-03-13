@@ -12,71 +12,50 @@ namespace Project_kindergarten
     public partial class FindGame : Form
     {
         System.Drawing.Bitmap myBitmap;
-        Image i = Image.FromFile("Backgroundexempel.png");//upload background image to i
-        Image j = Image.FromFile("knapp1.png");//upload first button to j
-        Image k = Image.FromFile("knapp2.png");
-        Image l = Image.FromFile("knapp3.png");
-        Image m = Image.FromFile("knapp4.png");
+        
 
         public FindGame()
         {
             InitializeComponent();
-        }
 
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            FindGame NG = new FindGame();
-            NG.Show();
-        }
+            // Create a bitmap and graphics object to draw a string (too bad for photoshop)
+            pb_Back.Image = new Bitmap(216, 116);
+            Bitmap temp = new Bitmap(pb_Back.Image);
+            Graphics graph = Graphics.FromImage(temp);
+            graph.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            graph.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-        private void pictureBox4_Click(object sender, EventArgs e)
-        {
+            graph.DrawString("Back", new Font("Arial", 25, FontStyle.Bold), Brushes.White, new PointF(0, 0));
+            
+            pb_Back.Image = temp;
+            pb_Back.Update();
 
-        }
-
-        private void pictureBox3_Click(object sender, EventArgs e)
-        {
-            Create_Game CG = new Create_Game();
-            CG.Show();
-        }
-
-        private void pictureBox5_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            MainMenu MM = new MainMenu();
-            MM.Show();
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
+            pictureBox1.Image = new Bitmap(@"Backgroundexempel.png");
+            pictureBox1.Update();
         }
 
         private void newgame_Load(object sender, EventArgs e)
         {
             myBitmap = new Bitmap(1960, 1080);//make bitmap
             //apply bitmap to picturebox and update
-            pictureBox1.Image = i;//myBitmap;
-            pictureBox1.Update();
-            pictureBox2.Image = j;//myBitmap;
-            pictureBox2.Update();
-            pictureBox3.Image = k;
-            pictureBox3.Update();
-            pictureBox4.Image = l;
-            pictureBox4.Update();
-            pictureBox5.Image = m;
-            pictureBox5.Update();
+            //pictureBox1.Image = null;//myBitmap;
+            //pictureBox1.Update();
             Rectangle rect = Screen.PrimaryScreen.Bounds;
             this.Width = rect.Width;
             this.Height = rect.Height;
             this.Location = new Point(0, 0);
         }
 
+
+
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             
+        }
+
+        private void pb_Back_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

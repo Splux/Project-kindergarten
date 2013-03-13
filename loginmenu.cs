@@ -100,7 +100,7 @@ namespace Project_kindergarten
 
         private void successfulLogin()
         {
-            MessageBox.Show("Success");
+            //MessageBox.Show("Success");
             this.Hide();
             mainMenu.Show();
             //serverConnection.Close();
@@ -255,12 +255,12 @@ namespace Project_kindergarten
             
             int sleepTime = 0;
 
+            // Retry to receive an answer from server for 5 seconds
             do
             {
                 System.Threading.Thread.Sleep(50);
                 sleepTime += 50;
                 serverConnection.Receive(out retVal);
-                
             }while(retVal == string.Empty && sleepTime <= 5000);
 
             serverConnection.Close();
@@ -268,7 +268,7 @@ namespace Project_kindergarten
             //serverConnection.Receive(out retVal);
             //retVal = string.Empty;
 
-            System.Windows.Forms.MessageBox.Show(retVal);
+            //System.Windows.Forms.MessageBox.Show(retVal);
 
             //System.Windows.Forms.MessageBox.Show("Registration successful!");
         }
@@ -348,6 +348,7 @@ namespace Project_kindergarten
 
         private void userVerification()
         {
+
             VerifyUser vu = new VerifyUser(System.Net.IPAddress.Parse(_remoteServer), textBox_Username.Text);
             vu.ShowDialog();
 
