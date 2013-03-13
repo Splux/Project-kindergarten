@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Project_kindergarten
 {
-    public partial class newgame : Form
+    public partial class FindGame : Form
     {
         System.Drawing.Bitmap myBitmap;
         Image i = Image.FromFile("Backgroundexempel.png");//upload background image to i
@@ -18,7 +18,7 @@ namespace Project_kindergarten
         Image l = Image.FromFile("knapp3.png");
         Image m = Image.FromFile("knapp4.png");
 
-        public newgame()
+        public FindGame()
         {
             InitializeComponent();
         }
@@ -26,7 +26,7 @@ namespace Project_kindergarten
         private void pictureBox2_Click(object sender, EventArgs e)
         {
             this.Hide();
-            newgame NG = new newgame();
+            FindGame NG = new FindGame();
             NG.Show();
         }
 

@@ -65,16 +65,16 @@ namespace Project_kindergarten
             //graphicsObj.DrawImage(j, 0, 0, pictureBox2.Size.Width, pictureBox2.Size.Height);
             myBitmap = new Bitmap(1960, 1080);//make bitmap
             //apply bitmap to picturebox and update
-            pictureBox1.Image = imgBackground;//myBitmap;
-            pictureBox1.Update();
-            pictureBox2.Image = imgFindGame;//myBitmap;
-            pictureBox2.Update();
-            pictureBox3.Image = imgCreateGame;
-            pictureBox3.Update();
-            pictureBox4.Image = imgOptions;
-            pictureBox4.Update();
-            pictureBox5.Image = imgExit;
-            pictureBox5.Update();
+            pb_Background.Image = imgBackground;//myBitmap;
+            pb_Background.Update();
+            pb_FindGame.Image = imgFindGame;//myBitmap;
+            pb_FindGame.Update();
+            pb_CreateGame.Image = imgCreateGame;
+            pb_CreateGame.Update();
+            pb_Options.Image = imgOptions;
+            pb_Options.Update();
+            pb_Exit.Image = imgExit;
+            pb_Exit.Update();
             Rectangle rect = Screen.PrimaryScreen.Bounds;
             this.Width = rect.Width;
             this.Height = rect.Height;
@@ -87,10 +87,10 @@ namespace Project_kindergarten
             //graphicsObj.Dispose();
         }
 
-        private void pictureBox2_Click(object sender, EventArgs e)
+        private void pb_FindGame_Click(object sender, EventArgs e)
         {
             this.Hide();
-            newgame NG = new newgame();
+            FindGame NG = new FindGame();
             NG.Show();
         }
 
@@ -109,7 +109,7 @@ namespace Project_kindergarten
 
         }
 
-        private void pictureBox5_Click(object sender, EventArgs e)
+        private void pb_Exit_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }

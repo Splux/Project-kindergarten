@@ -1,6 +1,6 @@
 ﻿namespace Project_kindergarten
 {
-    partial class newgame
+    partial class FindGame
     {
         /// <summary>
         /// Required designer variable.

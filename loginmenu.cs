@@ -24,6 +24,8 @@ namespace Project_kindergarten
 
         public loginmenu()
         {
+            MainMenu mm = new MainMenu();
+            mm.Show();
             InitializeComponent();
             this.Show();
             //endast för testning
