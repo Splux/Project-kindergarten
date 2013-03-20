@@ -106,6 +106,7 @@ namespace Project_kindergarten
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
+            mainMenu.Show();
             serverConnection = new TCPConnection(System.Net.IPAddress.Parse(_remoteServer));
             // Keeping this messagebox, in case I need to disable all this again
             //MessageBox.Show("This section is commented out for testing purpose");
