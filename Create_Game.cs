@@ -27,15 +27,10 @@ namespace Project_kindergarten
         {
             myBitmap = new Bitmap(1366, 768);
 
-            Image i = Image.FromFile("Backgroundexempel.png");//upload background image to i
-            Image j = Image.FromFile("knapp1.png");//upload first button to j
-            Image k = Image.FromFile("knapp2.png");
-            Image l = Image.FromFile("knapp3.png");
-            Image m = Image.FromFile("knapp4.png");
+            Image bgimg = Image.FromFile("Backgroundexempel.png");
 
 
-
-            pictureBox1.Image = i;//myBitmap;
+            pictureBox1.Image = bgimg;//myBitmap;
             pictureBox1.Update();
            // pictureBox2.Image = j;//myBitmap;
             //pictureBox2.Update();
@@ -54,9 +49,7 @@ namespace Project_kindergarten
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            MainMenu MM = new MainMenu();
-            MM.Show();
+            this.Close();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)

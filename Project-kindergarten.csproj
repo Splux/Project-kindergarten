@@ -59,11 +59,16 @@
     <Compile Include="MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="newgame.cs">
+    <Compile Include="FindGame.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="newgame.Designer.cs">
-      <DependentUpon>newgame.cs</DependentUpon>
+    <Compile Include="FindGame.Designer.cs">
+      <DependentUpon>FindGame.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="TCPConnection.cs" />
     <Compile Include="VerifyUser.cs">
@@ -91,11 +96,15 @@
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="VerifyUser.resx">
       <DependentUpon>VerifyUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="newgame.resx">
-      <DependentUpon>newgame.cs</DependentUpon>
+    <EmbeddedResource Include="FindGame.resx">
+      <DependentUpon>FindGame.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

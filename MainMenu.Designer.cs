@@ -28,72 +28,72 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            this.pb_Background = new System.Windows.Forms.PictureBox();
+            this.pb_FindGame = new System.Windows.Forms.PictureBox();
+            this.pb_CreateGame = new System.Windows.Forms.PictureBox();
+            this.pb_Options = new System.Windows.Forms.PictureBox();
+            this.pb_Exit = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_Background)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_FindGame)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_CreateGame)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_Options)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_Exit)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1366, 786);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pb_Background.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pb_Background.Location = new System.Drawing.Point(0, 0);
+            this.pb_Background.Name = "pictureBox1";
+            this.pb_Background.Size = new System.Drawing.Size(1366, 786);
+            this.pb_Background.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pb_Background.TabIndex = 0;
+            this.pb_Background.TabStop = false;
+            this.pb_Background.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox2.Location = new System.Drawing.Point(68, 55);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(252, 134);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
+            this.pb_FindGame.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pb_FindGame.Location = new System.Drawing.Point(68, 55);
+            this.pb_FindGame.Name = "pictureBox2";
+            this.pb_FindGame.Size = new System.Drawing.Size(252, 134);
+            this.pb_FindGame.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pb_FindGame.TabIndex = 1;
+            this.pb_FindGame.TabStop = false;
+            this.pb_FindGame.Click += new System.EventHandler(this.pb_FindGame_Click);
             // 
             // pictureBox3
             // 
-            this.pictureBox3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox3.Location = new System.Drawing.Point(68, 236);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(252, 134);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox3.TabIndex = 2;
-            this.pictureBox3.TabStop = false;
-            this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
+            this.pb_CreateGame.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pb_CreateGame.Location = new System.Drawing.Point(68, 236);
+            this.pb_CreateGame.Name = "pictureBox3";
+            this.pb_CreateGame.Size = new System.Drawing.Size(252, 134);
+            this.pb_CreateGame.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pb_CreateGame.TabIndex = 2;
+            this.pb_CreateGame.TabStop = false;
+            this.pb_CreateGame.Click += new System.EventHandler(this.pictureBox3_Click);
             // 
             // pictureBox4
             // 
-            this.pictureBox4.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox4.Location = new System.Drawing.Point(68, 417);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(252, 134);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox4.TabIndex = 3;
-            this.pictureBox4.TabStop = false;
-            this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
+            this.pb_Options.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pb_Options.Location = new System.Drawing.Point(68, 417);
+            this.pb_Options.Name = "pictureBox4";
+            this.pb_Options.Size = new System.Drawing.Size(252, 134);
+            this.pb_Options.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pb_Options.TabIndex = 3;
+            this.pb_Options.TabStop = false;
+            this.pb_Options.Click += new System.EventHandler(this.pictureBox4_Click);
             // 
             // pictureBox5
             // 
-            this.pictureBox5.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox5.Location = new System.Drawing.Point(68, 595);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(252, 134);
-            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox5.TabIndex = 4;
-            this.pictureBox5.TabStop = false;
-            this.pictureBox5.Click += new System.EventHandler(this.pictureBox5_Click);
+            this.pb_Exit.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pb_Exit.Location = new System.Drawing.Point(68, 595);
+            this.pb_Exit.Name = "pictureBox5";
+            this.pb_Exit.Size = new System.Drawing.Size(252, 134);
+            this.pb_Exit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pb_Exit.TabIndex = 4;
+            this.pb_Exit.TabStop = false;
+            this.pb_Exit.Click += new System.EventHandler(this.pb_Exit_Click);
             // 
             // MainMenu
             // 
@@ -101,11 +101,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1366, 786);
             this.ControlBox = false;
-            this.Controls.Add(this.pictureBox5);
-            this.Controls.Add(this.pictureBox4);
-            this.Controls.Add(this.pictureBox3);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.pb_Exit);
+            this.Controls.Add(this.pb_Options);
+            this.Controls.Add(this.pb_CreateGame);
+            this.Controls.Add(this.pb_FindGame);
+            this.Controls.Add(this.pb_Background);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MainMenu";
             this.ShowIcon = false;
@@ -113,21 +113,21 @@
             this.BackColor = System.Drawing.Color.Blue;
             this.Load += new System.EventHandler(this.MainMenu_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.handleKeypress);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_Background)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_FindGame)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_CreateGame)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_Options)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_Exit)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.PictureBox pb_Background;
+        private System.Windows.Forms.PictureBox pb_FindGame;
+        private System.Windows.Forms.PictureBox pb_CreateGame;
+        private System.Windows.Forms.PictureBox pb_Options;
+        private System.Windows.Forms.PictureBox pb_Exit;
     }
 }

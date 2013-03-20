@@ -19,15 +19,28 @@ namespace Project_kindergarten
 
 
         System.Drawing.Bitmap myBitmap;
-        Image i = Image.FromFile("Backgroundexempel.png");//upload background image to i
-        Image j = Image.FromFile("knapp1.png");//upload first button to j
-        Image k = Image.FromFile("knapp2.png");
-        Image l = Image.FromFile("knapp3.png");
-        Image m = Image.FromFile("knapp4.png");
+        Image imgBackground;
+        Image imgFindGame;
+        Image imgCreateGame;
+        Image imgOptions;
+        Image imgExit;
 
         public MainMenu()
         {
-            
+            try
+            {
+                imgBackground = Image.FromFile("Backgroundexempel.png");//upload background image
+                imgFindGame = Image.FromFile("knapp1.png");
+                imgCreateGame = Image.FromFile("knapp2.png");
+                imgOptions = Image.FromFile("knapp3.png");
+                imgExit = Image.FromFile("knapp4.png");
+            }
+            catch (System.Exception ex)
+            {
+                Log.Write(ex.ToString() + "\n" + "In MainMenu()");
+                System.Windows.Forms.MessageBox.Show("Missing resources");
+                Application.Exit();
+            }
             InitializeComponent();
         }
         ~MainMenu()
@@ -52,16 +65,16 @@ namespace Project_kindergarten
             //graphicsObj.DrawImage(j, 0, 0, pictureBox2.Size.Width, pictureBox2.Size.Height);
             myBitmap = new Bitmap(1960, 1080);//make bitmap
             //apply bitmap to picturebox and update
-            pictureBox1.Image = i;//myBitmap;
-            pictureBox1.Update();
-            pictureBox2.Image = j;//myBitmap;
-            pictureBox2.Update();
-            pictureBox3.Image = k;
-            pictureBox3.Update();
-            pictureBox4.Image = l;
-            pictureBox4.Update();
-            pictureBox5.Image = m;
-            pictureBox5.Update();
+            pb_Background.Image = imgBackground;//myBitmap;
+            pb_Background.Update();
+            pb_FindGame.Image = imgFindGame;//myBitmap;
+            pb_FindGame.Update();
+            pb_CreateGame.Image = imgCreateGame;
+            pb_CreateGame.Update();
+            pb_Options.Image = imgOptions;
+            pb_Options.Update();
+            pb_Exit.Image = imgExit;
+            pb_Exit.Update();
             Rectangle rect = Screen.PrimaryScreen.Bounds;
             this.Width = rect.Width;
             this.Height = rect.Height;
@@ -74,11 +87,13 @@ namespace Project_kindergarten
             //graphicsObj.Dispose();
         }
 
-        private void pictureBox2_Click(object sender, EventArgs e)
+        private void pb_FindGame_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            newgame NG = new newgame();
-            NG.Show();
+            FindGame NG = new FindGame();
+            System.Threading.Thread th = new System.Threading.Thread(hideMe);
+            th.Start();
+            NG.ShowDialog();
+            this.Show();
         }
 
         //private void pictureBox2_MouseHover(object sender, EventArgs e)
@@ -96,15 +111,24 @@ namespace Project_kindergarten
 
         }
 
-        private void pictureBox5_Click(object sender, EventArgs e)
+        private void pb_Exit_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void hideMe()
+        {
+            System.Threading.Thread.Sleep(50);
+            this.Hide();
         }
 
         private void pictureBox3_Click(object sender, EventArgs e)
         {
             Create_Game CG = new Create_Game ();
-            CG.Show();
+            System.Threading.Thread th = new System.Threading.Thread(hideMe);
+            th.Start();
+            CG.ShowDialog();
+            this.Show();
         }
 
         private void pictureBox4_Click(object sender, EventArgs e)
