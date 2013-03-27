@@ -54,17 +54,17 @@ namespace Project_kindergarten
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            textBox2.Update();
+            tb_Password.Update();
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
             
 
-            if (checkBox1.Checked == true)
-                textBox2.UseSystemPasswordChar = true;
+            if (cb_HideChar.Checked == true)
+                tb_Password.UseSystemPasswordChar = true;
             else
-                textBox2.UseSystemPasswordChar = false;
+                tb_Password.UseSystemPasswordChar = false;
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
@@ -75,11 +75,11 @@ namespace Project_kindergarten
         {
             Image map1 = Image.FromFile("map1.png");
 
-            pictureBox2.Image = map1;
-            pictureBox2.Update();
-            if (radioButton1.Checked == true)
+            pb_ShowMap.Image = map1;
+            pb_ShowMap.Update();
+            if (rb_MapOne.Checked == true)
             {
-                label4.Text = "Map 1";
+                lbl_MapName.Text = "Map 1";
             }
         }
 
@@ -87,12 +87,12 @@ namespace Project_kindergarten
         {
             Image map2 = Image.FromFile("map2.png");
 
-            pictureBox2.Image = map2;
-            pictureBox2.Update();
+            pb_ShowMap.Image = map2;
+            pb_ShowMap.Update();
 
-            if (radioButton2.Checked == true)
+            if (rb_MapTwo.Checked == true)
             {
-                label4.Text = "Map 2";
+                lbl_MapName.Text = "Map 2";
             }
         }
 

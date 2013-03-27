@@ -30,7 +30,8 @@ namespace Project_kindergarten
                 MessageBox.Show("Missing resources");
                 this.Close();
             }
-            
+
+            lb_Serverlist.Items.Add("No servers\npress update to update");
 
             //pictureBox1.Image = new Bitmap(@"Backgroundexempel.png");
             //pictureBox1.Update();
@@ -59,6 +60,83 @@ namespace Project_kindergarten
         private void pb_Back_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private string[] splitString(string str, char split)
+        {
+            try
+            {
+                return str.Split(split);
+            }
+            catch (Exception e)
+            {
+                Log.Write(e.ToString());
+                MessageBox.Show("SEriosly?");
+            }
+            return null;
+        }
+
+        private void refreshServerList(object sender, EventArgs e)
+        {
+            TCPConnection con = new TCPConnection(System.Net.IPAddress.Parse(GrabbarnasIP.ipAddress));
+
+            con.Send(Flags.LOGIN_REQUEST  + "test" + "\\" + "test");
+            string loge;
+            int time = 0;
+            do
+            {
+                con.Receive(out loge);
+                System.Threading.Thread.Sleep(50);
+            }
+            while (time <= 5000 && string.IsNullOrEmpty(loge));
+
+            if (string.IsNullOrEmpty(loge))
+            {
+                MessageBox.Show("Okay...");
+                return;
+            }
+            if (loge[0] == Flags.LOGIN_SUCCESSFUL[0])
+            {
+                con.Send(Flags.FIND_SERVER_REQUEST);
+                int timer = 0;
+                string rcv = string.Empty;
+                do
+                {
+                    con.Receive(out rcv);
+                    System.Threading.Thread.Sleep(50);
+                    timer += 50;
+                } while (timer <= 5000 && rcv == string.Empty);
+
+                con.Close();
+
+                if (rcv == string.Empty)
+                {
+                    MessageBox.Show("NO");
+                    return;
+                }
+
+                //MessageBox.Show(rcv);
+
+                string[] hosts = rcv.Split('\\');
+
+                lb_Serverlist.Text = string.Empty;
+
+                if (hosts == null)
+                {
+                    lb_Serverlist.Text = "No servers";
+                    return;
+                }
+
+                lb_Serverlist.Items.Clear();
+
+                foreach (string str in hosts)
+                {
+                    lb_Serverlist.Items.Add(str);
+                }
+            }
+            else
+                MessageBox.Show("failure");
+            con.Close();
         }
     }
 }

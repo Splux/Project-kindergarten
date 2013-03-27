@@ -90,8 +90,9 @@ namespace Project_kindergarten
         private void pb_FindGame_Click(object sender, EventArgs e)
         {
             FindGame NG = new FindGame();
-            System.Threading.Thread th = new System.Threading.Thread(hideMe);
-            th.Start();
+            //System.Threading.Thread th = new System.Threading.Thread(hideMe);
+            //th.Start();
+            this.Hide();
             NG.ShowDialog();
             this.Show();
         }
@@ -125,10 +126,12 @@ namespace Project_kindergarten
         private void pictureBox3_Click(object sender, EventArgs e)
         {
             Create_Game CG = new Create_Game ();
-            System.Threading.Thread th = new System.Threading.Thread(hideMe);
-            th.Start();
+            //System.Threading.Thread th = new System.Threading.Thread(hideMe);
+            //th.Start();
+            this.Hide();
             CG.ShowDialog();
             this.Show();
+            //this.Show();
         }
 
         private void pictureBox4_Click(object sender, EventArgs e)
