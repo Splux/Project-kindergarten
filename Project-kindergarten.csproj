@@ -71,6 +71,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="TCPConnection.cs" />
+    <Compile Include="TextureManager.cs" />
     <Compile Include="VerifyUser.cs">
       <SubType>Form</SubType>
     </Compile>
