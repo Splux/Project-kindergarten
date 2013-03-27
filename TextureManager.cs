@@ -22,6 +22,7 @@ namespace Project_kindergarten
                 if(string.Compare(fileName, t.filename) == 0)
                     return t.Texture;
             }
+
             // loadTexture either return null or a Bitmap.
             return loadTexture(fileName);
         }
@@ -56,9 +57,8 @@ namespace Project_kindergarten
             {
                 return null;
             }
-            // No exception = file was found and loaded into memory, add to list and sort list.
+            // No exception = file was found and loaded into memory and add to list 
             _textureList.Add(temp);
-            _textureList.Sort();
 
             // Success.
             return temp.Texture;
