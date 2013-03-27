@@ -31,14 +31,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FindGame));
             this.lb_Serverlist = new System.Windows.Forms.ListBox();
             this.pb_Back = new System.Windows.Forms.PictureBox();
+            this._btnDesign = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pb_Back)).BeginInit();
             this.SuspendLayout();
             // 
-            // listBox1
+            // lb_Serverlist
             // 
             this.lb_Serverlist.FormattingEnabled = true;
             this.lb_Serverlist.Location = new System.Drawing.Point(527, 101);
-            this.lb_Serverlist.Name = "listBox1";
+            this.lb_Serverlist.Name = "lb_Serverlist";
             this.lb_Serverlist.Size = new System.Drawing.Size(265, 576);
             this.lb_Serverlist.TabIndex = 5;
             this.lb_Serverlist.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
@@ -52,6 +53,16 @@
             this.pb_Back.TabStop = false;
             this.pb_Back.Click += new System.EventHandler(this.pb_Back_Click);
             // 
+            // _btnDesign
+            // 
+            this._btnDesign.Location = new System.Drawing.Point(527, 54);
+            this._btnDesign.Name = "_btnDesign";
+            this._btnDesign.Size = new System.Drawing.Size(265, 41);
+            this._btnDesign.TabIndex = 7;
+            this._btnDesign.Text = "Refresh";
+            this._btnDesign.UseVisualStyleBackColor = true;
+            this._btnDesign.Click += new System.EventHandler(this.refreshServerList);
+            // 
             // FindGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -59,6 +70,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(1366, 780);
             this.ControlBox = false;
+            this.Controls.Add(this._btnDesign);
             this.Controls.Add(this.pb_Back);
             this.Controls.Add(this.lb_Serverlist);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -75,5 +87,6 @@
 
         private System.Windows.Forms.ListBox lb_Serverlist;
         private System.Windows.Forms.PictureBox pb_Back;
+        private System.Windows.Forms.Button _btnDesign;
     }
 }

@@ -29,20 +29,20 @@
         private void InitializeComponent()
         {
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.btn_CreateGame = new System.Windows.Forms.Button();
+            this.btn_Cancel = new System.Windows.Forms.Button();
+            this.lbl_ServerName = new System.Windows.Forms.Label();
+            this.tb_ServerName = new System.Windows.Forms.TextBox();
+            this.rb_MapOne = new System.Windows.Forms.RadioButton();
+            this.rb_MapTwo = new System.Windows.Forms.RadioButton();
+            this.lbl_Map = new System.Windows.Forms.Label();
+            this.lbl_Password = new System.Windows.Forms.Label();
+            this.tb_Password = new System.Windows.Forms.TextBox();
+            this.cb_HideChar = new System.Windows.Forms.CheckBox();
+            this.pb_ShowMap = new System.Windows.Forms.PictureBox();
+            this.lbl_MapName = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_ShowMap)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -55,169 +55,169 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
-            // button1
+            // btn_CreateGame
             // 
-            this.button1.Location = new System.Drawing.Point(1150, 681);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(204, 75);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Create Game!";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btn_CreateGame.Location = new System.Drawing.Point(1150, 681);
+            this.btn_CreateGame.Name = "btn_CreateGame";
+            this.btn_CreateGame.Size = new System.Drawing.Size(204, 75);
+            this.btn_CreateGame.TabIndex = 5;
+            this.btn_CreateGame.Text = "Create Game!";
+            this.btn_CreateGame.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btn_Cancel
             // 
-            this.button2.Location = new System.Drawing.Point(940, 681);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(204, 75);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "Cancel!";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btn_Cancel.Location = new System.Drawing.Point(940, 681);
+            this.btn_Cancel.Name = "btn_Cancel";
+            this.btn_Cancel.Size = new System.Drawing.Size(204, 75);
+            this.btn_Cancel.TabIndex = 6;
+            this.btn_Cancel.Text = "Cancel!";
+            this.btn_Cancel.UseVisualStyleBackColor = true;
+            this.btn_Cancel.Click += new System.EventHandler(this.button2_Click);
             // 
-            // label1
+            // lbl_ServerName
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.SystemColors.ControlText;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(109, 20);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Server Name: ";
+            this.lbl_ServerName.AutoSize = true;
+            this.lbl_ServerName.BackColor = System.Drawing.SystemColors.ControlText;
+            this.lbl_ServerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_ServerName.ForeColor = System.Drawing.SystemColors.Control;
+            this.lbl_ServerName.Location = new System.Drawing.Point(12, 9);
+            this.lbl_ServerName.Name = "lbl_ServerName";
+            this.lbl_ServerName.Size = new System.Drawing.Size(109, 20);
+            this.lbl_ServerName.TabIndex = 7;
+            this.lbl_ServerName.Text = "Server Name: ";
             // 
-            // textBox1
+            // tb_ServerName
             // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.InfoText;
-            this.textBox1.ForeColor = System.Drawing.SystemColors.Window;
-            this.textBox1.Location = new System.Drawing.Point(16, 32);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(220, 20);
-            this.textBox1.TabIndex = 8;
-            this.textBox1.Text = "<Player Name\'s> Server";
+            this.tb_ServerName.BackColor = System.Drawing.SystemColors.InfoText;
+            this.tb_ServerName.ForeColor = System.Drawing.SystemColors.Window;
+            this.tb_ServerName.Location = new System.Drawing.Point(16, 32);
+            this.tb_ServerName.Name = "tb_ServerName";
+            this.tb_ServerName.Size = new System.Drawing.Size(220, 20);
+            this.tb_ServerName.TabIndex = 8;
+            this.tb_ServerName.Text = "<Player Name\'s> Server";
             // 
-            // radioButton1
+            // rb_MapOne
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.radioButton1.ForeColor = System.Drawing.SystemColors.Control;
-            this.radioButton1.Location = new System.Drawing.Point(16, 145);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(55, 17);
-            this.radioButton1.TabIndex = 9;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Map 1";
-            this.radioButton1.UseVisualStyleBackColor = false;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            this.rb_MapOne.AutoSize = true;
+            this.rb_MapOne.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.rb_MapOne.ForeColor = System.Drawing.SystemColors.Control;
+            this.rb_MapOne.Location = new System.Drawing.Point(16, 145);
+            this.rb_MapOne.Name = "rb_MapOne";
+            this.rb_MapOne.Size = new System.Drawing.Size(55, 17);
+            this.rb_MapOne.TabIndex = 9;
+            this.rb_MapOne.TabStop = true;
+            this.rb_MapOne.Text = "Map 1";
+            this.rb_MapOne.UseVisualStyleBackColor = false;
+            this.rb_MapOne.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
-            // radioButton2
+            // rb_MapTwo
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.radioButton2.ForeColor = System.Drawing.SystemColors.Control;
-            this.radioButton2.Location = new System.Drawing.Point(16, 168);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(55, 17);
-            this.radioButton2.TabIndex = 10;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Map 2";
-            this.radioButton2.UseVisualStyleBackColor = false;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            this.rb_MapTwo.AutoSize = true;
+            this.rb_MapTwo.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.rb_MapTwo.ForeColor = System.Drawing.SystemColors.Control;
+            this.rb_MapTwo.Location = new System.Drawing.Point(16, 168);
+            this.rb_MapTwo.Name = "rb_MapTwo";
+            this.rb_MapTwo.Size = new System.Drawing.Size(55, 17);
+            this.rb_MapTwo.TabIndex = 10;
+            this.rb_MapTwo.TabStop = true;
+            this.rb_MapTwo.Text = "Map 2";
+            this.rb_MapTwo.UseVisualStyleBackColor = false;
+            this.rb_MapTwo.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
-            // label2
+            // lbl_Map
             // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.SystemColors.Control;
-            this.label2.Location = new System.Drawing.Point(12, 122);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 20);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "Map:";
+            this.lbl_Map.AutoSize = true;
+            this.lbl_Map.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lbl_Map.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Map.ForeColor = System.Drawing.SystemColors.Control;
+            this.lbl_Map.Location = new System.Drawing.Point(12, 122);
+            this.lbl_Map.Name = "lbl_Map";
+            this.lbl_Map.Size = new System.Drawing.Size(44, 20);
+            this.lbl_Map.TabIndex = 11;
+            this.lbl_Map.Text = "Map:";
             // 
-            // label3
+            // lbl_Password
             // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.SystemColors.Control;
-            this.label3.Location = new System.Drawing.Point(12, 227);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(82, 20);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "Password:";
+            this.lbl_Password.AutoSize = true;
+            this.lbl_Password.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lbl_Password.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Password.ForeColor = System.Drawing.SystemColors.Control;
+            this.lbl_Password.Location = new System.Drawing.Point(12, 227);
+            this.lbl_Password.Name = "lbl_Password";
+            this.lbl_Password.Size = new System.Drawing.Size(82, 20);
+            this.lbl_Password.TabIndex = 12;
+            this.lbl_Password.Text = "Password:";
             // 
-            // textBox2
+            // tb_Password
             // 
-            this.textBox2.BackColor = System.Drawing.SystemColors.MenuText;
-            this.textBox2.ForeColor = System.Drawing.SystemColors.Window;
-            this.textBox2.Location = new System.Drawing.Point(16, 250);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 13;
-            this.textBox2.Text = "<Enter Password>";
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.tb_Password.BackColor = System.Drawing.SystemColors.MenuText;
+            this.tb_Password.ForeColor = System.Drawing.SystemColors.Window;
+            this.tb_Password.Location = new System.Drawing.Point(16, 250);
+            this.tb_Password.Name = "tb_Password";
+            this.tb_Password.Size = new System.Drawing.Size(100, 20);
+            this.tb_Password.TabIndex = 13;
+            this.tb_Password.Text = "<Enter Password>";
+            this.tb_Password.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
-            // checkBox1
+            // cb_HideChar
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.checkBox1.ForeColor = System.Drawing.SystemColors.Control;
-            this.checkBox1.Location = new System.Drawing.Point(16, 277);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(101, 17);
-            this.checkBox1.TabIndex = 14;
-            this.checkBox1.Text = "Hide characters";
-            this.checkBox1.UseVisualStyleBackColor = false;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.cb_HideChar.AutoSize = true;
+            this.cb_HideChar.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.cb_HideChar.ForeColor = System.Drawing.SystemColors.Control;
+            this.cb_HideChar.Location = new System.Drawing.Point(16, 277);
+            this.cb_HideChar.Name = "cb_HideChar";
+            this.cb_HideChar.Size = new System.Drawing.Size(101, 17);
+            this.cb_HideChar.TabIndex = 14;
+            this.cb_HideChar.Text = "Hide characters";
+            this.cb_HideChar.UseVisualStyleBackColor = false;
+            this.cb_HideChar.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
-            // pictureBox2
+            // pb_ShowMap
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(481, 69);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(400, 400);
-            this.pictureBox2.TabIndex = 15;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
+            this.pb_ShowMap.Location = new System.Drawing.Point(481, 69);
+            this.pb_ShowMap.Name = "pb_ShowMap";
+            this.pb_ShowMap.Size = new System.Drawing.Size(400, 400);
+            this.pb_ShowMap.TabIndex = 15;
+            this.pb_ShowMap.TabStop = false;
+            this.pb_ShowMap.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
-            // label4
+            // lbl_MapName
             // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label4.Location = new System.Drawing.Point(478, 16);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(104, 20);
-            this.label4.TabIndex = 16;
-            this.label4.Text = "<Map Name>";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
+            this.lbl_MapName.AutoSize = true;
+            this.lbl_MapName.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lbl_MapName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_MapName.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lbl_MapName.Location = new System.Drawing.Point(478, 16);
+            this.lbl_MapName.Name = "lbl_MapName";
+            this.lbl_MapName.Size = new System.Drawing.Size(104, 20);
+            this.lbl_MapName.TabIndex = 16;
+            this.lbl_MapName.Text = "<Map Name>";
+            this.lbl_MapName.Click += new System.EventHandler(this.label4_Click);
             // 
             // Create_Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1366, 768);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.radioButton2);
-            this.Controls.Add(this.radioButton1);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.lbl_MapName);
+            this.Controls.Add(this.pb_ShowMap);
+            this.Controls.Add(this.cb_HideChar);
+            this.Controls.Add(this.tb_Password);
+            this.Controls.Add(this.lbl_Password);
+            this.Controls.Add(this.lbl_Map);
+            this.Controls.Add(this.rb_MapTwo);
+            this.Controls.Add(this.rb_MapOne);
+            this.Controls.Add(this.tb_ServerName);
+            this.Controls.Add(this.lbl_ServerName);
+            this.Controls.Add(this.btn_Cancel);
+            this.Controls.Add(this.btn_CreateGame);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Create_Game";
             this.Text = "Create_Game";
             this.Load += new System.EventHandler(this.Create_Game_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_ShowMap)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -226,17 +226,17 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btn_CreateGame;
+        private System.Windows.Forms.Button btn_Cancel;
+        private System.Windows.Forms.Label lbl_ServerName;
+        private System.Windows.Forms.TextBox tb_ServerName;
+        private System.Windows.Forms.RadioButton rb_MapOne;
+        private System.Windows.Forms.RadioButton rb_MapTwo;
+        private System.Windows.Forms.Label lbl_Map;
+        private System.Windows.Forms.Label lbl_Password;
+        private System.Windows.Forms.TextBox tb_Password;
+        private System.Windows.Forms.CheckBox cb_HideChar;
+        private System.Windows.Forms.PictureBox pb_ShowMap;
+        private System.Windows.Forms.Label lbl_MapName;
     }
 }

@@ -5,6 +5,10 @@ using System.Text;
 
 namespace Project_kindergarten
 {
+    static public class GrabbarnasIP
+    {
+        public const string ipAddress = "172.20.1.59";
+    }
         static public class Flags
         {
             public const string LOGIN_REQUEST =                 "A";
