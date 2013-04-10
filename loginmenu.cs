@@ -239,7 +239,7 @@ namespace Project_kindergarten
 
             //System.Windows.Forms.MessageBox.Show(sendData);
 
-            serverConnection = new TCPConnection(System.Net.IPAddress.Parse(_remoteServer));
+            serverConnection = new TCPConnection(System.Net.IPAddress.Parse(GrabbarnasIP.ipAddress));
 
             serverConnection.Send(sendData);
             string retVal = string.Empty;
