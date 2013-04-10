@@ -97,9 +97,11 @@ namespace Project_kindergarten
             }
             if (loge[0] == Flags.LOGIN_SUCCESSFUL[0])
             {
+                // Send request to server
                 con.Send(Flags.FIND_SERVER_REQUEST);
                 int timer = 0;
                 string rcv = string.Empty;
+                // Try for 5sec to get a result from server
                 do
                 {
                     con.Receive(out rcv);
@@ -121,13 +123,15 @@ namespace Project_kindergarten
 
                 lb_Serverlist.Text = string.Empty;
 
+                // Clear the list, check if there are any servers in host and if there are any servers
+                // we will loop through it and add to the list
+                lb_Serverlist.Items.Clear();
                 if (hosts == null)
                 {
-                    lb_Serverlist.Text = "No servers";
+                    lb_Serverlist.Items.Add("No servers");
+                    lb_Serverlist.Items.Add("Click refresh to search again");
                     return;
                 }
-
-                lb_Serverlist.Items.Clear();
 
                 foreach (string str in hosts)
                 {

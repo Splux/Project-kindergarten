@@ -41,6 +41,7 @@ namespace Project_kindergarten
                 System.Windows.Forms.MessageBox.Show("Missing resources");
                 Application.Exit();
             }
+
             InitializeComponent();
         }
         ~MainMenu()

@@ -27,10 +27,20 @@ namespace Project_kindergarten
             return loadTexture(fileName);
         }
         // Private stuff
-        private class _texture
+        private class _texture : IComparable
         {
             public System.Drawing.Bitmap Texture;
             public string filename;
+            // For sorting the list
+            public int CompareTo(object obj)
+            {
+                if (obj == null)
+                    return 1;
+                _texture other = obj as _texture;
+                if (other == null)
+                    throw new ArgumentException("Other object is not a _texture");
+                return this.filename.CompareTo(other.filename);
+            }
             public _texture(string Filename)
             {
                 try
@@ -57,12 +67,12 @@ namespace Project_kindergarten
             {
                 return null;
             }
-            // No exception = file was found and loaded into memory and add to list 
+            // No exception = file was found and loaded into memory, add to list and sort
             _textureList.Add(temp);
-
+            _textureList.Sort();
             // Success.
             return temp.Texture;
         }
-        static private List<_texture> _textureList;
+        static private List<_texture> _textureList = new List<_texture>();
     }
 }

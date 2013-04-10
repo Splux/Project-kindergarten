@@ -63,6 +63,7 @@
             this.btn_CreateGame.TabIndex = 5;
             this.btn_CreateGame.Text = "Create Game!";
             this.btn_CreateGame.UseVisualStyleBackColor = true;
+            this.btn_CreateGame.Click += new System.EventHandler(this.btn_CreateGameOnClick);
             // 
             // btn_Cancel
             // 

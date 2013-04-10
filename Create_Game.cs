@@ -59,8 +59,6 @@ namespace Project_kindergarten
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            
-
             if (cb_HideChar.Checked == true)
                 tb_Password.UseSystemPasswordChar = true;
             else
@@ -103,6 +101,11 @@ namespace Project_kindergarten
 
 
 
+
+        }
+
+        private void btn_CreateGameOnClick(object sender, EventArgs e)
+        {
 
         }
     }

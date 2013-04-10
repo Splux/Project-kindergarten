@@ -79,8 +79,8 @@ namespace Project_kindergarten
             try
             {
                 _rcvThread = new System.Threading.Thread(new System.Threading.ThreadStart(Receive));
-                _rcvThread.IsBackground = true;
                 _rcvThread.Start();
+                _rcvThread.IsBackground = true;
             }
             catch (Exception e)
             {
@@ -347,7 +347,6 @@ namespace Project_kindergarten
                     }
                 }
             }
-
         }
     }
 }

@@ -72,6 +72,7 @@
     </Compile>
     <Compile Include="TCPConnection.cs" />
     <Compile Include="TextureManager.cs" />
+    <Compile Include="UserInfo.cs" />
     <Compile Include="VerifyUser.cs">
       <SubType>Form</SubType>
     </Compile>

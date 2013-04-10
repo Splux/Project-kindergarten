@@ -61,8 +61,6 @@ namespace Project_kindergarten
             pb_Border.Visible = false;
             #endregion
             this.Size = new Size(285, 265);
-
-            
         }
 
 
@@ -102,6 +100,8 @@ namespace Project_kindergarten
         {
             //MessageBox.Show("Success");
             this.Hide();
+            UserInfo.PlayerName = this.textBox_Username.Text;
+            UserInfo.TcpClient = this.serverConnection;
             mainMenu.Show();
             //serverConnection.Close();
         }
