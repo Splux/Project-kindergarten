@@ -7,7 +7,7 @@ namespace Project_kindergarten
 {
     static public class GrabbarnasIP
     {
-        public const string ipAddress = "172.20.1.59";
+        public const string ipAddress = "172.20.0.196";
     }
         static public class Flags
         {
@@ -25,9 +25,10 @@ namespace Project_kindergarten
             public const string USER_VERIFICATION_SUCCESS =     "L";
             public const string USER_VERIFICATION_FAILED =      "M";
             public const string FIND_SERVER_REQUEST =           "N";
-            public const string CREATE_SERVER_REQUEST =         "O";
+            public const string HOST_CREATION_SUCCESS =         "O";
             public const string USER_REGISTRATION_SUCCESS =     "P";
             public const string USER_REGISTRATION_FAILED =      "Q";
             public const string USER_NAME_NOT_AVAILABLE =       "R";
+            public const string HOST_SUCCESSFUL_REMOVE =        "S";
         }
 }

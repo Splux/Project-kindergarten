@@ -226,8 +226,11 @@ namespace Project_kindergarten
                 System.Windows.Forms.MessageBox.Show("failed to send information to server");
                 return;
             }
-            else if (inString == null)
+            else if (inString == null || inString == string.Empty)
+            {
+                System.Windows.Forms.MessageBox.Show("inString == null || inString == string.empty");
                 return;
+            }
             try
             {
                 //System.Net.Sockets.NetworkStream _tcpNetStream;
@@ -263,6 +266,7 @@ namespace Project_kindergarten
                 "Please check your internet connection");
                 Log.Write(e.ToString());
             }
+            System.Windows.Forms.MessageBox.Show("So good, so far...");
         }
         public void Receive(out string outString)
         {
