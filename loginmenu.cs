@@ -24,8 +24,6 @@ namespace Project_kindergarten
 
         public loginmenu()
         {
-            MainMenu mm = new MainMenu();
-            mm.Show();
             InitializeComponent();
             this.Show();
             //endast för testning
@@ -108,7 +106,7 @@ namespace Project_kindergarten
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
-            serverConnection = new TCPConnection(System.Net.IPAddress.Parse(_remoteServer));
+            serverConnection = new TCPConnection(System.Net.IPAddress.Parse(GrabbarnasIP.ipAddress));
             // Keeping this messagebox, in case I need to disable all this again
             //MessageBox.Show("This section is commented out for testing purpose");
             if (textBox_Username.Text == "" || textBox_Password.Text == "")
@@ -282,21 +280,22 @@ namespace Project_kindergarten
 
         private void showRegObjects()
         {
+            clearRegisterFields();
             // Set visibility of register menu to true
             // Textboxes
-            textBox_RegUsrname.Visible = true;
-            textBox_RegPw.Visible = true;
-            textBox_ConfirmPw.Visible = true;
-            textBox_LoginEmail.Visible = true;
+            textBox_RegUsrname.Visible =   true;
+            textBox_RegPw.Visible =        true;
+            textBox_ConfirmPw.Visible =    true;
+            textBox_LoginEmail.Visible =   true;
             // Button
-            btn_Register1.Visible = true;
+            btn_Register1.Visible =        true;
             // Labels
-            lbl_RegConfPw.Visible = true;
-            lbl_RegEmail.Visible = true;
-            lbl_RegPw.Visible = true;
-            lbl_RegUser.Visible = true;
+            lbl_RegConfPw.Visible =        true;
+            lbl_RegEmail.Visible =         true;
+            lbl_RegPw.Visible =            true;
+            lbl_RegUser.Visible =          true;
             // Border
-            pb_Border.Visible = true;
+            pb_Border.Visible =            true;
             //pb_Border.Update();
 
             // Set size so we can see it again
