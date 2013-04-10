@@ -78,69 +78,42 @@ namespace Project_kindergarten
 
         private void refreshServerList(object sender, EventArgs e)
         {
-            TCPConnection con = new TCPConnection(System.Net.IPAddress.Parse(GrabbarnasIP.ipAddress));
-
-            con.Send(Flags.LOGIN_REQUEST  + "test" + "\\" + "test");
-            string loge;
+            if (!UserInfo.TcpClient.IsConnected())
+            {
+                MessageBox.Show("Connection to server has dropped...");
+                Application.Exit();
+                return;
+            }
+            // Send find request to main server
+            UserInfo.TcpClient.Send(Flags.FIND_SERVER_REQUEST);
+            // try and receive an answer for 5sec
+            string rcvString;
             int time = 0;
             do
             {
-                con.Receive(out loge);
-                System.Threading.Thread.Sleep(50);
-            }
-            while (time <= 5000 && string.IsNullOrEmpty(loge));
+                UserInfo.TcpClient.Receive(out rcvString);
+                time += 50;
+            } while (rcvString == string.Empty && time <= 5000);
 
-            if (string.IsNullOrEmpty(loge))
+            if(rcvString == null || rcvString == string.Empty)
             {
-                MessageBox.Show("Okay...");
-                return;
-            }
-            if (loge[0] == Flags.LOGIN_SUCCESSFUL[0])
-            {
-                // Send request to server
-                con.Send(Flags.FIND_SERVER_REQUEST);
-                int timer = 0;
-                string rcv = string.Empty;
-                // Try for 5sec to get a result from server
-                do
-                {
-                    con.Receive(out rcv);
-                    System.Threading.Thread.Sleep(50);
-                    timer += 50;
-                } while (timer <= 5000 && rcv == string.Empty);
-
-                con.Close();
-
-                if (rcv == string.Empty)
-                {
-                    MessageBox.Show("NO");
-                    return;
-                }
-
-                //MessageBox.Show(rcv);
-
-                string[] hosts = rcv.Split('\\');
-
-                lb_Serverlist.Text = string.Empty;
-
-                // Clear the list, check if there are any servers in host and if there are any servers
-                // we will loop through it and add to the list
                 lb_Serverlist.Items.Clear();
-                if (hosts == null)
-                {
-                    lb_Serverlist.Items.Add("No servers");
-                    lb_Serverlist.Items.Add("Click refresh to search again");
+                lb_Serverlist.Items.Add("Fuck it");
+            }
+            else
+            {
+                // Split received string and loop through a string array and add to serverlist
+                string[] servers = rcvString.Split('\\');
+                if (servers == null)
                     return;
-                }
 
-                foreach (string str in hosts)
+                // clear and loop through all servers from main server
+                lb_Serverlist.Items.Clear();
+                foreach(string str in servers)
                 {
                     lb_Serverlist.Items.Add(str);
                 }
             }
-            else
-                MessageBox.Show("failure");
-            con.Close();
         }
     }
 }
