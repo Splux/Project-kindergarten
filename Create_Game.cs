@@ -16,6 +16,7 @@ namespace Project_kindergarten
         public Create_Game()
         {
             InitializeComponent();
+            tb_ServerName.Text = UserInfo.PlayerName + "'s server";
         }
 
         private void Create_Game_Load(object sender, EventArgs e)
@@ -78,7 +79,37 @@ namespace Project_kindergarten
 
         private void btn_CreateGame_Click(object sender, EventArgs e)
         {
+            if(UserInfo.TcpClient.IsConnected())
+            {
+                UserInfo.TcpClient.Send(Flags.HOST_REQUEST);
 
+                int time = 0;
+                string rcv;
+                do
+                {
+                    UserInfo.TcpClient.Receive(out rcv);
+                    time += 50;
+                } while (rcv == string.Empty && time <= 5000);
+
+                if(rcv == string.Empty)
+                {
+                    MessageBox.Show("Server not created; random error");
+                    return;
+                }
+                else
+                {
+                    if(rcv == Flags.HOST_CREATION_SUCCESS)
+                    {
+                        // TODO: goto lobby
+                        MessageBox.Show("Server created successfully, remember to fix lobby...");
+                    }
+                    else if(rcv == Flags.HOST_SUCCESSFUL_REMOVE)
+                    {
+                        // what
+                        MessageBox.Show("Removed server from main server");
+                    }
+                }
+            }
         }
     }
 }
