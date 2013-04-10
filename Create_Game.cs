@@ -18,11 +18,6 @@ namespace Project_kindergarten
             InitializeComponent();
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void Create_Game_Load(object sender, EventArgs e)
         {
             myBitmap = new Bitmap(1366, 768);
@@ -30,24 +25,11 @@ namespace Project_kindergarten
             Image bgimg = Image.FromFile("Backgroundexempel.png");
 
 
-            pictureBox1.Image = bgimg;//myBitmap;
-            pictureBox1.Update();
-           // pictureBox2.Image = j;//myBitmap;
-            //pictureBox2.Update();
-            //pictureBox3.Image = k;
-            //pictureBox3.Update();
-            //pictureBox4.Image = l;
-            //pictureBox4.Update();
-            //pictureBox5.Image = m;
-            //pictureBox5.Update();
+            pb_BackGround.Image = bgimg;//myBitmap;
+            pb_BackGround.Update();
         }
 
-        private void pictureBox5_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
+        private void btn_Cancel_Click(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -57,7 +39,7 @@ namespace Project_kindergarten
             tb_Password.Update();
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
+        private void tb_Password_TextChanged(object sender, EventArgs e)
         {
             if (cb_HideChar.Checked == true)
                 tb_Password.UseSystemPasswordChar = true;
@@ -65,11 +47,11 @@ namespace Project_kindergarten
                 tb_Password.UseSystemPasswordChar = false;
         }
 
-        private void pictureBox2_Click(object sender, EventArgs e)
+        private void pb_ShowMap_Click(object sender, EventArgs e)
         {
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        private void rb_MapOne_CheckChanged(object sender, EventArgs e)
         {
             Image map1 = Image.FromFile("map1.png");
 
@@ -81,7 +63,7 @@ namespace Project_kindergarten
             }
         }
 
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        private void rb_MapTwo_CheckedChanged(object sender, EventArgs e)
         {
             Image map2 = Image.FromFile("map2.png");
 
@@ -94,17 +76,7 @@ namespace Project_kindergarten
             }
         }
 
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-
-
-
-
-
-        }
-
-        private void btn_CreateGameOnClick(object sender, EventArgs e)
+        private void btn_CreateGame_Click(object sender, EventArgs e)
         {
 
         }

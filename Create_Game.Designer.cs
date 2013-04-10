@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pb_BackGround = new System.Windows.Forms.PictureBox();
             this.btn_CreateGame = new System.Windows.Forms.Button();
             this.btn_Cancel = new System.Windows.Forms.Button();
             this.lbl_ServerName = new System.Windows.Forms.Label();
@@ -41,19 +41,18 @@
             this.cb_HideChar = new System.Windows.Forms.CheckBox();
             this.pb_ShowMap = new System.Windows.Forms.PictureBox();
             this.lbl_MapName = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_BackGround)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_ShowMap)).BeginInit();
             this.SuspendLayout();
             // 
-            // pictureBox1
+            // pb_BackGround
             // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1366, 768);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pb_BackGround.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pb_BackGround.Location = new System.Drawing.Point(0, 0);
+            this.pb_BackGround.Name = "pb_BackGround";
+            this.pb_BackGround.Size = new System.Drawing.Size(1366, 768);
+            this.pb_BackGround.TabIndex = 0;
+            this.pb_BackGround.TabStop = false;
             // 
             // btn_CreateGame
             // 
@@ -63,7 +62,7 @@
             this.btn_CreateGame.TabIndex = 5;
             this.btn_CreateGame.Text = "Create Game!";
             this.btn_CreateGame.UseVisualStyleBackColor = true;
-            this.btn_CreateGame.Click += new System.EventHandler(this.btn_CreateGameOnClick);
+            this.btn_CreateGame.Click += new System.EventHandler(this.btn_CreateGame_Click);
             // 
             // btn_Cancel
             // 
@@ -73,7 +72,7 @@
             this.btn_Cancel.TabIndex = 6;
             this.btn_Cancel.Text = "Cancel!";
             this.btn_Cancel.UseVisualStyleBackColor = true;
-            this.btn_Cancel.Click += new System.EventHandler(this.button2_Click);
+            this.btn_Cancel.Click += new System.EventHandler(this.btn_Cancel_Click);
             // 
             // lbl_ServerName
             // 
@@ -109,7 +108,7 @@
             this.rb_MapOne.TabStop = true;
             this.rb_MapOne.Text = "Map 1";
             this.rb_MapOne.UseVisualStyleBackColor = false;
-            this.rb_MapOne.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            this.rb_MapOne.CheckedChanged += new System.EventHandler(this.rb_MapOne_CheckChanged);
             // 
             // rb_MapTwo
             // 
@@ -123,7 +122,7 @@
             this.rb_MapTwo.TabStop = true;
             this.rb_MapTwo.Text = "Map 2";
             this.rb_MapTwo.UseVisualStyleBackColor = false;
-            this.rb_MapTwo.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            this.rb_MapTwo.CheckedChanged += new System.EventHandler(this.rb_MapTwo_CheckedChanged);
             // 
             // lbl_Map
             // 
@@ -158,7 +157,7 @@
             this.tb_Password.Size = new System.Drawing.Size(100, 20);
             this.tb_Password.TabIndex = 13;
             this.tb_Password.Text = "<Enter Password>";
-            this.tb_Password.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.tb_Password.TextChanged += new System.EventHandler(this.tb_Password_TextChanged);
             // 
             // cb_HideChar
             // 
@@ -180,7 +179,7 @@
             this.pb_ShowMap.Size = new System.Drawing.Size(400, 400);
             this.pb_ShowMap.TabIndex = 15;
             this.pb_ShowMap.TabStop = false;
-            this.pb_ShowMap.Click += new System.EventHandler(this.pictureBox2_Click);
+            this.pb_ShowMap.Click += new System.EventHandler(this.pb_ShowMap_Click);
             // 
             // lbl_MapName
             // 
@@ -193,7 +192,6 @@
             this.lbl_MapName.Size = new System.Drawing.Size(104, 20);
             this.lbl_MapName.TabIndex = 16;
             this.lbl_MapName.Text = "<Map Name>";
-            this.lbl_MapName.Click += new System.EventHandler(this.label4_Click);
             // 
             // Create_Game
             // 
@@ -212,12 +210,12 @@
             this.Controls.Add(this.lbl_ServerName);
             this.Controls.Add(this.btn_Cancel);
             this.Controls.Add(this.btn_CreateGame);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.pb_BackGround);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Create_Game";
             this.Text = "Create_Game";
             this.Load += new System.EventHandler(this.Create_Game_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_BackGround)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_ShowMap)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -226,7 +224,7 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pb_BackGround;
         private System.Windows.Forms.Button btn_CreateGame;
         private System.Windows.Forms.Button btn_Cancel;
         private System.Windows.Forms.Label lbl_ServerName;
