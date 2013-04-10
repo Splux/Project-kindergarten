@@ -46,6 +46,7 @@ namespace Project_kindergarten
         }
         ~MainMenu()
         {
+            UserInfo.TcpClient.Close();
             Application.Exit();
         }
 
