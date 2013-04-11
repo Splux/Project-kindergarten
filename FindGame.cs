@@ -11,13 +11,13 @@ namespace Project_kindergarten
 {
     public partial class FindGame : Form
     {
-        System.Drawing.Bitmap myBitmap;
-        
+        private System.Drawing.Bitmap myBitmap;
+        private Dictionary<string, string> _serverList;
 
         public FindGame()
         {
             InitializeComponent();
-
+            _serverList = null;
             // Create a bitmap and graphics object to draw a string (too bad for photoshop)
             try
             {
@@ -62,20 +62,6 @@ namespace Project_kindergarten
             this.Close();
         }
 
-        private string[] splitString(string str, char split)
-        {
-            try
-            {
-                return str.Split(split);
-            }
-            catch (Exception e)
-            {
-                Log.Write(e.ToString());
-                MessageBox.Show("SEriosly?");
-            }
-            return null;
-        }
-
         private void refreshServerList(object sender, EventArgs e)
         {
             if (!UserInfo.TcpClient.IsConnected())
@@ -109,11 +95,29 @@ namespace Project_kindergarten
 
                 // clear and loop through all servers from main server
                 lb_Serverlist.Items.Clear();
+                _serverList = new Dictionary<string, string>();
                 foreach(string str in servers)
                 {
-                    lb_Serverlist.Items.Add(str);
+                    // split string again to get username + ip
+                    string[] userAndIp = str.Split('/');
+                    if(userAndIp == null)
+                    {
+                        MessageBox.Show("Find out what went wrong, you lazy fuck");
+                    }
+                    lb_Serverlist.Items.Add(userAndIp[0]);
+
+                    _serverList[userAndIp[0]] = userAndIp[1];
                 }
             }
+        }
+
+        private void btn_joinGame_Click(object sender, EventArgs e)
+        {
+            if (_serverList == null)
+                return;
+
+            string selectedServer = string.Empty;
+
         }
     }
 }

@@ -32,15 +32,16 @@
             this.lb_Serverlist = new System.Windows.Forms.ListBox();
             this.pb_Back = new System.Windows.Forms.PictureBox();
             this._btnDesign = new System.Windows.Forms.Button();
+            this.btn_joinGame = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pb_Back)).BeginInit();
             this.SuspendLayout();
             // 
             // lb_Serverlist
             // 
             this.lb_Serverlist.FormattingEnabled = true;
-            this.lb_Serverlist.Location = new System.Drawing.Point(527, 101);
+            this.lb_Serverlist.Location = new System.Drawing.Point(405, 101);
             this.lb_Serverlist.Name = "lb_Serverlist";
-            this.lb_Serverlist.Size = new System.Drawing.Size(265, 576);
+            this.lb_Serverlist.Size = new System.Drawing.Size(552, 355);
             this.lb_Serverlist.TabIndex = 5;
             this.lb_Serverlist.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
@@ -63,6 +64,16 @@
             this._btnDesign.UseVisualStyleBackColor = true;
             this._btnDesign.Click += new System.EventHandler(this.refreshServerList);
             // 
+            // btn_joinGame
+            // 
+            this.btn_joinGame.Location = new System.Drawing.Point(672, 462);
+            this.btn_joinGame.Name = "btn_joinGame";
+            this.btn_joinGame.Size = new System.Drawing.Size(285, 66);
+            this.btn_joinGame.TabIndex = 8;
+            this.btn_joinGame.Text = "Join game";
+            this.btn_joinGame.UseVisualStyleBackColor = true;
+            this.btn_joinGame.Click += new System.EventHandler(this.btn_joinGame_Click);
+            // 
             // FindGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -70,6 +81,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(1366, 780);
             this.ControlBox = false;
+            this.Controls.Add(this.btn_joinGame);
             this.Controls.Add(this._btnDesign);
             this.Controls.Add(this.pb_Back);
             this.Controls.Add(this.lb_Serverlist);
@@ -88,5 +100,6 @@
         private System.Windows.Forms.ListBox lb_Serverlist;
         private System.Windows.Forms.PictureBox pb_Back;
         private System.Windows.Forms.Button _btnDesign;
+        private System.Windows.Forms.Button btn_joinGame;
     }
 }

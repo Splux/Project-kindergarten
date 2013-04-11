@@ -8,6 +8,7 @@ namespace Project_kindergarten
     class UserInfo
     {
         static public string PlayerName;
+        static public string PlayerPassword;
         static public TCPConnection TcpClient;
     }
 }
