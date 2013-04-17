@@ -78,8 +78,16 @@ namespace Project_kindergarten
         {
             if (_tcpClient == null)
                 return false;
-            else
-                return _tcpClient.Connected;
+            try
+            {
+                _streamWriter.WriteLine("123");
+                _streamWriter.Flush();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
         public bool Close()
