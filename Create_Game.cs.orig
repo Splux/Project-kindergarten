@@ -112,7 +112,14 @@ namespace Project_kindergarten
                     }
                 }
             }
+<<<<<<< HEAD
         }
+
+        private void btn_CreateGame_Click(object sender, EventArgs e)
+        {
+                
+=======
+>>>>>>> origin/master
         }
     }
 }
