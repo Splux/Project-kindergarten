@@ -206,7 +206,7 @@ namespace Project_kindergarten
                 "Please check your internet connection");
                 Log.Write(e.ToString());
             }
-            System.Windows.Forms.MessageBox.Show("So good, so far...");
+            //System.Windows.Forms.MessageBox.Show("So good, so far...");
         }
         public void Receive(out string outString)
         {

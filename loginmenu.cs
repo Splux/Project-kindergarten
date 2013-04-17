@@ -53,7 +53,7 @@ namespace Project_kindergarten
             {
                 sb2.Append(sb[i]);
             }
-            MessageBox.Show(sb2.ToString());
+            //MessageBox.Show(sb2.ToString());
             return sb2.ToString();
         }
 
@@ -156,7 +156,7 @@ namespace Project_kindergarten
 
             if (rcvData == string.Empty)
             {
-                MessageBox.Show("Connection dropped, try again later");
+                //MessageBox.Show("Connection dropped, try again later");
                 return;
             }
             else
