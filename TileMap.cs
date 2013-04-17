@@ -15,7 +15,7 @@ namespace Project_kindergarten
         System.Drawing.Bitmap myBitmap2;
         Image TileImage;
 
-        Bitmap myBitmap2 = new Bitmap(768,768);
+        //Bitmap myBitmap2 = new Bitmap(768,768);
         
         private int width; //768
         private int height; //768
@@ -23,7 +23,7 @@ namespace Project_kindergarten
         private int m_Width; //16
         private int m_Height; //16
         private int t_width; //24
-        private int t_width; //24
+        //private int t_width; //24
 
     }
 }
