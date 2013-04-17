@@ -28,10 +28,10 @@ namespace Project_kindergarten
         private System.IO.StreamReader _streamReader;
         private System.IO.StreamWriter _streamWriter;
         //private System.Threading.Mutex _rcvMutex;
-        private System.Threading.Thread _rcvThread = null;
+        //private System.Threading.Thread _rcvThread = null;
         //private string _rcvString = null;
 
-        private volatile bool _stillAlive = true;
+        //private volatile bool _stillAlive = true;
 
         private List<string> _rcvStrings = new List<string>();
 
@@ -74,66 +74,6 @@ namespace Project_kindergarten
             this.Close();
         }
 
-        public bool StartRcvThread()
-        {
-            try
-            {
-                _rcvThread = new System.Threading.Thread(new System.Threading.ThreadStart(Receive));
-                _rcvThread.IsBackground = true;
-                _rcvThread.Start();
-            }
-            catch (Exception e)
-            {
-                Log.Write(e.ToString()+ "\n");
-                return false;
-            }
-
-            return true;
-        }
-
-        public void CloseRcvThread()
-        {
-            _stillAlive = false;
-        }
-
-        public string GetString(char id)
-        {
-            // Check so it isn't empty
-            if (_rcvStrings.Count < 1)
-                return string.Empty;
-
-
-            //string[] strings;
-            //lock (_rcvStrings) // Lock for threadsafety
-            //{
-            //    strings = _rcvStrings.ToArray();
-            //}
-            
-            //for (int i = 0; i < strings.Length; i++)
-            //{
-            //    if(strings[i][0] == id)
-            //    {
-            //        lock (_rcvStrings) // Threadsafety
-            //        {
-            //            _rcvStrings.Remove(strings[i]);
-            //        }
-            //        return strings[i];
-            //    }
-            //}
-
-            lock (_rcvStrings)
-            {
-                foreach (string str in _rcvStrings)
-                {
-                    if (str[0] == id)
-                        return str;
-                }
-            }
-
-            // Couldn't find requested string
-            return string.Empty;
-        }
-
         public bool IsConnected()
         {
             if (_tcpClient == null)
@@ -159,7 +99,7 @@ namespace Project_kindergarten
                 return false;
             }
 
-            _stillAlive = false;
+            //_stillAlive = false;
 
             //_rcvThread.Join();
 
@@ -226,8 +166,11 @@ namespace Project_kindergarten
                 System.Windows.Forms.MessageBox.Show("failed to send information to server");
                 return;
             }
-            else if (inString == null)
+            else if (inString == null || inString == string.Empty)
+            {
+                System.Windows.Forms.MessageBox.Show("inString == null || inString == string.empty");
                 return;
+            }
             try
             {
                 //System.Net.Sockets.NetworkStream _tcpNetStream;
@@ -263,6 +206,7 @@ namespace Project_kindergarten
                 "Please check your internet connection");
                 Log.Write(e.ToString());
             }
+            System.Windows.Forms.MessageBox.Show("So good, so far...");
         }
         public void Receive(out string outString)
         {
@@ -298,56 +242,6 @@ namespace Project_kindergarten
             //outString = System.Text.Encoding.ASCII.GetString(data);
 
             ////_tcpNetStream.Close();
-        }
-
-        public void Receive()
-        {
-            if (_tcpClient == null)
-                return;
-            if (!_tcpClient.Connected)
-            {
-                System.Windows.Forms.MessageBox.Show("Not connected to server...");
-                return;
-            }
-
-            using (System.Net.Sockets.NetworkStream stream = _tcpClient.GetStream())
-            {
-                bool stillConnected = true;
-                _stillAlive = true;
-                string rcv;
-                while (stillConnected && _stillAlive)
-                {
-
-                    try
-                    {
-                        byte[] recv = new byte[_tcpClient.ReceiveBufferSize];
-                        stream.Read(recv, 0, _tcpClient.ReceiveBufferSize);
-                        rcv = System.Text.Encoding.ASCII.GetString(recv);
-                        //rcv = _streamReader.ReadLine();
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Write(e.ToString() + "\n\n\n");
-                        //_streamReader.Dispose();
-                        //_tcpClient.GetStream().Close();
-                        if (_tcpClient != null) 
-                            if (_tcpClient.Connected) 
-                                _tcpClient.Close();
-                        
-                        System.Windows.Forms.MessageBox.Show("Failed to receive data");
-                        return ;
-                    }
-                    if (rcv == null)
-                    {
-                        break;
-                    }
-                    lock (_rcvStrings)
-                    {
-                        _rcvStrings.Add(rcv);
-                    }
-                }
-            }
-
         }
     }
 }

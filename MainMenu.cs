@@ -41,10 +41,13 @@ namespace Project_kindergarten
                 System.Windows.Forms.MessageBox.Show("Missing resources");
                 Application.Exit();
             }
+
             InitializeComponent();
         }
         ~MainMenu()
         {
+            if(UserInfo.TcpClient != null)
+                UserInfo.TcpClient.Close();
             Application.Exit();
         }
 

@@ -11,13 +11,13 @@ namespace Project_kindergarten
 {
     public partial class FindGame : Form
     {
-        System.Drawing.Bitmap myBitmap;
-        
+        private System.Drawing.Bitmap myBitmap;
+        private System.Collections.Specialized.StringDictionary _serverList;
 
         public FindGame()
         {
             InitializeComponent();
-
+            _serverList = new System.Collections.Specialized.StringDictionary();
             // Create a bitmap and graphics object to draw a string (too bad for photoshop)
             try
             {
@@ -50,93 +50,79 @@ namespace Project_kindergarten
             this.Location = new Point(0, 0);
         }
 
-
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-        }
-
         private void pb_Back_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private string[] splitString(string str, char split)
-        {
-            try
-            {
-                return str.Split(split);
-            }
-            catch (Exception e)
-            {
-                Log.Write(e.ToString());
-                MessageBox.Show("SEriosly?");
-            }
-            return null;
-        }
-
         private void refreshServerList(object sender, EventArgs e)
         {
-            TCPConnection con = new TCPConnection(System.Net.IPAddress.Parse(GrabbarnasIP.ipAddress));
-
-            con.Send(Flags.LOGIN_REQUEST  + "test" + "\\" + "test");
-            string loge;
+            if (!UserInfo.TcpClient.IsConnected())
+            {
+                MessageBox.Show("Connection to server has dropped...");
+                Application.Exit();
+                return;
+            }
+            // Send find request to main server
+            UserInfo.TcpClient.Send(Flags.FIND_SERVER_REQUEST);
+            // try and receive an answer for 5sec
+            string rcvString;
             int time = 0;
             do
             {
-                con.Receive(out loge);
-                System.Threading.Thread.Sleep(50);
-            }
-            while (time <= 5000 && string.IsNullOrEmpty(loge));
+                UserInfo.TcpClient.Receive(out rcvString);
+                time += 50;
+            } while (rcvString == string.Empty && time <= 5000);
 
-            if (string.IsNullOrEmpty(loge))
+            if(rcvString == null || rcvString == string.Empty)
             {
-                MessageBox.Show("Okay...");
-                return;
-            }
-            if (loge[0] == Flags.LOGIN_SUCCESSFUL[0])
-            {
-                con.Send(Flags.FIND_SERVER_REQUEST);
-                int timer = 0;
-                string rcv = string.Empty;
-                do
-                {
-                    con.Receive(out rcv);
-                    System.Threading.Thread.Sleep(50);
-                    timer += 50;
-                } while (timer <= 5000 && rcv == string.Empty);
-
-                con.Close();
-
-                if (rcv == string.Empty)
-                {
-                    MessageBox.Show("NO");
-                    return;
-                }
-
-                //MessageBox.Show(rcv);
-
-                string[] hosts = rcv.Split('\\');
-
-                lb_Serverlist.Text = string.Empty;
-
-                if (hosts == null)
-                {
-                    lb_Serverlist.Text = "No servers";
-                    return;
-                }
-
                 lb_Serverlist.Items.Clear();
-
-                foreach (string str in hosts)
-                {
-                    lb_Serverlist.Items.Add(str);
-                }
+                lb_Serverlist.Items.Add("Fuck it");
             }
             else
-                MessageBox.Show("failure");
-            con.Close();
+            {
+                // Split received string and loop through a string array and add to serverlist
+                string[] servers = rcvString.Split('\\');
+                if (servers == null)
+                    return;
+
+                // clear and loop through all servers from main server
+                lb_Serverlist.Items.Clear();
+                _serverList.Clear();
+                foreach(string str in servers)
+                {
+                    // split string again to get username + ip
+                    string[] userAndIp = str.Split('/');
+                    if(userAndIp == null)
+                    {
+                        MessageBox.Show("Find out what went wrong, you lazy fuck");
+                    }
+                    lb_Serverlist.Items.Add(userAndIp[0]);
+
+                    try
+                    {
+                        _serverList.Add(userAndIp[0], userAndIp[1]);
+                    }catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                    }
+                }
+            }
+        }
+
+        private void btn_joinGame_Click(object sender, EventArgs e)
+        {
+            if (_serverList.Count < 1 || lb_Serverlist.SelectedIndex == -1)
+                return;
+
+            string serverName = lb_Serverlist.SelectedItem.ToString();
+            if(_serverList.ContainsKey(serverName))
+            {
+                Lobby lobby = new Lobby(_serverList[serverName]);
+                this.Hide();
+                lobby.ShowDialog();
+                this.Show();
+            }
         }
     }
 }

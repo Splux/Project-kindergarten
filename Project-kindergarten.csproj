@@ -47,6 +47,18 @@
     <Compile Include="Create_Game.Designer.cs">
       <DependentUpon>Create_Game.cs</DependentUpon>
     </Compile>
+    <Compile Include="HostLobby.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HostLobby.Designer.cs">
+      <DependentUpon>HostLobby.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Lobby.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Lobby.Designer.cs">
+      <DependentUpon>Lobby.cs</DependentUpon>
+    </Compile>
     <Compile Include="Log.cs" />
     <Compile Include="loginmenu.cs">
       <SubType>Form</SubType>
@@ -72,6 +84,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="TCPConnection.cs" />
+    <Compile Include="TextureManager.cs" />
+    <Compile Include="UserInfo.cs" />
     <Compile Include="VerifyUser.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +104,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Create_Game.resx">
       <DependentUpon>Create_Game.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HostLobby.resx">
+      <DependentUpon>HostLobby.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Lobby.resx">
+      <DependentUpon>Lobby.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="loginmenu.resx">
       <DependentUpon>loginmenu.cs</DependentUpon>

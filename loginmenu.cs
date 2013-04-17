@@ -24,8 +24,6 @@ namespace Project_kindergarten
 
         public loginmenu()
         {
-            MainMenu mm = new MainMenu();
-            mm.Show();
             InitializeComponent();
             this.Show();
             //endast för testning
@@ -35,6 +33,28 @@ namespace Project_kindergarten
         ~loginmenu()
         {
             Application.Exit();
+        }
+
+        private string CalculateMD5(string inString)
+        {
+            System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
+            byte[] inBytes = System.Text.ASCIIEncoding.ASCII.GetBytes(inString);
+            byte[] md5hash = md5.ComputeHash(inBytes);
+
+            StringBuilder sb = new StringBuilder();
+
+            for(int i = 0; i < md5hash.Length; i++)
+            {
+                sb.Append(md5hash[i].ToString("x2"));
+            }
+
+            StringBuilder sb2 = new StringBuilder();
+            for(int i = 0; i < 20; i++)
+            {
+                sb2.Append(sb[i]);
+            }
+            MessageBox.Show(sb2.ToString());
+            return sb2.ToString();
         }
 
         private void loginmenu_Load(object sender, EventArgs e)
@@ -61,8 +81,6 @@ namespace Project_kindergarten
             pb_Border.Visible = false;
             #endregion
             this.Size = new Size(285, 265);
-
-            
         }
 
 
@@ -102,14 +120,15 @@ namespace Project_kindergarten
         {
             //MessageBox.Show("Success");
             this.Hide();
+            UserInfo.PlayerName = this.textBox_Username.Text;
+            UserInfo.TcpClient = this.serverConnection;
             mainMenu.Show();
             //serverConnection.Close();
         }
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
-            mainMenu.Show();
-            serverConnection = new TCPConnection(System.Net.IPAddress.Parse(_remoteServer));
+            serverConnection = new TCPConnection(System.Net.IPAddress.Parse(GrabbarnasIP.ipAddress));
             // Keeping this messagebox, in case I need to disable all this again
             //MessageBox.Show("This section is commented out for testing purpose");
             if (textBox_Username.Text == "" || textBox_Password.Text == "")
@@ -117,7 +136,7 @@ namespace Project_kindergarten
                 System.Windows.Forms.MessageBox.Show("Enter both username and/or password");
                 return;
             }
-            string sendData = Flags.LOGIN_REQUEST + textBox_Username.Text + '\\' + textBox_Password.Text;
+            string sendData = Flags.LOGIN_REQUEST + textBox_Username.Text + '\\' + CalculateMD5(textBox_Password.Text);
             //System.Windows.Forms.MessageBox.Show(textBox_Username.ToString());
             string rcvData;
             
@@ -233,7 +252,7 @@ namespace Project_kindergarten
 
             StringBuilder str = new StringBuilder();
             str.Append(Flags.REGISTER_REQUEST); /*str.Append("\\");*/ str.Append(textBox_RegUsrname.Text);
-            str.Append("\\"); str.Append(textBox_RegPw.Text); str.Append("\\"); str.Append(textBox_LoginEmail.Text);
+            str.Append("\\"); str.Append(CalculateMD5(textBox_RegPw.Text)); str.Append("\\"); str.Append(textBox_LoginEmail.Text);
 
             string sendData = str.ToString();
 
@@ -242,13 +261,13 @@ namespace Project_kindergarten
 
             //System.Windows.Forms.MessageBox.Show(sendData);
 
-            serverConnection = new TCPConnection(System.Net.IPAddress.Parse(_remoteServer));
+            serverConnection = new TCPConnection(System.Net.IPAddress.Parse(GrabbarnasIP.ipAddress));
 
             serverConnection.Send(sendData);
             string retVal = string.Empty;
             if (!serverConnection.IsConnected())
             {
-                MessageBox.Show("dropped connection");
+                //MessageBox.Show("dropped connection");
                 return;
             }
             //System.Threading.Thread.Sleep(100);
@@ -259,19 +278,32 @@ namespace Project_kindergarten
             // Retry to receive an answer from server for 5 seconds
             do
             {
+                serverConnection.Receive(out retVal);
                 System.Threading.Thread.Sleep(50);
                 sleepTime += 50;
-                serverConnection.Receive(out retVal);
             }while(retVal == string.Empty && sleepTime <= 5000);
 
             serverConnection.Close();
             serverConnection = null;
-            //serverConnection.Receive(out retVal);
-            //retVal = string.Empty;
+            
+            if(retVal == string.Empty)
+            {
+                MessageBox.Show("Failed to register");
+                return;
+            }
 
-            //System.Windows.Forms.MessageBox.Show(retVal);
-
-            //System.Windows.Forms.MessageBox.Show("Registration successful!");
+            if(retVal == Flags.USER_REGISTRATION_SUCCESS)
+            {
+                MessageBox.Show("Registration completed!");
+            }
+            else if(retVal == Flags.USER_REGISTRATION_FAILED)
+            {
+                MessageBox.Show("Registration failed");
+            }
+            else if(retVal == Flags.USER_NAME_NOT_AVAILABLE)
+            {
+                MessageBox.Show("Username already in use");
+            }
         }
 
         private void btn_Exit_Click(object sender, EventArgs e)
@@ -283,21 +315,22 @@ namespace Project_kindergarten
 
         private void showRegObjects()
         {
+            clearRegisterFields();
             // Set visibility of register menu to true
             // Textboxes
-            textBox_RegUsrname.Visible = true;
-            textBox_RegPw.Visible = true;
-            textBox_ConfirmPw.Visible = true;
-            textBox_LoginEmail.Visible = true;
+            textBox_RegUsrname.Visible =   true;
+            textBox_RegPw.Visible =        true;
+            textBox_ConfirmPw.Visible =    true;
+            textBox_LoginEmail.Visible =   true;
             // Button
-            btn_Register1.Visible = true;
+            btn_Register1.Visible =        true;
             // Labels
-            lbl_RegConfPw.Visible = true;
-            lbl_RegEmail.Visible = true;
-            lbl_RegPw.Visible = true;
-            lbl_RegUser.Visible = true;
+            lbl_RegConfPw.Visible =        true;
+            lbl_RegEmail.Visible =         true;
+            lbl_RegPw.Visible =            true;
+            lbl_RegUser.Visible =          true;
             // Border
-            pb_Border.Visible = true;
+            pb_Border.Visible =            true;
             //pb_Border.Update();
 
             // Set size so we can see it again
@@ -350,7 +383,7 @@ namespace Project_kindergarten
         private void userVerification()
         {
 
-            VerifyUser vu = new VerifyUser(System.Net.IPAddress.Parse(_remoteServer), textBox_Username.Text);
+            VerifyUser vu = new VerifyUser(System.Net.IPAddress.Parse(GrabbarnasIP.ipAddress), textBox_Username.Text);
             vu.ShowDialog();
 
             bool userVerified = vu.IsVerified;

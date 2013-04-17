@@ -16,11 +16,7 @@ namespace Project_kindergarten
         public Create_Game()
         {
             InitializeComponent();
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
+            tb_ServerName.Text = UserInfo.PlayerName + "'s server";
         }
 
         private void Create_Game_Load(object sender, EventArgs e)
@@ -30,24 +26,11 @@ namespace Project_kindergarten
             Image bgimg = Image.FromFile("Backgroundexempel.png");
 
 
-            pictureBox1.Image = bgimg;//myBitmap;
-            pictureBox1.Update();
-           // pictureBox2.Image = j;//myBitmap;
-            //pictureBox2.Update();
-            //pictureBox3.Image = k;
-            //pictureBox3.Update();
-            //pictureBox4.Image = l;
-            //pictureBox4.Update();
-            //pictureBox5.Image = m;
-            //pictureBox5.Update();
+            pb_BackGround.Image = bgimg;//myBitmap;
+            pb_BackGround.Update();
         }
 
-        private void pictureBox5_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
+        private void btn_Cancel_Click(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -57,21 +40,19 @@ namespace Project_kindergarten
             tb_Password.Update();
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
+        private void tb_Password_TextChanged(object sender, EventArgs e)
         {
-            
-
             if (cb_HideChar.Checked == true)
                 tb_Password.UseSystemPasswordChar = true;
             else
                 tb_Password.UseSystemPasswordChar = false;
         }
 
-        private void pictureBox2_Click(object sender, EventArgs e)
+        private void pb_ShowMap_Click(object sender, EventArgs e)
         {
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        private void rb_MapOne_CheckChanged(object sender, EventArgs e)
         {
             Image map1 = Image.FromFile("map1.png");
 
@@ -83,7 +64,7 @@ namespace Project_kindergarten
             }
         }
 
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        private void rb_MapTwo_CheckedChanged(object sender, EventArgs e)
         {
             Image map2 = Image.FromFile("map2.png");
 
@@ -96,14 +77,41 @@ namespace Project_kindergarten
             }
         }
 
-        private void label4_Click(object sender, EventArgs e)
+        private void btn_CreateGame_Click(object sender, EventArgs e)
         {
+            if(UserInfo.TcpClient.IsConnected())
+            {
+                UserInfo.TcpClient.Send(Flags.HOST_REQUEST);
 
+                int time = 0;
+                string rcv;
+                do
+                {
+                    UserInfo.TcpClient.Receive(out rcv);
+                    time += 50;
+                } while (rcv == string.Empty && time <= 5000);
 
-
-
-
-
+                if(rcv == string.Empty)
+                {
+                    MessageBox.Show("Server not created; random error");
+                    return;
+                }
+                else
+                {
+                    if(rcv == Flags.HOST_CREATION_SUCCESS)
+                    {
+                        HostLobby lobby = new HostLobby();
+                        this.Hide();
+                        lobby.ShowDialog();
+                        this.Show();
+                    }
+                    else if(rcv == Flags.HOST_SUCCESSFUL_REMOVE)
+                    {
+                        // what
+                        MessageBox.Show("Removed server from main server");
+                    }
+                }
+            }
         }
 
         private void btn_CreateGame_Click(object sender, EventArgs e)
