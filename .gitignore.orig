@@ -1,4 +1,4 @@
-﻿obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 bin/Debug/Project-kindergarten.vshost.exe
 bin/Debug/Project-kindergarten.vshost.exe.manifest
 bin/Debug/Project-kindergarten.exe
@@ -63,8 +63,11 @@ obj/x86/Debug/GenerateResource.read.1.tlog
 obj/x86/Debug/GenerateResource.write.1.tlog
 obj/x86/Debug/Project_kindergarten.FindGame.resources
 obj/x86/Debug/ResolveAssemblyReference.cache
+<<<<<<< HEAD
 loginmenu.cs.orig
 obj/x86/Debug/Project_kindergarten.FindGame.resources
 obj/x86/Debug/Project_kindergarten.FindGame.resources
 obj/x86/Debug/Project_kindergarten.FindGame.resources
 obj/x86/Debug/Project_kindergarten.FindGame.resources
+=======
+>>>>>>> origin/master

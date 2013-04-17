@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="AnimButton.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="TileMap.cs" />
     <Compile Include="FlagEnum.cs" />
     <Compile Include="Create_Game.cs">
       <SubType>Form</SubType>
