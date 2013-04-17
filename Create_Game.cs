@@ -100,8 +100,10 @@ namespace Project_kindergarten
                 {
                     if(rcv == Flags.HOST_CREATION_SUCCESS)
                     {
-                        // TODO: goto lobby
-                        MessageBox.Show("Server created successfully, remember to fix lobby...");
+                        HostLobby lobby = new HostLobby();
+                        this.Hide();
+                        lobby.ShowDialog();
+                        this.Show();
                     }
                     else if(rcv == Flags.HOST_SUCCESSFUL_REMOVE)
                     {

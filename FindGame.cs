@@ -12,12 +12,12 @@ namespace Project_kindergarten
     public partial class FindGame : Form
     {
         private System.Drawing.Bitmap myBitmap;
-        private Dictionary<string, string> _serverList;
+        private System.Collections.Specialized.StringDictionary _serverList;
 
         public FindGame()
         {
             InitializeComponent();
-            _serverList = null;
+            _serverList = new System.Collections.Specialized.StringDictionary();
             // Create a bitmap and graphics object to draw a string (too bad for photoshop)
             try
             {
@@ -48,13 +48,6 @@ namespace Project_kindergarten
             this.Width = rect.Width;
             this.Height = rect.Height;
             this.Location = new Point(0, 0);
-        }
-
-
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
         }
 
         private void pb_Back_Click(object sender, EventArgs e)
@@ -95,7 +88,7 @@ namespace Project_kindergarten
 
                 // clear and loop through all servers from main server
                 lb_Serverlist.Items.Clear();
-                _serverList = new Dictionary<string, string>();
+                _serverList.Clear();
                 foreach(string str in servers)
                 {
                     // split string again to get username + ip
@@ -106,18 +99,30 @@ namespace Project_kindergarten
                     }
                     lb_Serverlist.Items.Add(userAndIp[0]);
 
-                    _serverList[userAndIp[0]] = userAndIp[1];
+                    try
+                    {
+                        _serverList.Add(userAndIp[0], userAndIp[1]);
+                    }catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                    }
                 }
             }
         }
 
         private void btn_joinGame_Click(object sender, EventArgs e)
         {
-            if (_serverList == null)
+            if (_serverList.Count < 1 || lb_Serverlist.SelectedIndex == -1)
                 return;
 
-            string selectedServer = string.Empty;
-
+            string serverName = lb_Serverlist.SelectedItem.ToString();
+            if(_serverList.ContainsKey(serverName))
+            {
+                Lobby lobby = new Lobby(_serverList[serverName]);
+                this.Hide();
+                lobby.ShowDialog();
+                this.Show();
+            }
         }
     }
 }

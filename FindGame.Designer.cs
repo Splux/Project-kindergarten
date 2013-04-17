@@ -43,7 +43,6 @@
             this.lb_Serverlist.Name = "lb_Serverlist";
             this.lb_Serverlist.Size = new System.Drawing.Size(552, 355);
             this.lb_Serverlist.TabIndex = 5;
-            this.lb_Serverlist.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // pb_Back
             // 

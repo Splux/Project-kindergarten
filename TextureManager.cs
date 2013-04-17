@@ -65,6 +65,7 @@ namespace Project_kindergarten
             }
             catch(System.Exception e)
             {
+                Log.Write(e.ToString() + "\n");
                 return null;
             }
             // No exception = file was found and loaded into memory, add to list and sort
