@@ -105,5 +105,10 @@ namespace Project_kindergarten
 
 
         }
+
+        private void btn_CreateGame_Click(object sender, EventArgs e)
+        {
+                
+        }
     }
 }
