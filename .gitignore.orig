@@ -63,9 +63,13 @@ obj/x86/Debug/GenerateResource.read.1.tlog
 obj/x86/Debug/GenerateResource.write.1.tlog
 obj/x86/Debug/Project_kindergarten.FindGame.resources
 obj/x86/Debug/ResolveAssemblyReference.cache
+<<<<<<< HEAD
+obj/x86/Debug/Project_kindergarten.FindGame.resources
+=======
 loginmenu.cs.orig
 obj/x86/Debug/Project_kindergarten.FindGame.resources
 obj/x86/Debug/Project_kindergarten.FindGame.resources
 obj/x86/Debug/Project_kindergarten.FindGame.resources
 obj/x86/Debug/Project_kindergarten.FindGame.resources
 obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+>>>>>>> cea186b64f6619c08ee3685a1cd5edf9963a2ca1

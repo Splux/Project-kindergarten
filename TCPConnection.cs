@@ -78,8 +78,16 @@ namespace Project_kindergarten
         {
             if (_tcpClient == null)
                 return false;
-            else
-                return _tcpClient.Connected;
+            try
+            {
+                _streamWriter.WriteLine("123");
+                _streamWriter.Flush();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
         public bool Close()
@@ -206,7 +214,7 @@ namespace Project_kindergarten
                 "Please check your internet connection");
                 Log.Write(e.ToString());
             }
-            System.Windows.Forms.MessageBox.Show("So good, so far...");
+            //System.Windows.Forms.MessageBox.Show("So good, so far...");
         }
         public void Receive(out string outString)
         {

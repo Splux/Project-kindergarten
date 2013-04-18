@@ -17,34 +17,48 @@ namespace Project_kindergarten
         private Point _startPoint = new Point(0, 0);
         private int _fullBorderXSize = 677;
         private int _minBorderXSize = 285;
-<<<<<<< HEAD
-=======
-        private const string _remoteServer = "172.20.0.152";
->>>>>>> 21c735e5aea0e3aef67edf0628d04c81ad7ca24a
+        private const string _remoteServer = "172.20.0.185";
+
+        private MainMenu mainMenu = new MainMenu();
         #endregion
 
         public loginmenu()
         {
             InitializeComponent();
             this.Show();
+            //endast för testning
+            //mainMenu.ShowDialog();
         }
 
-<<<<<<< HEAD
-        private void loginmenu_Load(object sender, EventArgs e)
-        {
-            //serverConnection = new TCPConnection(System.Net.IPAddress.Parse("172.20.0.172"));
-            serverConnection = new TCPConnection("asdfs");
-
-            // Add eventhandlers for window-dragging functionality
-=======
         ~loginmenu()
         {
             Application.Exit();
         }
 
+        private string CalculateMD5(string inString)
+        {
+            System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
+            byte[] inBytes = System.Text.ASCIIEncoding.ASCII.GetBytes(inString);
+            byte[] md5hash = md5.ComputeHash(inBytes);
+
+            StringBuilder sb = new StringBuilder();
+
+            for(int i = 0; i < md5hash.Length; i++)
+            {
+                sb.Append(md5hash[i].ToString("x2"));
+            }
+
+            StringBuilder sb2 = new StringBuilder();
+            for(int i = 0; i < 20; i++)
+            {
+                sb2.Append(sb[i]);
+            }
+            MessageBox.Show(sb2.ToString());
+            return sb2.ToString();
+        }
+
         private void loginmenu_Load(object sender, EventArgs e)
         {
->>>>>>> 21c735e5aea0e3aef67edf0628d04c81ad7ca24a
             this.MouseDown += new MouseEventHandler(onMouseDown);
             this.MouseUp += new MouseEventHandler(onMouseUp);
             this.MouseMove += new MouseEventHandler(onMouseMove);
@@ -67,13 +81,6 @@ namespace Project_kindergarten
             pb_Border.Visible = false;
             #endregion
             this.Size = new Size(285, 265);
-<<<<<<< HEAD
-
-
-            MainMenu menu = new MainMenu();
-            menu.Show();
-=======
->>>>>>> 21c735e5aea0e3aef67edf0628d04c81ad7ca24a
         }
 
 
@@ -108,24 +115,25 @@ namespace Project_kindergarten
 
         #endregion
 
-<<<<<<< HEAD
-        
-
-        private void btn_Login_Click(object sender, EventArgs e)
-        {
-=======
 
         private void successfulLogin()
         {
-            MessageBox.Show("Success");
-
-            serverConnection.Close();
+            //MessageBox.Show("Success");
+            this.Hide();
+            UserInfo.PlayerName = this.textBox_Username.Text;
+            UserInfo.TcpClient = this.serverConnection;
+            mainMenu.Show();
+            //serverConnection.Close();
         }
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
+            mainMenu.Show();
             serverConnection = new TCPConnection(System.Net.IPAddress.Parse(_remoteServer));
->>>>>>> 21c735e5aea0e3aef67edf0628d04c81ad7ca24a
+=======
+            serverConnection = new TCPConnection(System.Net.IPAddress.Parse(GrabbarnasIP.ipAddress));
+>>>>>>> 579341dc1357623dcbae2a8dc421d155fe032abe
             // Keeping this messagebox, in case I need to disable all this again
             //MessageBox.Show("This section is commented out for testing purpose");
             if (textBox_Username.Text == "" || textBox_Password.Text == "")
@@ -133,28 +141,7 @@ namespace Project_kindergarten
                 System.Windows.Forms.MessageBox.Show("Enter both username and/or password");
                 return;
             }
-<<<<<<< HEAD
-            string sendData = "0" + textBox_Username.Text + '\\' + textBox_Password.Text;
-            //System.Windows.Forms.MessageBox.Show(textBox_Username.ToString());
-            string rcvData;
-            serverConnection.Send(sendData);
-            serverConnection.Receive(out rcvData);
-            if (string.IsNullOrEmpty(rcvData))
-            {
-                System.Windows.Forms.MessageBox.Show("Something went wrong!\n Blame our monkeys.");
-                return;
-            }
-            if (rcvData[0] == '0')
-            {
-                this.Hide();
-                MainMenu menu = new MainMenu();
-                menu.Show();
-            }
-            this.Hide();
-            MainMenu mesnu = new MainMenu();
-            mesnu.Show();
-=======
-            string sendData = Flags.LOGIN_REQUEST + textBox_Username.Text + '\\' + textBox_Password.Text;
+            string sendData = Flags.LOGIN_REQUEST + textBox_Username.Text + '\\' + CalculateMD5(textBox_Password.Text);
             //System.Windows.Forms.MessageBox.Show(textBox_Username.ToString());
             string rcvData;
             
@@ -211,7 +198,6 @@ namespace Project_kindergarten
 
             // User successfully logged in
             successfulLogin();
->>>>>>> 21c735e5aea0e3aef67edf0628d04c81ad7ca24a
         }
 
         private bool isValidRegister()
@@ -235,19 +221,11 @@ namespace Project_kindergarten
                 return false;
             }
             // check for invalid characters in loginmail/usrname/pw
-<<<<<<< HEAD
-            if (textBox_LoginEmail.Text.Contains('@'))
-            {
-                System.Windows.Forms.MessageBox.Show("Don't use '@' in mail >:(");
-                return false;
-            }
-=======
             //if (textBox_LoginEmail.Text.Contains('@'))
             //{
             //    System.Windows.Forms.MessageBox.Show("Don't use '@' in mail >:(");
             //    return false;
             //}
->>>>>>> 21c735e5aea0e3aef67edf0628d04c81ad7ca24a
 
             if (textBox_ConfirmPw.Text.Contains('\\') || textBox_RegPw.Text.Contains('\\') || textBox_RegUsrname.Text.Contains('\\'))
             {
@@ -258,47 +236,6 @@ namespace Project_kindergarten
             return true;
         }
 
-<<<<<<< HEAD
-        private void btn_Register1_Click(object sender, EventArgs e)
-        {
-            // Check so both password is valid
-            if (!isValidRegister())
-            {
-                textBox_RegPw.Text = string.Empty;
-                textBox_ConfirmPw.Text = string.Empty;
-                return;
-            }
-            
-            System.Windows.Forms.MessageBox.Show("3" + '\\' + textBox_RegUsrname.Text + '\\' +
-                textBox_RegPw.Text + '\\' + textBox_LoginEmail.Text);
-
-            string sendData = "3" + textBox_RegUsrname.Text + '\\' +
-                textBox_RegPw.Text + '\\' + textBox_LoginEmail.Text;
-
-            System.Windows.Forms.MessageBox.Show(sendData);
-
-            serverConnection.Send(sendData);
-            string retVal;
-            serverConnection.Receive(out retVal);
-
-            // retVal[0] should be 3, else something failed
-            if (string.IsNullOrEmpty(retVal))
-            {
-                MessageBox.Show("WHAT");
-                textBox_ConfirmPw.Clear();
-                textBox_LoginEmail.Clear();
-                textBox_RegPw.Clear();
-                textBox_RegUsrname.Clear();
-                return;
-            }
-            else if (retVal[0] != '3')
-            {
-                System.Windows.Forms.MessageBox.Show("Registration failed");
-                return;
-            }
-
-            System.Windows.Forms.MessageBox.Show("Registration successful!");
-=======
         private void clearRegisterFields()
         {
             textBox_ConfirmPw.Clear();
@@ -320,7 +257,7 @@ namespace Project_kindergarten
 
             StringBuilder str = new StringBuilder();
             str.Append(Flags.REGISTER_REQUEST); /*str.Append("\\");*/ str.Append(textBox_RegUsrname.Text);
-            str.Append("\\"); str.Append(textBox_RegPw.Text); str.Append("\\"); str.Append(textBox_LoginEmail.Text);
+            str.Append("\\"); str.Append(CalculateMD5(textBox_RegPw.Text)); str.Append("\\"); str.Append(textBox_LoginEmail.Text);
 
             string sendData = str.ToString();
 
@@ -329,13 +266,13 @@ namespace Project_kindergarten
 
             //System.Windows.Forms.MessageBox.Show(sendData);
 
-            serverConnection = new TCPConnection(System.Net.IPAddress.Parse(_remoteServer));
+            serverConnection = new TCPConnection(System.Net.IPAddress.Parse(GrabbarnasIP.ipAddress));
 
             serverConnection.Send(sendData);
             string retVal = string.Empty;
             if (!serverConnection.IsConnected())
             {
-                MessageBox.Show("dropped connection");
+                //MessageBox.Show("dropped connection");
                 return;
             }
             //System.Threading.Thread.Sleep(100);
@@ -343,52 +280,62 @@ namespace Project_kindergarten
             
             int sleepTime = 0;
 
+            // Retry to receive an answer from server for 5 seconds
             do
             {
+                serverConnection.Receive(out retVal);
                 System.Threading.Thread.Sleep(50);
                 sleepTime += 50;
-                serverConnection.Receive(out retVal);
-                
             }while(retVal == string.Empty && sleepTime <= 5000);
 
             serverConnection.Close();
             serverConnection = null;
-            //serverConnection.Receive(out retVal);
-            //retVal = string.Empty;
+            
+            if(retVal == string.Empty)
+            {
+                MessageBox.Show("Failed to register");
+                return;
+            }
 
-            System.Windows.Forms.MessageBox.Show(retVal);
-
-            //System.Windows.Forms.MessageBox.Show("Registration successful!");
->>>>>>> 21c735e5aea0e3aef67edf0628d04c81ad7ca24a
+            if(retVal == Flags.USER_REGISTRATION_SUCCESS)
+            {
+                MessageBox.Show("Registration completed!");
+            }
+            else if(retVal == Flags.USER_REGISTRATION_FAILED)
+            {
+                MessageBox.Show("Registration failed");
+            }
+            else if(retVal == Flags.USER_NAME_NOT_AVAILABLE)
+            {
+                MessageBox.Show("Username already in use");
+            }
         }
 
         private void btn_Exit_Click(object sender, EventArgs e)
         {
-<<<<<<< HEAD
-=======
             if(serverConnection != null)
                 serverConnection.Close();
->>>>>>> 21c735e5aea0e3aef67edf0628d04c81ad7ca24a
             Application.Exit();
         }
 
         private void showRegObjects()
         {
+            clearRegisterFields();
             // Set visibility of register menu to true
             // Textboxes
-            textBox_RegUsrname.Visible = true;
-            textBox_RegPw.Visible = true;
-            textBox_ConfirmPw.Visible = true;
-            textBox_LoginEmail.Visible = true;
+            textBox_RegUsrname.Visible =   true;
+            textBox_RegPw.Visible =        true;
+            textBox_ConfirmPw.Visible =    true;
+            textBox_LoginEmail.Visible =   true;
             // Button
-            btn_Register1.Visible = true;
+            btn_Register1.Visible =        true;
             // Labels
-            lbl_RegConfPw.Visible = true;
-            lbl_RegEmail.Visible = true;
-            lbl_RegPw.Visible = true;
-            lbl_RegUser.Visible = true;
+            lbl_RegConfPw.Visible =        true;
+            lbl_RegEmail.Visible =         true;
+            lbl_RegPw.Visible =            true;
+            lbl_RegUser.Visible =          true;
             // Border
-            pb_Border.Visible = true;
+            pb_Border.Visible =            true;
             //pb_Border.Update();
 
             // Set size so we can see it again
@@ -401,18 +348,11 @@ namespace Project_kindergarten
         private void btn_Register_Click(object sender, EventArgs e)
         {
             // do it in a thread to avoid a bug I can't solve.
-<<<<<<< HEAD
-            System.Threading.Thread th = new System.Threading.Thread(showRegObjects);
-            th.Start();
-        }
-
-=======
             //System.Threading.Thread th = new System.Threading.Thread(showRegObjects);
             showRegObjects();
             //th.Start();
         }
         
->>>>>>> 21c735e5aea0e3aef67edf0628d04c81ad7ca24a
         private void btn_Close_Click(object sender, EventArgs e)
         {
             // Set size so we cannot see it again.
@@ -420,11 +360,7 @@ namespace Project_kindergarten
             {
                 Size = new Size(i, this.Size.Height);
             }
-<<<<<<< HEAD
-
-=======
             
->>>>>>> 21c735e5aea0e3aef67edf0628d04c81ad7ca24a
             // Set visibility of register menu to false.
             textBox_RegUsrname.Visible = false;
             textBox_RegPw.Visible = false;
@@ -449,12 +385,10 @@ namespace Project_kindergarten
             }
         }
 
-<<<<<<< HEAD
-        
-=======
         private void userVerification()
         {
-            VerifyUser vu = new VerifyUser(System.Net.IPAddress.Parse(_remoteServer), textBox_Username.Text);
+
+            VerifyUser vu = new VerifyUser(System.Net.IPAddress.Parse(GrabbarnasIP.ipAddress), textBox_Username.Text);
             vu.ShowDialog();
 
             bool userVerified = vu.IsVerified;
@@ -471,6 +405,5 @@ namespace Project_kindergarten
                 MessageBox.Show("User verification failed");
             }
         }
->>>>>>> 21c735e5aea0e3aef67edf0628d04c81ad7ca24a
     }
 }

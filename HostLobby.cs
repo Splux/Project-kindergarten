@@ -29,6 +29,8 @@ namespace Project_kindergarten
                     local_ip = ip.ToString();
             }
 
+            lbl_ipaddress.Text = local_ip;
+
             _serverListener = new TcpListener(System.Net.IPAddress.Parse(local_ip), 1337);
             _serverListener.Start();
 
