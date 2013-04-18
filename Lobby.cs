@@ -28,7 +28,7 @@ namespace Project_kindergarten
                 _server.Receive(out servername);
                 System.Threading.Thread.Sleep(10);
                 time += 10;
-            } while (servername != string.Empty && time <= 2000);
+            } while (servername == string.Empty && time <= 2000);
             if (servername != string.Empty)
                 _serverName = servername;
             lbl_ipaddress.Text = _ipAddress;

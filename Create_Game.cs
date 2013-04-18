@@ -100,7 +100,7 @@ namespace Project_kindergarten
                 {
                     if(rcv == Flags.HOST_CREATION_SUCCESS)
                     {
-                        HostLobby lobby = new HostLobby();
+                        HostLobby lobby = new HostLobby(tb_ServerName.Text);
                         this.Hide();
                         lobby.ShowDialog();
                         this.Show();

@@ -77,7 +77,7 @@ namespace Project_kindergarten
             if(rcvString == null || rcvString == string.Empty)
             {
                 lb_Serverlist.Items.Clear();
-                lb_Serverlist.Items.Add("Fuck it");
+                lb_Serverlist.Items.Add("No servers");
             }
             else
             {

@@ -13,13 +13,17 @@ namespace Project_kindergarten
     public partial class HostLobby : Form
     {
         
-        public HostLobby()
+        public HostLobby(string servername)
         {
             InitializeComponent();
-            Initialize();
+            Initialize(servername);
+        }
+        ~HostLobby()
+        {
+            cleanup();
         }
 
-        private void Initialize()
+        private void Initialize(string servername)
         {
             System.Net.IPHostEntry hosts = System.Net.Dns.GetHostEntry(System.Net.Dns.GetHostName());
             string local_ip = string.Empty;
@@ -30,6 +34,11 @@ namespace Project_kindergarten
             }
 
             lbl_ipaddress.Text = local_ip;
+            lbl_serverName.Text = servername;
+
+            lb_Users.Items.Add(UserInfo.PlayerName);
+
+            _serverName = servername;
 
             _serverListener = new TcpListener(System.Net.IPAddress.Parse(local_ip), 1337);
             _serverListener.Start();
@@ -45,6 +54,7 @@ namespace Project_kindergarten
             {
                 for(int i = 0; i < _connectedClients.Count; i++)
                 {
+                    // Check for new incoming messages
                     if(_connectedClients[i].NewMessage)
                     {
                         string messageToSend = _connectedClients[i].ClientMessage;
@@ -72,7 +82,31 @@ namespace Project_kindergarten
                     continue;
                 }
                 TcpClient client = _serverListener.AcceptTcpClient();
-                Client newclient = new Client(client, _serverName);
+                string playerlist = "";
+                System.Net.IPEndPoint ipep = (System.Net.IPEndPoint)client.Client.RemoteEndPoint;
+                System.Net.IPAddress ipad = ipep.Address;
+                //lock (label1)
+                //{
+                //    label1.Text = "New player: " + ipad.ToString();
+                //}
+                foreach (string str in lb_Users.Items)
+                {
+                    if (str == "")
+                        break;
+                    playerlist += str;
+                    playerlist += "/";
+                }
+                System.IO.StreamReader sr = new System.IO.StreamReader(client.GetStream());
+
+                while (sr.Peek() < 0)
+                {
+                    System.Threading.Thread.Sleep(10);
+                }
+                string clientname = sr.ReadLine();
+                //HostLobby.lb_Users.Items.Add(clientname);
+                //lb_Users.Items.Add(clientname);
+                Client newclient = new Client(client, _serverName, playerlist);
+
                 lock (_connectedClients)
                 {
                     _connectedClients.Add(newclient);
@@ -96,6 +130,8 @@ namespace Project_kindergarten
             _running = false;
 
             _serverListener.Stop();
+
+            this.Close();
         }
 
         #region Variables
@@ -108,8 +144,6 @@ namespace Project_kindergarten
 
         private volatile bool _running = true;
         #endregion
-
-        
     }
 
     class Client
@@ -119,12 +153,22 @@ namespace Project_kindergarten
             _tcpClient = null;
             _rcvThread = null;
         }
-        public Client(TcpClient client, string servername)
+
+        public NetworkStream ClientStream
         {
-            _tcpClient = client;
-            System.IO.StreamWriter sw = new System.IO.StreamWriter(_tcpClient.GetStream());
-            sw.WriteLine(servername);
-            sw.Flush();
+            get { return _tcpClient.GetStream(); }
+            set { }
+        }
+
+        public Client(TcpClient client, string servername, string playerlist)
+        {
+            _tcpClient = new TCPConnection(client);
+            // peek and then readline
+            
+            _tcpClient.Send(servername);
+            _tcpClient.Send(playerlist);
+            
+
             _rcvThread = new System.Threading.Thread(receiveThread);
             _rcvThread.IsBackground = true;
             _rcvThread.Start();
@@ -158,9 +202,7 @@ namespace Project_kindergarten
 
         public void Send(string msg)
         {
-            System.IO.StreamWriter sw = new System.IO.StreamWriter(_tcpClient.GetStream());
-            sw.WriteLine(msg);
-            sw.Flush();
+            _tcpClient.Send(msg);
         }
 
         private void handleReceivedData(string rcv)
@@ -168,29 +210,22 @@ namespace Project_kindergarten
             lock (_clientMessage)
             {
                 _clientMessage = rcv;
+                _newMessage = true;
             }
         }
 
         private void receiveThread()
         {
-            System.IO.StreamReader reader = new System.IO.StreamReader(_tcpClient.GetStream());
-            while (_running && _tcpClient.Connected)
+            //System.IO.StreamReader reader = new System.IO.StreamReader(_tcpClient.GetStream());
+            while (_running && _tcpClient.IsConnected())
             {
                 string rcv = string.Empty;
-                try
-                {
-                    rcv = reader.ReadLine();
-                    handleReceivedData(rcv);
-                }
-                catch(Exception e)
-                {
-                    Log.Write(e.ToString());
-                    return;
-                }
+                _tcpClient.Receive(out rcv);
+                handleReceivedData(rcv);
             }
         }
 
-        private TcpClient _tcpClient;
+        private TCPConnection _tcpClient;
         private System.Threading.Thread _rcvThread;
         private string _clientMessage;
         private volatile bool _running = true;
