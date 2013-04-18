@@ -184,7 +184,7 @@ namespace Project_kindergarten
             _streamReader = new System.IO.StreamReader(_tcpClient.GetStream());
 
             // > 0 == something to read
-            if (_streamReader.Peek() > 0)
+            if (_streamReader.Peek() >= 0)
             {
                 return true;
             }
