@@ -84,6 +84,7 @@
             this.Controls.Add(this._btnDesign);
             this.Controls.Add(this.pb_Back);
             this.Controls.Add(this.lb_Serverlist);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FindGame";
             this.ShowIcon = false;
