@@ -9,6 +9,14 @@ namespace Project_kindergarten
     {
         public const string ipAddress = "172.20.1.10";
     }
+
+    static public class LobbyFlags
+    {
+        public const string ADD_USER = "!";
+        public const string REMOVE_USER = "@";
+        public const string SERVER_STARTING = "#";
+    }
+
     static public class Flags
     {
         // Requests
