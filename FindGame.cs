@@ -31,7 +31,7 @@ namespace Project_kindergarten
                 this.Close();
             }
 
-            lb_Serverlist.Items.Add("No servers\npress update to update");
+            lb_Serverlist.Items.Add("No servers press update to update");
 
             //pictureBox1.Image = new Bitmap(@"Backgroundexempel.png");
             //pictureBox1.Update();
@@ -93,10 +93,12 @@ namespace Project_kindergarten
                 {
                     // split string again to get username + ip
                     string[] userAndIp = str.Split('/');
-                    if(userAndIp == null)
+                    if (userAndIp == null)
                     {
                         MessageBox.Show("Find out what went wrong, you lazy fuck");
                     }
+                    else if (userAndIp[0] == "" || userAndIp[1] == "")
+                        break;
                     lb_Serverlist.Items.Add(userAndIp[0]);
 
                     try
@@ -118,7 +120,8 @@ namespace Project_kindergarten
             string serverName = lb_Serverlist.SelectedItem.ToString();
             if(_serverList.ContainsKey(serverName))
             {
-                Lobby lobby = new Lobby(_serverList[serverName]);
+                Lobby lobby = new Lobby();
+                lobby.Initialize(_serverList[serverName]);
                 this.Hide();
                 lobby.ShowDialog();
                 this.Show();

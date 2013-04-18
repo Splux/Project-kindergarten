@@ -30,6 +30,7 @@
         {
             this.lbl_serverName = new System.Windows.Forms.Label();
             this.lbl_ipaddress = new System.Windows.Forms.Label();
+            this.lb_users = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // lbl_serverName
@@ -51,12 +52,21 @@
             this.lbl_ipaddress.TabIndex = 1;
             this.lbl_ipaddress.Text = "No ip address";
             // 
+            // namebox
+            // 
+            this.lb_users.FormattingEnabled = true;
+            this.lb_users.Location = new System.Drawing.Point(19, 85);
+            this.lb_users.Name = "namebox";
+            this.lb_users.Size = new System.Drawing.Size(181, 238);
+            this.lb_users.TabIndex = 2;
+            // 
             // Lobby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1366, 768);
             this.ControlBox = false;
+            this.Controls.Add(this.lb_users);
             this.Controls.Add(this.lbl_ipaddress);
             this.Controls.Add(this.lbl_serverName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -73,5 +83,6 @@
 
         private System.Windows.Forms.Label lbl_serverName;
         private System.Windows.Forms.Label lbl_ipaddress;
+        private System.Windows.Forms.ListBox lb_users;
     }
 }
