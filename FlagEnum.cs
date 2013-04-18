@@ -12,9 +12,10 @@ namespace Project_kindergarten
 
     static public class LobbyFlags
     {
-        public const string ADD_USER = "!";
-        public const string REMOVE_USER = "@";
-        public const string SERVER_STARTING = "#";
+        public const char ADD_USER = '!';
+        public const char REMOVE_USER = '@';
+        public const char SERVER_STARTING = '#';
+        public const char SERVER_STOP = '¤';
     }
 
     static public class Flags
