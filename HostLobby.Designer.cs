@@ -33,6 +33,7 @@
             this.btn_Start = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.lb_Users = new System.Windows.Forms.ListBox();
+            this.btn_Exit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lbl_serverName
@@ -82,12 +83,24 @@
             this.lb_Users.Size = new System.Drawing.Size(120, 251);
             this.lb_Users.TabIndex = 4;
             // 
+            // btn_Exit
+            // 
+            this.btn_Exit.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.btn_Exit.Location = new System.Drawing.Point(19, 685);
+            this.btn_Exit.Name = "btn_Exit";
+            this.btn_Exit.Size = new System.Drawing.Size(246, 71);
+            this.btn_Exit.TabIndex = 5;
+            this.btn_Exit.Text = "Exit";
+            this.btn_Exit.UseVisualStyleBackColor = false;
+            this.btn_Exit.Click += new System.EventHandler(this.btn_Exit_Click);
+            // 
             // HostLobby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1366, 768);
             this.ControlBox = false;
+            this.Controls.Add(this.btn_Exit);
             this.Controls.Add(this.lb_Users);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btn_Start);
@@ -98,6 +111,8 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
             this.Text = "HostLobby";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            //this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnClose);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -110,5 +125,6 @@
         private System.Windows.Forms.Button btn_Start;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox lb_Users;
+        private System.Windows.Forms.Button btn_Exit;
     }
 }

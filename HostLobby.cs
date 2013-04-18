@@ -46,9 +46,19 @@ namespace Project_kindergarten
             _newConnectionThread = new System.Threading.Thread(AcceptClients);
             _newConnectionThread.IsBackground = true;
             _newConnectionThread.Start();
+
+            _sendThread = new System.Threading.Thread(BroadcastThread);
+            _sendThread.IsBackground = true;
+            _sendThread.Start();
         }
 
-        private void SendThread()
+        private void removeUser(int user)
+        {
+            _connectedClients[user].Stop();
+            _connectedClients.RemoveAt(user);
+        }
+
+        private void BroadcastThread()
         {
             while(_running)
             {
@@ -58,6 +68,13 @@ namespace Project_kindergarten
                     if(_connectedClients[i].NewMessage)
                     {
                         string messageToSend = _connectedClients[i].ClientMessage;
+
+                        // check if someone is exiting
+                        if (messageToSend[0] == LobbyFlags.REMOVE_USER)
+                        {
+                            removeUser(i);
+                        }
+
                         for(int j = 0; j < _connectedClients.Count; j++)
                         {
                             if(j != i)
@@ -131,7 +148,28 @@ namespace Project_kindergarten
 
             _serverListener.Stop();
 
+            UserInfo.TcpClient.Send(Flags.HOST_REQUEST);
+            string rcv = "";
+
+            while (!UserInfo.TcpClient.Peek())
+                System.Threading.Thread.Sleep(10);
+            UserInfo.TcpClient.Receive(out rcv);
+
+            if (rcv == Flags.HOST_SUCCESSFUL_REMOVE)
+            {
+                MessageBox.Show("Successfully closed server");
+            }
+
             this.Close();
+        }
+
+        private void btn_Exit_Click(object sender, EventArgs e)
+        {
+            foreach (Client cl in _connectedClients)
+            {
+                cl.Send(LobbyFlags.SERVER_STOP.ToString());
+            }
+            cleanup();
         }
 
         #region Variables
@@ -144,6 +182,13 @@ namespace Project_kindergarten
 
         private volatile bool _running = true;
         #endregion
+
+        //private void OnClose(object sender, FormClosingEventArgs e)
+        //{
+        //    cleanup();
+        //}
+
+        
     }
 
     class Client
@@ -227,7 +272,7 @@ namespace Project_kindergarten
 
         private TCPConnection _tcpClient;
         private System.Threading.Thread _rcvThread;
-        private string _clientMessage;
+        private string _clientMessage = "";
         private volatile bool _running = true;
         private volatile bool _newMessage = false;
     }
