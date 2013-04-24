@@ -77,7 +77,7 @@ namespace Project_kindergarten
             if(rcvString == null || rcvString == string.Empty)
             {
                 lb_Serverlist.Items.Clear();
-                lb_Serverlist.Items.Add("No servers");
+                lb_Serverlist.Items.Add("No server found.");
             }
             else
             {
@@ -95,7 +95,7 @@ namespace Project_kindergarten
                     string[] userAndIp = str.Split('/');
                     if (userAndIp == null)
                     {
-                        MessageBox.Show("Find out what went wrong, you lazy fuck");
+                        MessageBox.Show("userAndIp == null");
                     }
                     else if (userAndIp[0] == "" || userAndIp[1] == "")
                         break;
@@ -120,11 +120,18 @@ namespace Project_kindergarten
             string serverName = lb_Serverlist.SelectedItem.ToString();
             if(_serverList.ContainsKey(serverName))
             {
-                Lobby lobby = new Lobby();
-                lobby.Initialize(_serverList[serverName]);
-                this.Hide();
-                lobby.ShowDialog();
-                this.Show();
+                try
+                {
+                    Lobby lobby = new Lobby();
+                    lobby.Initialize(_serverList[serverName]);
+                    this.Hide();
+                    lobby.ShowDialog();
+                    this.Show();
+                }
+                catch
+                {
+                    MessageBox.Show("Couldn't create lobby.");
+                }
             }
         }
     }

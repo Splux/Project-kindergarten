@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Net;
+using System.Net.Sockets;
 
 namespace Project_kindergarten
 {
@@ -48,6 +50,8 @@ namespace Project_kindergarten
 
             foreach (string name in _playerNames)
             {
+                if (name == "")
+                    break;
                 lb_users.Items.Add(name);
             }
 
@@ -56,6 +60,7 @@ namespace Project_kindergarten
             _rcvThread = new System.Threading.Thread(ReceiveThread);
             _rcvThread.IsBackground = true;
             _rcvThread.Start();
+
         }
 
         private void ReceiveThread()
@@ -63,15 +68,39 @@ namespace Project_kindergarten
             string inString;
             _server.Receive(out inString);
 
-            if (inString != string.Empty)
+            if (inString != string.Empty && inString != null)
             {
-                if (inString[0] == 'x')
+                if (inString[0] == LobbyFlags.REMOVE_USER) //Player left, update list of players accordingly.
                 {
-                    inString.Remove(0, 1);
+                    inString = inString.Remove(0, 1);
                     lb_users.Items.Remove(lb_users.FindString(inString));
+                    lb_users.Update();
                 }
-                else if (inString[0] == 'T')
+                else if (inString[0] == LobbyFlags.ADD_USER) //Player joined, update list of players. 
                 {
+                    inString = inString.Remove(0, 1);
+                    lb_users.Items.Add(inString);
+                    lb_users.Update();
+                }
+                else if (inString[0] == LobbyFlags.SERVER_STARTING)
+                {
+                    _rcvThread.Abort();
+                    closeThis();
+                    IPEndPoint ServerEndPoint = new IPEndPoint(IPAddress.Parse(_ipAddress), 1337);
+                    UdpClient GameServer = new UdpClient();
+                    GameServer.Connect(ServerEndPoint);
+                    //Start Game
+                }
+                else if (inString[0] == LobbyFlags.SERVER_STOP)
+                {
+                    _rcvThread.Abort(); 
+                    closeThis();
+                    //Game closed
+                }
+                else if (inString[0] == LobbyFlags.CHAT_MESSAGE)
+                {
+                    inString = inString.Remove(0, 1);
+                    tb_Chat.AppendText(inString + "\n");
                 }
             }
         }
@@ -82,5 +111,22 @@ namespace Project_kindergarten
         private string[] _playerNames;
         private TCPConnection _server;
         private char _splitChar;
+
+        private void btn_Disconnect_Click(object sender, EventArgs e)
+        {
+            _server.Send(LobbyFlags.REMOVE_USER.ToString());
+            this.Dispose();
+        }
+
+        private void btn_ChatSend_Click(object sender, EventArgs e)
+        {
+            string ChatText = tb_WriteChat.Text;
+            if (ChatText != string.Empty)
+            {
+                tb_WriteChat.Clear();
+                tb_Chat.AppendText(UserInfo.PlayerName + ": " + ChatText + "\n");
+                _server.Send(LobbyFlags.CHAT_MESSAGE.ToString() + UserInfo.PlayerName + ": " + ChatText);
+            }
+        }
     }
 }

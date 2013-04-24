@@ -7,14 +7,16 @@ namespace Project_kindergarten
 {
     static public class GrabbarnasIP
     {
-        public const string ipAddress = "172.20.1.10";
+        public const string ipAddress = "172.20.0.220";
     }
 
     static public class LobbyFlags
     {
-        public const string ADD_USER = "!";
-        public const string REMOVE_USER = "@";
-        public const string SERVER_STARTING = "#";
+        public const char ADD_USER = '!';
+        public const char REMOVE_USER = '@';
+        public const char SERVER_STARTING = '#';
+        public const char SERVER_STOP = '¤';
+        public const char CHAT_MESSAGE = '%';
     }
 
     static public class Flags
