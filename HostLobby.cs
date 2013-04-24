@@ -33,6 +33,8 @@ namespace Project_kindergarten
                     local_ip = ip.ToString();
             }
 
+            _connectedClients = new List<Client>();
+
             lbl_ipaddress.Text = local_ip;
             lbl_serverName.Text = servername;
 
@@ -52,16 +54,49 @@ namespace Project_kindergarten
             _sendThread.Start();
         }
 
+        private void addUserToListbox(string user)
+        {
+            if(lb_Users.InvokeRequired)
+            {
+                lb_Users.BeginInvoke(new Action(delegate() { lb_Users.Items.Add(user); }));
+                return;
+            }
+            lb_Users.Items.Add(user);
+        }
+
+        private void removeUserFromListbox(int id)
+        {
+            if(lb_Users.InvokeRequired)
+            {
+                lb_Users.BeginInvoke(new Action(delegate() { lb_Users.Items.RemoveAt(id); }));
+                return;
+            }
+            lb_Users.Items.RemoveAt(id);
+        }
+
         private void removeUser(int user)
         {
-            _connectedClients[user].Stop();
-            _connectedClients.RemoveAt(user);
+            lock (_connectedClients)
+            {
+                _connectedClients[user - 1].Stop();
+                _connectedClients.RemoveAt(user - 1);
+            }
+            removeUserFromListbox(user);
         }
 
         private void BroadcastThread()
         {
             while(_running)
             {
+                if(_newClient)
+                {
+                    _newClient = false;
+                    lock(lb_Users)
+                    {
+                        addUserToListbox(_strClient);
+                        _strClient = "";
+                    }
+                }
                 for(int i = 0; i < _connectedClients.Count; i++)
                 {
                     // Check for new incoming messages
@@ -72,7 +107,8 @@ namespace Project_kindergarten
                         // check if someone is exiting
                         if (messageToSend[0] == LobbyFlags.REMOVE_USER)
                         {
-                            removeUser(i);
+                            removeUser(i + 1);
+                            break;
                         }
 
                         for(int j = 0; j < _connectedClients.Count; j++)
@@ -90,7 +126,7 @@ namespace Project_kindergarten
 
         private void AcceptClients()
         {
-            _connectedClients = new List<Client>();
+            //_connectedClients = new List<Client>();
             while(_running)
             {
                 if (!_serverListener.Pending())
@@ -102,27 +138,32 @@ namespace Project_kindergarten
                 string playerlist = "";
                 System.Net.IPEndPoint ipep = (System.Net.IPEndPoint)client.Client.RemoteEndPoint;
                 System.Net.IPAddress ipad = ipep.Address;
-                //lock (label1)
-                //{
-                //    label1.Text = "New player: " + ipad.ToString();
-                //}
+                
+                // 
                 foreach (string str in lb_Users.Items)
                 {
                     if (str == "")
                         break;
+                    if (str == "\n")
+                        continue;
                     playerlist += str;
                     playerlist += "/";
                 }
                 System.IO.StreamReader sr = new System.IO.StreamReader(client.GetStream());
 
+                // Wait for client to send us something
                 while (sr.Peek() < 0)
                 {
                     System.Threading.Thread.Sleep(10);
                 }
+                // Receive
                 string clientname = sr.ReadLine();
                 //HostLobby.lb_Users.Items.Add(clientname);
                 //lb_Users.Items.Add(clientname);
                 Client newclient = new Client(client, _serverName, playerlist);
+
+                _strClient = clientname;
+                _newClient = true;
 
                 lock (_connectedClients)
                 {
@@ -144,7 +185,8 @@ namespace Project_kindergarten
 
         private void cleanup()
         {
-            _running = false;
+            _sendThread.Abort();
+            _newConnectionThread.Abort();
 
             _serverListener.Stop();
 
@@ -181,6 +223,8 @@ namespace Project_kindergarten
         private List<Client> _connectedClients;
 
         private volatile bool _running = true;
+        private volatile bool _newClient = false;
+        private volatile string _strClient = "";
         #endregion
 
         //private void OnClose(object sender, FormClosingEventArgs e)
@@ -265,7 +309,8 @@ namespace Project_kindergarten
             while (_running && _tcpClient.IsConnected())
             {
                 string rcv = string.Empty;
-                _tcpClient.Receive(out rcv);
+                if(_tcpClient != null)
+                    _tcpClient.Receive(out rcv);
                 handleReceivedData(rcv);
             }
         }
