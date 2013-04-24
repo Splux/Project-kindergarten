@@ -56,7 +56,9 @@ namespace Project_kindergarten
             }
 
             lb_users.Items.Add(UserInfo.PlayerName);
-
+            
+            
+            _connected = true;
             _rcvThread = new System.Threading.Thread(ReceiveThread);
             _rcvThread.IsBackground = true;
             _rcvThread.Start();
@@ -65,42 +67,51 @@ namespace Project_kindergarten
 
         private void ReceiveThread()
         {
-            string inString;
-            _server.Receive(out inString);
+            
 
-            if (inString != string.Empty && inString != null)
+            while (_connected && _server.IsConnected())
             {
-                if (inString[0] == LobbyFlags.REMOVE_USER) //Player left, update list of players accordingly.
+                while(!_server.Peek())
                 {
-                    inString = inString.Remove(0, 1);
-                    lb_users.Items.Remove(lb_users.FindString(inString));
-                    lb_users.Update();
+                    System.Threading.Thread.Sleep(10);
                 }
-                else if (inString[0] == LobbyFlags.ADD_USER) //Player joined, update list of players. 
+                string inString;
+                _server.Receive(out inString);
+
+                if (inString != string.Empty && inString != null)
                 {
-                    inString = inString.Remove(0, 1);
-                    lb_users.Items.Add(inString);
-                    lb_users.Update();
-                }
-                else if (inString[0] == LobbyFlags.SERVER_STARTING)
-                {
-                    _rcvThread.Abort();
-                    closeThis();
-                    IPEndPoint ServerEndPoint = new IPEndPoint(IPAddress.Parse(_ipAddress), 1337);
-                    UdpClient GameServer = new UdpClient();
-                    GameServer.Connect(ServerEndPoint);
-                    //Start Game
-                }
-                else if (inString[0] == LobbyFlags.SERVER_STOP)
-                {
-                    _rcvThread.Abort(); 
-                    closeThis();
-                    //Game closed
-                }
-                else if (inString[0] == LobbyFlags.CHAT_MESSAGE)
-                {
-                    inString = inString.Remove(0, 1);
-                    tb_Chat.AppendText(inString + "\n");
+                    if (inString[0] == LobbyFlags.REMOVE_USER) //Player left, update list of players accordingly.
+                    {
+                        inString = inString.Remove(0, 1);
+                        lb_users.Items.Remove(lb_users.FindString(inString));
+                        lb_users.Update();
+                    }
+                    else if (inString[0] == LobbyFlags.ADD_USER) //Player joined, update list of players. 
+                    {
+                        inString = inString.Remove(0, 1);
+                        lb_users.Items.Add(inString);
+                        lb_users.Update();
+                    }
+                    else if (inString[0] == LobbyFlags.SERVER_STARTING)
+                    {
+                        _rcvThread.Abort();
+                        closeThis();
+                        IPEndPoint ServerEndPoint = new IPEndPoint(IPAddress.Parse(_ipAddress), 1337);
+                        UdpClient GameServer = new UdpClient();
+                        GameServer.Connect(ServerEndPoint);
+                        //Start Game
+                    }
+                    else if (inString[0] == LobbyFlags.SERVER_STOP)
+                    {
+                        _rcvThread.Abort();
+                        closeThis();
+                        //Game closed
+                    }
+                    else if (inString[0] == LobbyFlags.CHAT_MESSAGE)
+                    {
+                        inString = inString.Remove(0, 1);
+                        tb_Chat.AppendText(inString + "\n");
+                    }
                 }
             }
         }
@@ -111,6 +122,7 @@ namespace Project_kindergarten
         private string[] _playerNames;
         private TCPConnection _server;
         private char _splitChar;
+        private volatile bool _connected;
 
         private void btn_Disconnect_Click(object sender, EventArgs e)
         {
