@@ -106,6 +106,7 @@ namespace Project_kindergarten
                     {
                         string messageToSend = _connectedClients[i].ClientMessage;
                         _connectedClients[i].ClientMessage = "";
+                        _connectedClients[i].NewMessage = false;
 
                         // check if someone is exiting
                         if (messageToSend[0] == LobbyFlags.REMOVE_USER)
