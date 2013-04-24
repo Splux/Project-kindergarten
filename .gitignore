@@ -69,3 +69,6 @@ obj/x86/Debug/Project_kindergarten.FindGame.resources
 obj/x86/Debug/Project_kindergarten.FindGame.resources
 obj/x86/Debug/Project_kindergarten.FindGame.resources
 obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+*.*.orig
+
+obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache

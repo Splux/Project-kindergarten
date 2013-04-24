@@ -13,13 +13,17 @@ namespace Project_kindergarten
     public partial class HostLobby : Form
     {
         
-        public HostLobby()
+        public HostLobby(string servername)
         {
             InitializeComponent();
-            Initialize();
+            Initialize(servername);
+        }
+        ~HostLobby()
+        {
+            cleanup();
         }
 
-        private void Initialize()
+        private void Initialize(string servername)
         {
             System.Net.IPHostEntry hosts = System.Net.Dns.GetHostEntry(System.Net.Dns.GetHostName());
             string local_ip = string.Empty;
@@ -29,7 +33,14 @@ namespace Project_kindergarten
                     local_ip = ip.ToString();
             }
 
+            _connectedClients = new List<Client>();
+
             lbl_ipaddress.Text = local_ip;
+            lbl_serverName.Text = servername;
+
+            lb_Users.Items.Add(UserInfo.PlayerName);
+
+            _serverName = servername;
 
             _serverListener = new TcpListener(System.Net.IPAddress.Parse(local_ip), 1337);
             _serverListener.Start();
@@ -37,17 +48,69 @@ namespace Project_kindergarten
             _newConnectionThread = new System.Threading.Thread(AcceptClients);
             _newConnectionThread.IsBackground = true;
             _newConnectionThread.Start();
+
+            _sendThread = new System.Threading.Thread(BroadcastThread);
+            _sendThread.IsBackground = true;
+            _sendThread.Start();
         }
 
-        private void SendThread()
+        private void addUserToListbox(string user)
+        {
+            if(lb_Users.InvokeRequired)
+            {
+                lb_Users.BeginInvoke(new Action(delegate() { lb_Users.Items.Add(user); }));
+                return;
+            }
+            lb_Users.Items.Add(user);
+        }
+
+        private void removeUserFromListbox(int id)
+        {
+            if(lb_Users.InvokeRequired)
+            {
+                lb_Users.BeginInvoke(new Action(delegate() { lb_Users.Items.RemoveAt(id); }));
+                return;
+            }
+            lb_Users.Items.RemoveAt(id);
+        }
+
+        private void removeUser(int user)
+        {
+            lock (_connectedClients)
+            {
+                _connectedClients[user - 1].Stop();
+                _connectedClients.RemoveAt(user - 1);
+            }
+            removeUserFromListbox(user);
+        }
+
+        private void BroadcastThread()
         {
             while(_running)
             {
+                if(_newClient)
+                {
+                    _newClient = false;
+                    lock(lb_Users)
+                    {
+                        addUserToListbox(_strClient);
+                        _strClient = "";
+                    }
+                }
                 for(int i = 0; i < _connectedClients.Count; i++)
                 {
+                    // Check for new incoming messages
                     if(_connectedClients[i].NewMessage)
                     {
                         string messageToSend = _connectedClients[i].ClientMessage;
+
+                        // check if someone is exiting
+                        if (messageToSend[0] == LobbyFlags.REMOVE_USER)
+                        {
+                            removeUser(i + 1);
+                            break;
+                        }
+
                         for(int j = 0; j < _connectedClients.Count; j++)
                         {
                             if(j != i)
@@ -63,7 +126,7 @@ namespace Project_kindergarten
 
         private void AcceptClients()
         {
-            _connectedClients = new List<Client>();
+            //_connectedClients = new List<Client>();
             while(_running)
             {
                 if (!_serverListener.Pending())
@@ -72,7 +135,36 @@ namespace Project_kindergarten
                     continue;
                 }
                 TcpClient client = _serverListener.AcceptTcpClient();
-                Client newclient = new Client(client, _serverName);
+                string playerlist = "";
+                System.Net.IPEndPoint ipep = (System.Net.IPEndPoint)client.Client.RemoteEndPoint;
+                System.Net.IPAddress ipad = ipep.Address;
+                
+                // 
+                foreach (string str in lb_Users.Items)
+                {
+                    if (str == "")
+                        break;
+                    if (str == "\n")
+                        continue;
+                    playerlist += str;
+                    playerlist += "/";
+                }
+                System.IO.StreamReader sr = new System.IO.StreamReader(client.GetStream());
+
+                // Wait for client to send us something
+                while (sr.Peek() < 0)
+                {
+                    System.Threading.Thread.Sleep(10);
+                }
+                // Receive
+                string clientname = sr.ReadLine();
+                //HostLobby.lb_Users.Items.Add(clientname);
+                //lb_Users.Items.Add(clientname);
+                Client newclient = new Client(client, _serverName, playerlist);
+
+                _strClient = clientname;
+                _newClient = true;
+
                 lock (_connectedClients)
                 {
                     _connectedClients.Add(newclient);
@@ -93,9 +185,33 @@ namespace Project_kindergarten
 
         private void cleanup()
         {
-            _running = false;
+            _sendThread.Abort();
+            _newConnectionThread.Abort();
 
             _serverListener.Stop();
+
+            UserInfo.TcpClient.Send(Flags.HOST_REQUEST);
+            string rcv = "";
+
+            while (!UserInfo.TcpClient.Peek())
+                System.Threading.Thread.Sleep(10);
+            UserInfo.TcpClient.Receive(out rcv);
+
+            if (rcv == Flags.HOST_SUCCESSFUL_REMOVE)
+            {
+                MessageBox.Show("Successfully closed server");
+            }
+
+            this.Close();
+        }
+
+        private void btn_Exit_Click(object sender, EventArgs e)
+        {
+            foreach (Client cl in _connectedClients)
+            {
+                cl.Send(LobbyFlags.SERVER_STOP.ToString());
+            }
+            cleanup();
         }
 
         #region Variables
@@ -107,7 +223,14 @@ namespace Project_kindergarten
         private List<Client> _connectedClients;
 
         private volatile bool _running = true;
+        private volatile bool _newClient = false;
+        private volatile string _strClient = "";
         #endregion
+
+        //private void OnClose(object sender, FormClosingEventArgs e)
+        //{
+        //    cleanup();
+        //}
 
         
     }
@@ -119,12 +242,22 @@ namespace Project_kindergarten
             _tcpClient = null;
             _rcvThread = null;
         }
-        public Client(TcpClient client, string servername)
+
+        public NetworkStream ClientStream
         {
-            _tcpClient = client;
-            System.IO.StreamWriter sw = new System.IO.StreamWriter(_tcpClient.GetStream());
-            sw.WriteLine(servername);
-            sw.Flush();
+            get { return _tcpClient.GetStream(); }
+            set { }
+        }
+
+        public Client(TcpClient client, string servername, string playerlist)
+        {
+            _tcpClient = new TCPConnection(client);
+            // peek and then readline
+            
+            _tcpClient.Send(servername);
+            _tcpClient.Send(playerlist);
+            
+
             _rcvThread = new System.Threading.Thread(receiveThread);
             _rcvThread.IsBackground = true;
             _rcvThread.Start();
@@ -158,9 +291,7 @@ namespace Project_kindergarten
 
         public void Send(string msg)
         {
-            System.IO.StreamWriter sw = new System.IO.StreamWriter(_tcpClient.GetStream());
-            sw.WriteLine(msg);
-            sw.Flush();
+            _tcpClient.Send(msg);
         }
 
         private void handleReceivedData(string rcv)
@@ -168,31 +299,25 @@ namespace Project_kindergarten
             lock (_clientMessage)
             {
                 _clientMessage = rcv;
+                _newMessage = true;
             }
         }
 
         private void receiveThread()
         {
-            System.IO.StreamReader reader = new System.IO.StreamReader(_tcpClient.GetStream());
-            while (_running && _tcpClient.Connected)
+            //System.IO.StreamReader reader = new System.IO.StreamReader(_tcpClient.GetStream());
+            while (_running && _tcpClient.IsConnected())
             {
                 string rcv = string.Empty;
-                try
-                {
-                    rcv = reader.ReadLine();
-                    handleReceivedData(rcv);
-                }
-                catch(Exception e)
-                {
-                    Log.Write(e.ToString());
-                    return;
-                }
+                if(_tcpClient != null)
+                    _tcpClient.Receive(out rcv);
+                handleReceivedData(rcv);
             }
         }
 
-        private TcpClient _tcpClient;
+        private TCPConnection _tcpClient;
         private System.Threading.Thread _rcvThread;
-        private string _clientMessage;
+        private string _clientMessage = "";
         private volatile bool _running = true;
         private volatile bool _newMessage = false;
     }

@@ -24,40 +24,23 @@ namespace Project_kindergarten
         #region Private variables
 
         private System.Net.Sockets.TcpClient _tcpClient = null;
-        //private System.Net.Sockets.NetworkStream _tcpNetStream;
         private System.IO.StreamReader _streamReader;
         private System.IO.StreamWriter _streamWriter;
-        //private System.Threading.Mutex _rcvMutex;
-        //private System.Threading.Thread _rcvThread = null;
-        //private string _rcvString = null;
 
-        //private volatile bool _stillAlive = true;
-
-        private List<string> _rcvStrings = new List<string>();
-
-        //public string RcvString
-        //{
-        //    get
-        //    {
-        //        lock (_rcvString)
-        //        {
-        //            return _rcvString;
-        //        }
-        //    }
-        //    set
-        //    {
-        //        //lock (_rcvString)
-        //        //{
-        //        //    _rcvString = value;
-        //        //}
-        //    }
-        //}
+        public System.Net.Sockets.NetworkStream GetStream()
+        {
+            return _tcpClient.GetStream();
+        }
 
         #endregion
 
         public TCPConnection()
         {
             _tcpClient = null;
+        }
+        public TCPConnection(System.Net.Sockets.TcpClient client)
+        {
+            _tcpClient = client;
         }
         public TCPConnection(string dnsName)
         {
@@ -181,41 +164,33 @@ namespace Project_kindergarten
             }
             try
             {
-                //System.Net.Sockets.NetworkStream _tcpNetStream;
-                //// Get the network stream
-                //_tcpNetStream = _tcpClient.GetStream();
-                ////Convert string to bytes
-                //byte[] sendBytes = System.Text.Encoding.ASCII.GetBytes(inString);
-                //// Fire away.
-                //_tcpNetStream.Write(sendBytes, 0, sendBytes.Length);
-
-                //// Close the stream, otherwise it'll block everything else.
-                ////_tcpNetStream.Close();
-
+                // Try to write
                 _streamWriter = new System.IO.StreamWriter(_tcpClient.GetStream());
                 _streamWriter.WriteLine(inString);
                 _streamWriter.Flush();
-                //System.Windows.Forms.MessageBox.Show("" + _tcpClient.Connected.ToString());
-                    
-                //System.Net.Sockets.NetworkStream nw = _tcpClient.GetStream();
-                //if (nw.CanWrite)
-                //{
-                //    byte[] sendbyte = ASCIIEncoding.ASCII.GetBytes(inString);
-                //    nw.Write(sendbyte, 0, sendbyte.Length);
-                //}
-                //System.Windows.Forms.MessageBox.Show("" + _tcpClient.Connected.ToString());
-                ////nw.Flush();
-                //nw.Close();
-                //System.Windows.Forms.MessageBox.Show("" + _tcpClient.Connected.ToString());
             }
             catch (Exception e)
             {
+                // Probably not connected anymore
                 System.Windows.Forms.MessageBox.Show("Couldn't send information to server\n " +
                 "Please check your internet connection");
                 Log.Write(e.ToString());
             }
             //System.Windows.Forms.MessageBox.Show("So good, so far...");
         }
+
+        public bool Peek()
+        {
+            _streamReader = new System.IO.StreamReader(_tcpClient.GetStream());
+
+            // > 0 == something to read
+            if (_streamReader.Peek() >= 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public void Receive(out string outString)
         {
             outString = string.Empty;

@@ -154,34 +154,42 @@ namespace Project_kindergarten
 
             bool DropConnection = true;
 
-            if (rcvData == string.Empty)
+            if (rcvData == string.Empty || rcvData == null)
             {
                 //MessageBox.Show("Connection dropped, try again later");
                 return;
             }
             else
             {
-                switch (rcvData[0])
+                try
                 {
-                    case 'G':
-                        MessageBox.Show("Login failed, please try again later");
-                        break;
-                    case 'H':
-                        MessageBox.Show("User already logged in");
-                        break;
-                    case 'I':
-                        MessageBox.Show("Wrong username and/or password");
-                        break;
-                    case 'J':
-                        MessageBox.Show("User not registered");
-                        break;
-                    case 'K':
-                        serverConnection.Close();
-                        userVerification();
-                        break;
-                    default:
-                        DropConnection = false;
-                        break;
+                    switch (rcvData[0])
+                    {
+                        case 'G':
+                            MessageBox.Show("Login failed, please try again later");
+                            break;
+                        case 'H':
+                            MessageBox.Show("User already logged in");
+                            break;
+                        case 'I':
+                            MessageBox.Show("Wrong username and/or password");
+                            break;
+                        case 'J':
+                            MessageBox.Show("User not registered");
+                            break;
+                        case 'K':
+                            serverConnection.Close();
+                            userVerification();
+                            break;
+                        default:
+                            DropConnection = false;
+                            break;
+                    }
+                }
+                catch (Exception ec)
+                {
+                    Log.Write(ec.ToString() + "\n\n");
+                    MessageBox.Show("Something went wrong...");
                 }
             }
 
