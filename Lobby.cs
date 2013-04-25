@@ -92,7 +92,7 @@ namespace Project_kindergarten
                         lb_users.Items.Add(inString);
                         lb_users.Update();
                     }
-                    else if (inString[0] == LobbyFlags.SERVER_STARTING)
+                    else if (inString[0] == LobbyFlags.GAME_STARTING)
                     {
                         _rcvThread.Abort();
                         closeThis();

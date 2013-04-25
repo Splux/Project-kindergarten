@@ -34,10 +34,16 @@ namespace Project_kindergarten
             udp_socket.AllowNatTraversal(true);
             ServerIsOnline = true;
 
+            // Create thread for receiving and broadcasting data
             BroadcastThread = new Thread(ReceiveData);
             BroadcastThread.IsBackground = true;
             BroadcastThread.Start();
+        }
 
+        public void StopServer()
+        {
+            ServerIsOnline = false;
+            BroadcastThread.Abort();
         }
 
         public void ReceiveData()
@@ -47,19 +53,20 @@ namespace Project_kindergarten
             while (ServerIsOnline == true)
             {
                 data = udp_socket.Receive(ref RemoteIpEndPoint);
+                BroadcastData(data);
             }
         }
 
-        public void BroadcastData(String SendData)
+        public void BroadcastData(byte[] SendData)
         {
-            Byte[] sendByte = Encoding.ASCII.GetBytes(SendData);
+            //Byte[] sendByte = Encoding.ASCII.GetBytes(SendData);
             foreach (IPAddress adress in adresslist)
             {
                 try
                 {
                     SendIpEndPoint = new IPEndPoint(adress, PortToSendTo);
                     udp_socket.Connect(SendIpEndPoint);
-                    udp_socket.Send(sendByte, sendByte.Length);
+                    udp_socket.Send(SendData, SendData.Length);
                     udp_socket.Close();
                 }
                 catch (Exception ex)

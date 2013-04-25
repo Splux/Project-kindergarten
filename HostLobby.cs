@@ -84,8 +84,6 @@ namespace Project_kindergarten
             removeUserFromListbox(user);
         }
 
-
-
         private void BroadcastThread()
         {
             while(_running)
@@ -185,6 +183,16 @@ namespace Project_kindergarten
         private void btn_Start_Click(object sender, EventArgs e)
         {
             // TODO: make some code
+
+            foreach(Client c in _connectedClients)
+            {
+                c.Send(LobbyFlags.GAME_STARTING.ToString());
+            }
+
+            Game game = new Game();
+            game.InitializeGame();
+            this.Hide();
+            game.ShowDialog();
         }
 
         private void HostLobby_KeyUp(object sender, KeyEventArgs e)
