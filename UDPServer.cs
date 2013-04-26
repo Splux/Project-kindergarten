@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Project_Kindergarten
+namespace Project_kindergarten
 {
     public class UDP
     {
@@ -27,12 +27,6 @@ namespace Project_Kindergarten
             PortToSendTo = _port;
         }
 
-        public void StopServer()
-        {
-            ServerIsOnline = false;
-            BroadcastThread.Abort();
-        }
-
         public void StartServer()
         {
             udp_socket = new UdpClient();
@@ -40,10 +34,16 @@ namespace Project_Kindergarten
             udp_socket.AllowNatTraversal(true);
             ServerIsOnline = true;
 
+            // Create thread for receiving and broadcasting data
             BroadcastThread = new Thread(ReceiveData);
             BroadcastThread.IsBackground = true;
             BroadcastThread.Start();
+        }
 
+        public void StopServer()
+        {
+            ServerIsOnline = false;
+            BroadcastThread.Abort();
         }
 
         public void ReceiveData()
@@ -57,8 +57,9 @@ namespace Project_Kindergarten
             }
         }
 
-        public void BroadcastData(Byte[] SendData)
+        public void BroadcastData(byte[] SendData)
         {
+            //Byte[] sendByte = Encoding.ASCII.GetBytes(SendData);
             foreach (IPAddress adress in adresslist)
             {
                 try
@@ -68,8 +69,9 @@ namespace Project_Kindergarten
                     udp_socket.Send(SendData, SendData.Length);
                     udp_socket.Close();
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
+                    Log.Write(ex.ToString());
                     System.Windows.Forms.MessageBox.Show("Failed to send data to " + adress.ToString() + ".");
                 }
             }

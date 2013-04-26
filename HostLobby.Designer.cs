@@ -33,6 +33,8 @@
             this.btn_Start = new System.Windows.Forms.Button();
             this.lb_Users = new System.Windows.Forms.ListBox();
             this.btn_Exit = new System.Windows.Forms.Button();
+            this.tb_ChatMessage = new System.Windows.Forms.TextBox();
+            this.tb_ChatReceived = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lbl_serverName
@@ -84,12 +86,31 @@
             this.btn_Exit.UseVisualStyleBackColor = false;
             this.btn_Exit.Click += new System.EventHandler(this.btn_Exit_Click);
             // 
+            // tb_ChatMessage
+            // 
+            this.tb_ChatMessage.Location = new System.Drawing.Point(922, 605);
+            this.tb_ChatMessage.Name = "tb_ChatMessage";
+            this.tb_ChatMessage.Size = new System.Drawing.Size(432, 20);
+            this.tb_ChatMessage.TabIndex = 6;
+            this.tb_ChatMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.onKeyDown);
+            // 
+            // tb_ChatReceived
+            // 
+            this.tb_ChatReceived.Location = new System.Drawing.Point(922, 80);
+            this.tb_ChatReceived.Multiline = true;
+            this.tb_ChatReceived.Name = "tb_ChatReceived";
+            this.tb_ChatReceived.ReadOnly = true;
+            this.tb_ChatReceived.Size = new System.Drawing.Size(432, 519);
+            this.tb_ChatReceived.TabIndex = 7;
+            // 
             // HostLobby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1366, 768);
             this.ControlBox = false;
+            this.Controls.Add(this.tb_ChatReceived);
+            this.Controls.Add(this.tb_ChatMessage);
             this.Controls.Add(this.btn_Exit);
             this.Controls.Add(this.lb_Users);
             this.Controls.Add(this.btn_Start);
@@ -113,5 +134,7 @@
         private System.Windows.Forms.Button btn_Start;
         private System.Windows.Forms.ListBox lb_Users;
         private System.Windows.Forms.Button btn_Exit;
+        private System.Windows.Forms.TextBox tb_ChatMessage;
+        private System.Windows.Forms.TextBox tb_ChatReceived;
     }
 }

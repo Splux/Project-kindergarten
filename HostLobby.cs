@@ -103,6 +103,8 @@ namespace Project_kindergarten
                     if(_connectedClients[i].NewMessage)
                     {
                         string messageToSend = _connectedClients[i].ClientMessage;
+                        _connectedClients[i].ClientMessage = "";
+                        _connectedClients[i].NewMessage = false;
 
                         // check if someone is exiting
                         if (messageToSend[0] == LobbyFlags.REMOVE_USER)
@@ -110,6 +112,7 @@ namespace Project_kindergarten
                             removeUser(i + 1);
                             break;
                         }
+                        
 
                         for(int j = 0; j < _connectedClients.Count; j++)
                         {
@@ -117,6 +120,11 @@ namespace Project_kindergarten
                             {
                                 _connectedClients[i].Send(messageToSend);
                             }
+                        }
+                        if (messageToSend[0] == LobbyFlags.CHAT_MESSAGE)
+                        {
+                            string str = messageToSend.Remove(0, 1);
+                            tb_ChatReceived.Text += str + Environment.NewLine;
                         }
                         _connectedClients[i].NewMessage = false;
                     }
@@ -175,6 +183,16 @@ namespace Project_kindergarten
         private void btn_Start_Click(object sender, EventArgs e)
         {
             // TODO: make some code
+
+            foreach(Client c in _connectedClients)
+            {
+                c.Send(LobbyFlags.GAME_STARTING.ToString());
+            }
+
+            Game game = new Game();
+            game.InitializeGame();
+            this.Hide();
+            game.ShowDialog();
         }
 
         private void HostLobby_KeyUp(object sender, KeyEventArgs e)
@@ -191,16 +209,6 @@ namespace Project_kindergarten
             _serverListener.Stop();
 
             UserInfo.TcpClient.Send(Flags.HOST_REQUEST);
-            string rcv = "";
-
-            while (!UserInfo.TcpClient.Peek())
-                System.Threading.Thread.Sleep(10);
-            UserInfo.TcpClient.Receive(out rcv);
-
-            if (rcv == Flags.HOST_SUCCESSFUL_REMOVE)
-            {
-                MessageBox.Show("Successfully closed server");
-            }
 
             this.Close();
         }
@@ -226,6 +234,21 @@ namespace Project_kindergarten
         private volatile bool _newClient = false;
         private volatile string _strClient = "";
         #endregion
+
+        private void onKeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                tb_ChatReceived.Text +=  UserInfo.PlayerName + ": " + tb_ChatMessage.Text + Environment.NewLine;
+                foreach(Client c in _connectedClients)
+                {
+                    
+                    c.Send(LobbyFlags.CHAT_MESSAGE + UserInfo.PlayerName + ": " + tb_ChatMessage.Text);
+                    
+                }
+                tb_ChatMessage.Clear();
+            }
+        }
 
         //private void OnClose(object sender, FormClosingEventArgs e)
         //{

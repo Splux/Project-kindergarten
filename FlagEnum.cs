@@ -14,7 +14,7 @@ namespace Project_kindergarten
     {
         public const char ADD_USER = '!';
         public const char REMOVE_USER = '@';
-        public const char SERVER_STARTING = '#';
+        public const char GAME_STARTING = '#';
         public const char SERVER_STOP = '¤';
         public const char CHAT_MESSAGE = '%';
     }

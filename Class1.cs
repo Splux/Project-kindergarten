@@ -9,7 +9,10 @@ namespace Project_kindergarten
     {
         static void Main()
         {
-            System.Windows.Forms.Application.Run(new loginmenu());
+            //System.Windows.Forms.Application.Run(new loginmenu());
+            Game g = new Game();
+            g.InitializeGame();
+            g.StartGame();
         }
     }
 }

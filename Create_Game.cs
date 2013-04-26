@@ -104,6 +104,23 @@ namespace Project_kindergarten
                         this.Hide();
                         lobby.ShowDialog();
                         this.Show();
+
+                        if(UserInfo.TcpClient.Peek())
+                        {
+                            string strRcv;
+                            UserInfo.TcpClient.Receive(out strRcv);
+                            if(strRcv == string.Empty || strRcv == "")
+                            {
+                                MessageBox.Show("Something just happened...");
+                            }
+                            else
+                            {
+                                if(strRcv[0] == Flags.HOST_SUCCESSFUL_REMOVE[0])
+                                {
+                                    MessageBox.Show("Host removed");
+                                }
+                            }
+                        }
                     }
                     else if(rcv == Flags.HOST_SUCCESSFUL_REMOVE)
                     {
