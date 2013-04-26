@@ -46,6 +46,8 @@ namespace Project_kindergarten
             base.OnPaint(e);
         }
 
+        
+
         protected override void OnMouseClick(MouseEventArgs e)
         {
             // Testing some stuff for future usage
@@ -94,7 +96,6 @@ namespace Project_kindergarten
                         _backgroundColor = Microsoft.Xna.Framework.Color.Green;
                         break;
                 }
-                this.OnPaint(null);
             }
         }
 
@@ -104,6 +105,7 @@ namespace Project_kindergarten
             while(true)
             {
                 // Logic and stuff goes here
+                this.OnPaint(null);
                 Application.DoEvents();
             }
         }
