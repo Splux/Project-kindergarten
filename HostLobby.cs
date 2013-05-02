@@ -298,7 +298,7 @@ namespace Project_kindergarten
                 _tcpClient.Close();
                 _tcpClient = null;
             }
-            _rcvThread.Join();
+            _rcvThread.Abort();
         }
 
         public string ClientMessage

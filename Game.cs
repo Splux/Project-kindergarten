@@ -67,12 +67,12 @@ namespace Project_kindergarten
         {
             base.OnKeyDown(e);
             // Seems to be working, too
-            if(e.KeyData == Keys.A || e.KeyData == Keys.Left)
+            if (e.KeyData == Keys.A || e.KeyData == Keys.Left)
             {
-                switch(_random.Next(0, 3))
+                switch (_random.Next(0, 3))
                 {
                     case 0:
-                        if(_backgroundColor == Microsoft.Xna.Framework.Color.Black)
+                        if (_backgroundColor == Microsoft.Xna.Framework.Color.Black)
                         {
                             _backgroundColor = Microsoft.Xna.Framework.Color.Gray;
                             break;
@@ -80,7 +80,7 @@ namespace Project_kindergarten
                         _backgroundColor = Microsoft.Xna.Framework.Color.Black;
                         break;
                     case 1:
-                        if(_backgroundColor == Microsoft.Xna.Framework.Color.Blue)
+                        if (_backgroundColor == Microsoft.Xna.Framework.Color.Blue)
                         {
                             _backgroundColor = Microsoft.Xna.Framework.Color.PaleVioletRed;
                             break;
@@ -88,7 +88,7 @@ namespace Project_kindergarten
                         _backgroundColor = Microsoft.Xna.Framework.Color.Blue;
                         break;
                     case 2:
-                        if(_backgroundColor == Microsoft.Xna.Framework.Color.Green)
+                        if (_backgroundColor == Microsoft.Xna.Framework.Color.Green)
                         {
                             _backgroundColor = Microsoft.Xna.Framework.Color.Red;
                             break;
@@ -96,6 +96,9 @@ namespace Project_kindergarten
                         _backgroundColor = Microsoft.Xna.Framework.Color.Green;
                         break;
                 }
+
+            
+
             }
         }
 
