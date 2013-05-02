@@ -96,16 +96,17 @@ namespace Project_kindergarten
                         _backgroundColor = Microsoft.Xna.Framework.Color.Green;
                         break;
                 }
-
-            
-
+            }
+            else if(e.KeyData == Keys.Escape)
+            {
+                _gameRunning = false;
             }
         }
 
         public void StartGame()
         {
             this.Show();
-            while(true)
+            while(_gameRunning)
             {
                 // Logic and stuff goes here
                 this.OnPaint(null);
@@ -140,6 +141,8 @@ namespace Project_kindergarten
         private GraphicsDevice _graphicsDevice;
         private Microsoft.Xna.Framework.Color _backgroundColor = Microsoft.Xna.Framework.Color.Green;
         private Random _random = new Random();
+
+        private volatile bool _gameRunning = true;
 
         #endregion
     }
